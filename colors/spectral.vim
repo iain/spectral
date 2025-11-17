@@ -84,7 +84,6 @@ endfunction
 " ===============================================================
 
 call s:HL('Normal',          s:fg,         s:bg,         '')
-call s:HL('NormalFloat',     s:fg,         s:bg_alt,     '')
 call s:HL('NormalNC',        s:fg_alt,     s:bg,         '')
 
 " Cursor
@@ -119,6 +118,7 @@ call s:HL('VisualNOS',       s:none,       s:bg_alt2,    '')
 " Search
 call s:HL('Search',          s:bg,         s:yellow,     '')
 call s:HL('IncSearch',       s:bg,         s:orange,     '')
+call s:HL('CurSearch',       s:bg,         s:orange,     '')
 call s:HL('Substitute',      s:bg,         s:orange,     '')
 
 " Messages
@@ -133,6 +133,13 @@ call s:HL('Pmenu',           s:fg,         s:bg_alt,     '')
 call s:HL('PmenuSel',        s:bg,         s:cyan,       '')
 call s:HL('PmenuSbar',       s:none,       s:bg_alt2,    '')
 call s:HL('PmenuThumb',      s:none,       s:fg_darker,  '')
+call s:HL('PmenuShadow',     s:none,       s:bg,         '')
+call s:HL('PmenuKind',       s:purple,     s:bg_alt,     '')
+call s:HL('PmenuKindSel',    s:bg,         s:purple,     '')
+call s:HL('PmenuExtra',      s:fg_darker,  s:bg_alt,     '')
+call s:HL('PmenuExtraSel',   s:bg,         s:cyan,       '')
+call s:HL('PmenuMatch',      s:cyan,       s:bg_alt,     '')
+call s:HL('PmenuMatchSel',   s:bg,         s:cyan,       '')
 
 " Diff
 call s:HL('DiffAdd',         s:green,      s:bg_alt,     '')
@@ -153,13 +160,46 @@ call s:HL('Directory',       s:cyan,       s:none,       '')
 call s:HL('Folded',          s:fg_darker,  s:bg_alt,     '')
 call s:HL('MatchParen',      s:yellow,     s:bg_alt2,    '')
 call s:HL('NonText',         s:fg_dark,    s:none,       '')
+call s:HL('EndOfBuffer',     s:fg_dark,    s:none,       '')
 call s:HL('SpecialKey',      s:fg_dark,    s:none,       '')
+call s:HL('Whitespace',      s:fg_dark,    s:none,       '')
 call s:HL('Title',           s:purple,     s:none,       '')
 call s:HL('WildMenu',        s:bg,         s:cyan,       '')
+call s:HL('QuickFixLine',    s:none,       s:bg_alt2,    '')
 
 " Terminal
 call s:HL('Terminal',        s:fg,         s:bg,         '')
 call s:HL('TerminalNC',      s:fg_alt,     s:bg,         '')
+call s:HL('TermCursor',      s:bg,         s:fg,         '')
+call s:HL('TermCursorNC',    s:bg,         s:fg_darker,  '')
+
+" Neovim Floating Windows
+if has('nvim')
+  call s:HL('FloatBorder',   s:fg_alt,     s:bg_alt,     '')
+  call s:HL('FloatTitle',    s:purple,     s:bg_alt,     '')
+  call s:HL('FloatShadow',   s:none,       s:bg,         '')
+  call s:HL('FloatShadowThrough', s:none,  s:bg,         '')
+  call s:HL('NormalFloat',   s:fg,         s:bg_alt,     '')
+endif
+
+" Neovim Window UI
+if has('nvim')
+  call s:HL('WinSeparator',  s:bg_alt2,    s:none,       '')
+  call s:HL('WinBar',        s:fg,         s:bg_alt2,    '')
+  call s:HL('WinBarNC',      s:fg_darker,  s:bg_alt,     '')
+endif
+
+" Neovim Messages
+if has('nvim')
+  call s:HL('MsgArea',       s:fg,         s:bg,         '')
+  call s:HL('MsgSeparator',  s:fg_dark,    s:bg_alt,     '')
+endif
+
+" GUI Toolbar (gvim/MacVim)
+if has('gui_running')
+  call s:HL('ToolbarLine',   s:none,       s:bg_alt,     '')
+  call s:HL('ToolbarButton', s:fg,         s:bg_alt2,    '')
+endif
 
 " }}}
 " Syntax Highlighting {{{
