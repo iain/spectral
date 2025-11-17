@@ -19,11 +19,9 @@ let g:colors_name = 'spectral'
 
 " Check for 24-bit color support
 if has('termguicolors')
-  if (has('nvim'))
+  set termguicolors
+  if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-  endif
-  if (has('termguicolors'))
-    set termguicolors
   endif
 endif
 
@@ -48,9 +46,7 @@ let s:orange     = {'gui': '#fd9353', 'cterm': '209'}
 let s:yellow     = {'gui': '#fce566', 'cterm': '227'}
 let s:green      = {'gui': '#7bd88f', 'cterm': '114'}
 let s:cyan       = {'gui': '#5ad4e6', 'cterm': '81'}
-let s:blue       = {'gui': '#5ad4e6', 'cterm': '81'}
 let s:purple     = {'gui': '#948ae3', 'cterm': '141'}
-let s:pink       = {'gui': '#fc618d', 'cterm': '204'}
 
 " Special
 let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
@@ -142,7 +138,7 @@ call s:HL('PmenuThumb',      s:none,       s:fg_darker,  '')
 call s:HL('DiffAdd',         s:green,      s:bg_alt,     '')
 call s:HL('DiffChange',      s:yellow,     s:bg_alt,     '')
 call s:HL('DiffDelete',      s:red,        s:bg_alt,     '')
-call s:HL('DiffText',        s:blue,       s:bg_alt2,    'bold')
+call s:HL('DiffText',        s:cyan,       s:bg_alt2,    'bold')
 
 " Spelling
 call s:HL('SpellBad',        s:red,        s:none,       'underline')
@@ -285,7 +281,6 @@ call s:HL('rubyEscape',                s:orange, s:none, '')
 call s:HL('rubyFunction',              s:green,  s:none, '')
 call s:HL('rubyGlobalVariable',        s:orange, s:none, '')
 call s:HL('rubyInclude',               s:red,    s:none, '')
-call s:HL('rubyIncluderubyGlobalVariable', s:orange, s:none, '')
 call s:HL('rubyInstanceVariable',      s:orange, s:none, '')
 call s:HL('rubyInterpolation',         s:cyan,   s:none, '')
 call s:HL('rubyInterpolationDelimiter',s:orange, s:none, '')
@@ -450,7 +445,7 @@ if has('nvim')
   let g:terminal_color_1  = s:red.gui
   let g:terminal_color_2  = s:green.gui
   let g:terminal_color_3  = s:yellow.gui
-  let g:terminal_color_4  = s:blue.gui
+  let g:terminal_color_4  = s:cyan.gui
   let g:terminal_color_5  = s:purple.gui
   let g:terminal_color_6  = s:cyan.gui
   let g:terminal_color_7  = s:fg.gui
@@ -458,7 +453,7 @@ if has('nvim')
   let g:terminal_color_9  = s:red.gui
   let g:terminal_color_10 = s:green.gui
   let g:terminal_color_11 = s:yellow.gui
-  let g:terminal_color_12 = s:blue.gui
+  let g:terminal_color_12 = s:cyan.gui
   let g:terminal_color_13 = s:purple.gui
   let g:terminal_color_14 = s:cyan.gui
   let g:terminal_color_15 = s:white.gui
@@ -468,7 +463,7 @@ elseif has('terminal')
     \ s:red.gui,
     \ s:green.gui,
     \ s:yellow.gui,
-    \ s:blue.gui,
+    \ s:cyan.gui,
     \ s:purple.gui,
     \ s:cyan.gui,
     \ s:fg.gui,
@@ -476,7 +471,7 @@ elseif has('terminal')
     \ s:red.gui,
     \ s:green.gui,
     \ s:yellow.gui,
-    \ s:blue.gui,
+    \ s:cyan.gui,
     \ s:purple.gui,
     \ s:cyan.gui,
     \ s:white.gui
