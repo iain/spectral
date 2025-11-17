@@ -90,7 +90,7 @@ call s:HL('NormalNC',        s:fg_alt,     s:bg,         '')
 " Cursor
 call s:HL('Cursor',          s:bg,         s:fg,         '')
 call s:HL('CursorLine',      s:none,       s:bg_alt,     'NONE')
-call s:HL('CursorLineNr',    s:fg_light,   s:bg_alt,     'bold')
+call s:HL('CursorLineNr',    s:fg_light,   s:bg_alt,     '')
 call s:HL('CursorColumn',    s:none,       s:bg_alt,     '')
 
 " Line Numbers
@@ -107,7 +107,7 @@ call s:HL('StatusLineTermNC',s:fg_darker,  s:bg_alt,     'NONE')
 " Tabline
 call s:HL('TabLine',         s:fg_alt,     s:bg_alt,     'NONE')
 call s:HL('TabLineFill',     s:fg_dark,    s:bg_alt,     'NONE')
-call s:HL('TabLineSel',      s:fg_light,   s:bg_alt2,    'bold')
+call s:HL('TabLineSel',      s:fg_light,   s:bg_alt2,    '')
 
 " Vertical Split
 call s:HL('VertSplit',       s:bg_alt2,    s:bg,         'NONE')
@@ -122,15 +122,15 @@ call s:HL('IncSearch',       s:bg,         s:orange,     '')
 call s:HL('Substitute',      s:bg,         s:orange,     '')
 
 " Messages
-call s:HL('ErrorMsg',        s:red,        s:bg,         'bold')
-call s:HL('WarningMsg',      s:orange,     s:bg,         'bold')
-call s:HL('ModeMsg',         s:fg,         s:bg,         'bold')
-call s:HL('MoreMsg',         s:green,      s:bg,         'bold')
-call s:HL('Question',        s:cyan,       s:bg,         'bold')
+call s:HL('ErrorMsg',        s:red,        s:bg,         '')
+call s:HL('WarningMsg',      s:orange,     s:bg,         '')
+call s:HL('ModeMsg',         s:fg,         s:bg,         '')
+call s:HL('MoreMsg',         s:green,      s:bg,         '')
+call s:HL('Question',        s:cyan,       s:bg,         '')
 
 " Menu/Popup
 call s:HL('Pmenu',           s:fg,         s:bg_alt,     '')
-call s:HL('PmenuSel',        s:bg,         s:cyan,       'bold')
+call s:HL('PmenuSel',        s:bg,         s:cyan,       '')
 call s:HL('PmenuSbar',       s:none,       s:bg_alt2,    '')
 call s:HL('PmenuThumb',      s:none,       s:fg_darker,  '')
 
@@ -138,7 +138,7 @@ call s:HL('PmenuThumb',      s:none,       s:fg_darker,  '')
 call s:HL('DiffAdd',         s:green,      s:bg_alt,     '')
 call s:HL('DiffChange',      s:yellow,     s:bg_alt,     '')
 call s:HL('DiffDelete',      s:red,        s:bg_alt,     '')
-call s:HL('DiffText',        s:cyan,       s:bg_alt2,    'bold')
+call s:HL('DiffText',        s:cyan,       s:bg_alt2,    '')
 
 " Spelling
 call s:HL('SpellBad',        s:red,        s:none,       'underline')
@@ -149,13 +149,13 @@ call s:HL('SpellRare',       s:cyan,       s:none,       'underline')
 " Misc
 call s:HL('ColorColumn',     s:none,       s:bg_alt,     '')
 call s:HL('Conceal',         s:fg_dark,    s:none,       '')
-call s:HL('Directory',       s:cyan,       s:none,       'bold')
+call s:HL('Directory',       s:cyan,       s:none,       '')
 call s:HL('Folded',          s:fg_darker,  s:bg_alt,     '')
-call s:HL('MatchParen',      s:yellow,     s:bg_alt2,    'bold')
+call s:HL('MatchParen',      s:yellow,     s:bg_alt2,    '')
 call s:HL('NonText',         s:fg_dark,    s:none,       '')
 call s:HL('SpecialKey',      s:fg_dark,    s:none,       '')
-call s:HL('Title',           s:purple,     s:none,       'bold')
-call s:HL('WildMenu',        s:bg,         s:cyan,       'bold')
+call s:HL('Title',           s:purple,     s:none,       '')
+call s:HL('WildMenu',        s:bg,         s:cyan,       '')
 
 " Terminal
 call s:HL('Terminal',        s:fg,         s:bg,         '')
@@ -205,8 +205,8 @@ call s:HL('Debug',           s:orange,     s:none,       '')
 
 call s:HL('Underlined',      s:cyan,       s:none,       'underline')
 call s:HL('Ignore',          s:fg_dark,    s:none,       '')
-call s:HL('Error',           s:red,        s:bg,         'bold')
-call s:HL('Todo',            s:orange,     s:bg,         'bold')
+call s:HL('Error',           s:red,        s:bg,         '')
+call s:HL('Todo',            s:orange,     s:bg,         '')
 
 " }}}
 " Language-Specific {{{
@@ -219,7 +219,7 @@ call s:HL('htmlTagName',     s:red,        s:none,       '')
 call s:HL('htmlArg',         s:green,      s:none,       '')
 call s:HL('htmlSpecialChar', s:purple,     s:none,       '')
 call s:HL('htmlTitle',       s:fg,         s:none,       '')
-call s:HL('htmlH1',          s:fg,         s:none,       'bold')
+call s:HL('htmlH1',          s:fg,         s:none,       '')
 
 " XML
 call s:HL('xmlTag',          s:red,        s:none,       '')
@@ -236,7 +236,7 @@ call s:HL('cssAttr',         s:purple,     s:none,       '')
 call s:HL('cssColor',        s:purple,     s:none,       '')
 call s:HL('cssValueLength',  s:purple,     s:none,       '')
 call s:HL('cssValueNumber',  s:purple,     s:none,       '')
-call s:HL('cssImportant',    s:red,        s:none,       'bold')
+call s:HL('cssImportant',    s:red,        s:none,       '')
 
 " JavaScript
 call s:HL('javaScriptBraces',     s:fg,    s:none,       '')
@@ -298,7 +298,7 @@ call s:HL('rubyRescueModifier',        s:red,    s:none, '')
 
 " Methods and Attributes
 call s:HL('rubyFunction',              s:green,  s:none, '')
-call s:HL('rubyMethodName',            s:green,  s:none, 'bold')
+call s:HL('rubyMethodName',            s:green,  s:none, '')
 call s:HL('rubyAttribute',             s:cyan,   s:none, '')
 call s:HL('rubyMacro',                 s:cyan,   s:none, '')
 call s:HL('rubyEval',                  s:red,    s:none, '')
@@ -351,17 +351,17 @@ call s:HL('goVarDefs',           s:orange, s:none,       '')
 call s:HL('goConstants',         s:purple, s:none,       '')
 
 " Markdown
-call s:HL('markdownH1',                s:red,    s:none,  'bold')
-call s:HL('markdownH2',                s:orange, s:none,  'bold')
-call s:HL('markdownH3',                s:yellow, s:none,  'bold')
-call s:HL('markdownH4',                s:green,  s:none,  'bold')
-call s:HL('markdownH5',                s:cyan,   s:none,  'bold')
-call s:HL('markdownH6',                s:purple, s:none,  'bold')
-call s:HL('markdownHeadingDelimiter',  s:red,    s:none,  'bold')
+call s:HL('markdownH1',                s:red,    s:none,  '')
+call s:HL('markdownH2',                s:orange, s:none,  '')
+call s:HL('markdownH3',                s:yellow, s:none,  '')
+call s:HL('markdownH4',                s:green,  s:none,  '')
+call s:HL('markdownH5',                s:cyan,   s:none,  '')
+call s:HL('markdownH6',                s:purple, s:none,  '')
+call s:HL('markdownHeadingDelimiter',  s:red,    s:none,  '')
 call s:HL('markdownHeadingRule',       s:fg_dark,s:none,  '')
-call s:HL('markdownBold',              s:orange, s:none,  'bold')
+call s:HL('markdownBold',              s:orange, s:none,  '')
 call s:HL('markdownItalic',            s:purple, s:none,  'italic')
-call s:HL('markdownBoldItalic',        s:orange, s:none,  'bold,italic')
+call s:HL('markdownBoldItalic',        s:orange, s:none,  'italic')
 call s:HL('markdownCode',              s:green,  s:none,  '')
 call s:HL('markdownCodeBlock',         s:green,  s:none,  '')
 call s:HL('markdownCodeDelimiter',     s:green,  s:none,  '')
@@ -384,7 +384,7 @@ call s:HL('yamlConstant',        s:purple, s:none,       '')
 call s:HL('yamlBlockMappingKey', s:cyan,   s:none,       '')
 
 " TOML
-call s:HL('tomlTable',           s:purple, s:none,       'bold')
+call s:HL('tomlTable',           s:purple, s:none,       '')
 call s:HL('tomlKey',             s:cyan,   s:none,       '')
 
 " Vim
@@ -419,13 +419,13 @@ call s:HL('diffFile',            s:orange, s:none,       '')
 call s:HL('diffNewFile',         s:green,  s:none,       '')
 
 " NERDTree
-call s:HL('NERDTreeDir',         s:cyan,   s:none,       'bold')
+call s:HL('NERDTreeDir',         s:cyan,   s:none,       '')
 call s:HL('NERDTreeDirSlash',    s:cyan,   s:none,       '')
 call s:HL('NERDTreeFile',        s:fg,     s:none,       '')
 call s:HL('NERDTreeExecFile',    s:green,  s:none,       '')
 call s:HL('NERDTreeOpenable',    s:fg_alt, s:none,       '')
 call s:HL('NERDTreeClosable',    s:fg_alt, s:none,       '')
-call s:HL('NERDTreeCWD',         s:purple, s:none,       'bold')
+call s:HL('NERDTreeCWD',         s:purple, s:none,       '')
 call s:HL('NERDTreeUp',          s:fg_darker, s:none,    '')
 call s:HL('NERDTreeFlags',       s:purple, s:none,       '')
 
@@ -433,28 +433,28 @@ call s:HL('NERDTreeFlags',       s:purple, s:none,       '')
 call s:HL('ALEError',            s:red,    s:none,       'underline')
 call s:HL('ALEWarning',          s:yellow, s:none,       'underline')
 call s:HL('ALEInfo',             s:cyan,   s:none,       'underline')
-call s:HL('ALEErrorSign',        s:red,    s:bg,         'bold')
-call s:HL('ALEWarningSign',      s:yellow, s:bg,         'bold')
-call s:HL('ALEInfoSign',         s:cyan,   s:bg,         'bold')
+call s:HL('ALEErrorSign',        s:red,    s:bg,         '')
+call s:HL('ALEWarningSign',      s:yellow, s:bg,         '')
+call s:HL('ALEInfoSign',         s:cyan,   s:bg,         '')
 
 " CoC (Conquer of Completion)
-call s:HL('CocErrorSign',        s:red,    s:bg,         'bold')
-call s:HL('CocWarningSign',      s:yellow, s:bg,         'bold')
-call s:HL('CocInfoSign',         s:cyan,   s:bg,         'bold')
-call s:HL('CocHintSign',         s:purple, s:bg,         'bold')
+call s:HL('CocErrorSign',        s:red,    s:bg,         '')
+call s:HL('CocWarningSign',      s:yellow, s:bg,         '')
+call s:HL('CocInfoSign',         s:cyan,   s:bg,         '')
+call s:HL('CocHintSign',         s:purple, s:bg,         '')
 call s:HL('CocErrorFloat',       s:red,    s:bg_alt,     '')
 call s:HL('CocWarningFloat',     s:yellow, s:bg_alt,     '')
 call s:HL('CocInfoFloat',        s:cyan,   s:bg_alt,     '')
 call s:HL('CocHintFloat',        s:purple, s:bg_alt,     '')
 
 " CtrlP
-call s:HL('CtrlPMatch',          s:cyan,   s:none,       'bold')
+call s:HL('CtrlPMatch',          s:cyan,   s:none,       '')
 call s:HL('CtrlPNoEntries',      s:red,    s:none,       '')
 call s:HL('CtrlPPrtBase',        s:fg_dark,s:none,       '')
 call s:HL('CtrlPPrtCursor',      s:cyan,   s:none,       '')
 call s:HL('CtrlPLinePre',        s:fg_dark,s:none,       '')
-call s:HL('CtrlPMode1',          s:fg,     s:bg_alt,     'bold')
-call s:HL('CtrlPMode2',          s:fg,     s:bg_alt2,    'bold')
+call s:HL('CtrlPMode1',          s:fg,     s:bg_alt,     '')
+call s:HL('CtrlPMode2',          s:fg,     s:bg_alt2,    '')
 
 " fzf
 call s:HL('fzf1',                s:cyan,   s:bg_alt,     '')
@@ -468,15 +468,15 @@ call s:HL('StartifyFooter',      s:fg_dark,s:none,       '')
 call s:HL('StartifyHeader',      s:purple, s:none,       '')
 call s:HL('StartifyNumber',      s:orange, s:none,       '')
 call s:HL('StartifyPath',        s:fg_alt, s:none,       '')
-call s:HL('StartifySection',     s:red,    s:none,       'bold')
+call s:HL('StartifySection',     s:red,    s:none,       '')
 call s:HL('StartifySelect',      s:green,  s:none,       '')
 call s:HL('StartifySlash',       s:fg_alt, s:none,       '')
 call s:HL('StartifySpecial',     s:fg_dark,s:none,       '')
 
 " vim-which-key
-call s:HL('WhichKey',            s:cyan,   s:none,       'bold')
+call s:HL('WhichKey',            s:cyan,   s:none,       '')
 call s:HL('WhichKeySeperator',   s:fg_darker, s:none,    '')
-call s:HL('WhichKeyGroup',       s:purple, s:none,       'bold')
+call s:HL('WhichKeyGroup',       s:purple, s:none,       '')
 call s:HL('WhichKeyDesc',        s:fg,     s:none,       '')
 
 " Telescope
@@ -484,10 +484,10 @@ call s:HL('TelescopeBorder',     s:fg_alt, s:bg,         '')
 call s:HL('TelescopePromptBorder', s:cyan, s:bg,         '')
 call s:HL('TelescopeResultsBorder', s:fg_alt, s:bg,      '')
 call s:HL('TelescopePreviewBorder', s:fg_alt, s:bg,      '')
-call s:HL('TelescopeSelection',  s:fg,     s:bg_alt,     'bold')
-call s:HL('TelescopeSelectionCaret', s:cyan, s:bg_alt,   'bold')
+call s:HL('TelescopeSelection',  s:fg,     s:bg_alt,     '')
+call s:HL('TelescopeSelectionCaret', s:cyan, s:bg_alt,   '')
 call s:HL('TelescopeMultiSelection', s:purple, s:bg_alt, '')
-call s:HL('TelescopeMatching',   s:cyan,   s:none,       'bold')
+call s:HL('TelescopeMatching',   s:cyan,   s:none,       '')
 
 " }}}
 " Terminal Colors {{{
@@ -603,11 +603,11 @@ if has('nvim-0.8')
 
   " Text
   call s:HL('@text',               s:fg,         s:none, '')
-  call s:HL('@text.strong',        s:orange,     s:none, 'bold')
+  call s:HL('@text.strong',        s:orange,     s:none, '')
   call s:HL('@text.emphasis',      s:purple,     s:none, 'italic')
   call s:HL('@text.underline',     s:fg,         s:none, 'underline')
   call s:HL('@text.strike',        s:fg_dark,    s:none, 'strikethrough')
-  call s:HL('@text.title',         s:red,        s:none, 'bold')
+  call s:HL('@text.title',         s:red,        s:none, '')
   call s:HL('@text.literal',       s:green,      s:none, '')
   call s:HL('@text.uri',           s:cyan,       s:none, 'underline')
   call s:HL('@text.math',          s:purple,     s:none, '')
@@ -615,8 +615,8 @@ if has('nvim-0.8')
   call s:HL('@text.environment',   s:purple,     s:none, '')
   call s:HL('@text.environment.name', s:cyan,    s:none, '')
   call s:HL('@text.note',          s:fg_dark,    s:none, 'italic')
-  call s:HL('@text.warning',       s:orange,     s:none, 'bold')
-  call s:HL('@text.danger',        s:red,        s:none, 'bold')
+  call s:HL('@text.warning',       s:orange,     s:none, '')
+  call s:HL('@text.danger',        s:red,        s:none, '')
 
   " Tags
   call s:HL('@tag',                s:red,        s:none, '')
@@ -635,10 +635,10 @@ if has('nvim-0.5')
   call s:HL('DiagnosticInfo',      s:cyan,       s:none, '')
   call s:HL('DiagnosticHint',      s:purple,     s:none, '')
 
-  call s:HL('DiagnosticSignError', s:red,        s:bg,   'bold')
-  call s:HL('DiagnosticSignWarn',  s:yellow,     s:bg,   'bold')
-  call s:HL('DiagnosticSignInfo',  s:cyan,       s:bg,   'bold')
-  call s:HL('DiagnosticSignHint',  s:purple,     s:bg,   'bold')
+  call s:HL('DiagnosticSignError', s:red,        s:bg,   '')
+  call s:HL('DiagnosticSignWarn',  s:yellow,     s:bg,   '')
+  call s:HL('DiagnosticSignInfo',  s:cyan,       s:bg,   '')
+  call s:HL('DiagnosticSignHint',  s:purple,     s:bg,   '')
 
   call s:HL('DiagnosticUnderlineError', s:none,  s:none, 'underline')
   call s:HL('DiagnosticUnderlineWarn',  s:none,  s:none, 'underline')
