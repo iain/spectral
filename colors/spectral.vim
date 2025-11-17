@@ -276,22 +276,71 @@ call s:HL('pythonRepeat',        s:red,    s:none,       '')
 call s:HL('pythonDottedName',    s:green,  s:none,       '')
 
 " Ruby
+" Keywords and Definitions
+call s:HL('rubyClass',                 s:red,    s:none, '')
+call s:HL('rubyModule',                s:red,    s:none, '')
+call s:HL('rubyDefine',                s:red,    s:none, '')
+call s:HL('rubyKeyword',               s:red,    s:none, '')
+call s:HL('rubyConditional',           s:red,    s:none, '')
+call s:HL('rubyConditionalModifier',   s:red,    s:none, '')
+call s:HL('rubyRepeat',                s:red,    s:none, '')
+call s:HL('rubyRepeatModifier',        s:red,    s:none, '')
+call s:HL('rubyControl',               s:red,    s:none, '')
+call s:HL('rubyBeginEnd',              s:red,    s:none, '')
+call s:HL('rubyInclude',               s:red,    s:none, '')
+call s:HL('rubyAccess',                s:red,    s:none, '')
+call s:HL('rubyOperator',              s:red,    s:none, '')
+
+" Exception Handling
+call s:HL('rubyException',             s:red,    s:none, '')
+call s:HL('rubyExceptionHandler',      s:red,    s:none, '')
+call s:HL('rubyRescueModifier',        s:red,    s:none, '')
+
+" Methods and Attributes
+call s:HL('rubyFunction',              s:green,  s:none, '')
+call s:HL('rubyMethodName',            s:green,  s:none, 'bold')
+call s:HL('rubyAttribute',             s:cyan,   s:none, '')
+call s:HL('rubyMacro',                 s:cyan,   s:none, '')
+call s:HL('rubyEval',                  s:red,    s:none, '')
+
+" Constants and Types
+call s:HL('rubyConstant',              s:cyan,   s:none, '')
+call s:HL('rubyPredefinedConstant',    s:purple, s:none, '')
+
+" Variables
 call s:HL('rubyBlockParameter',        s:orange, s:none, '')
 call s:HL('rubyBlockParameterList',    s:orange, s:none, '')
-call s:HL('rubyClass',                 s:red,    s:none, '')
-call s:HL('rubyConstant',              s:cyan,   s:none, '')
-call s:HL('rubyControl',               s:red,    s:none, '')
-call s:HL('rubyEscape',                s:orange, s:none, '')
-call s:HL('rubyFunction',              s:green,  s:none, '')
 call s:HL('rubyGlobalVariable',        s:orange, s:none, '')
-call s:HL('rubyInclude',               s:red,    s:none, '')
+call s:HL('rubyPredefinedVariable',    s:orange, s:none, '')
 call s:HL('rubyInstanceVariable',      s:orange, s:none, '')
+call s:HL('rubyClassVariable',         s:orange, s:none, '')
+call s:HL('rubyPseudoVariable',        s:purple, s:none, '')
+
+" Literals
+call s:HL('rubyBoolean',               s:purple, s:none, '')
+call s:HL('rubyInteger',               s:purple, s:none, '')
+call s:HL('rubyFloat',                 s:purple, s:none, '')
+call s:HL('rubySymbol',                s:purple, s:none, '')
+
+" Strings
+call s:HL('rubyString',                s:yellow, s:none, '')
+call s:HL('rubyStringDelimiter',       s:yellow, s:none, '')
+call s:HL('rubyStringEscape',          s:orange, s:none, '')
+call s:HL('rubyEscape',                s:orange, s:none, '')
 call s:HL('rubyInterpolation',         s:cyan,   s:none, '')
 call s:HL('rubyInterpolationDelimiter',s:orange, s:none, '')
+
+" Regular Expressions
 call s:HL('rubyRegexp',                s:cyan,   s:none, '')
 call s:HL('rubyRegexpDelimiter',       s:cyan,   s:none, '')
-call s:HL('rubyStringDelimiter',       s:yellow, s:none, '')
-call s:HL('rubySymbol',                s:purple, s:none, '')
+call s:HL('rubyRegexpSpecial',         s:orange, s:none, '')
+call s:HL('rubyRegexpCharClass',       s:purple, s:none, '')
+call s:HL('rubyRegexpQuantifier',      s:purple, s:none, '')
+
+" Comments and Documentation
+call s:HL('rubyComment',               s:fg_dark,s:none, 'italic')
+call s:HL('rubyDocumentation',         s:fg_dark,s:none, 'italic')
+call s:HL('rubySharpBang',             s:fg_dark,s:none, 'italic')
 
 " Go
 call s:HL('goDeclaration',       s:red,    s:none,       '')
