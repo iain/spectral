@@ -219,7 +219,17 @@ call s:HL('htmlTagName',     s:red,        s:none,       '')
 call s:HL('htmlArg',         s:green,      s:none,       '')
 call s:HL('htmlSpecialChar', s:purple,     s:none,       '')
 call s:HL('htmlTitle',       s:fg,         s:none,       '')
-call s:HL('htmlH1',          s:fg,         s:none,       '')
+call s:HL('htmlH1',          s:red,        s:none,       '')
+call s:HL('htmlH2',          s:orange,     s:none,       '')
+call s:HL('htmlH3',          s:yellow,     s:none,       '')
+call s:HL('htmlH4',          s:green,      s:none,       '')
+call s:HL('htmlH5',          s:cyan,       s:none,       '')
+call s:HL('htmlH6',          s:purple,     s:none,       '')
+call s:HL('htmlBold',        s:orange,     s:none,       '')
+call s:HL('htmlItalic',      s:purple,     s:none,       'italic')
+call s:HL('htmlBoldItalic',  s:orange,     s:none,       'italic')
+call s:HL('htmlStrike',      s:fg_darker,  s:none,       'strikethrough')
+call s:HL('htmlLink',        s:purple,     s:none,       '')
 
 " XML
 call s:HL('xmlTag',          s:red,        s:none,       '')
@@ -360,26 +370,65 @@ call s:HL('goVarDefs',           s:orange, s:none,       '')
 call s:HL('goConstants',         s:purple, s:none,       '')
 
 " Markdown
+" Headings
 call s:HL('markdownH1',                s:red,    s:none,  '')
 call s:HL('markdownH2',                s:orange, s:none,  '')
 call s:HL('markdownH3',                s:yellow, s:none,  '')
 call s:HL('markdownH4',                s:green,  s:none,  '')
 call s:HL('markdownH5',                s:cyan,   s:none,  '')
 call s:HL('markdownH6',                s:purple, s:none,  '')
-call s:HL('markdownHeadingDelimiter',  s:red,    s:none,  '')
+call s:HL('markdownHeadingDelimiter',  s:fg_darker,s:none,'')
+call s:HL('markdownH1Delimiter',       s:red,    s:none,  '')
+call s:HL('markdownH2Delimiter',       s:orange, s:none,  '')
+call s:HL('markdownH3Delimiter',       s:yellow, s:none,  '')
+call s:HL('markdownH4Delimiter',       s:green,  s:none,  '')
+call s:HL('markdownH5Delimiter',       s:cyan,   s:none,  '')
+call s:HL('markdownH6Delimiter',       s:purple, s:none,  '')
 call s:HL('markdownHeadingRule',       s:fg_dark,s:none,  '')
+
+" Text Formatting
 call s:HL('markdownBold',              s:orange, s:none,  '')
+call s:HL('markdownBoldDelimiter',     s:fg_darker,s:none,'')
 call s:HL('markdownItalic',            s:purple, s:none,  'italic')
+call s:HL('markdownItalicDelimiter',   s:fg_darker,s:none,'italic')
 call s:HL('markdownBoldItalic',        s:orange, s:none,  'italic')
-call s:HL('markdownCode',              s:green,  s:none,  '')
-call s:HL('markdownCodeBlock',         s:green,  s:none,  '')
-call s:HL('markdownCodeDelimiter',     s:green,  s:none,  '')
+call s:HL('markdownBoldItalicDelimiter',s:fg_darker,s:none,'italic')
+call s:HL('markdownStrike',            s:fg_darker,s:none,'strikethrough')
+call s:HL('markdownStrikeDelimiter',   s:fg_dark,s:none,  '')
+
+" Code
+call s:HL('markdownCode',              s:green,  s:bg_alt, '')
+call s:HL('markdownCodeBlock',         s:green,  s:bg_alt, '')
+call s:HL('markdownCodeDelimiter',     s:fg_darker,s:none,'')
+
+" Links and URLs
 call s:HL('markdownUrl',               s:cyan,   s:none,  'underline')
+call s:HL('markdownAutomaticLink',     s:cyan,   s:none,  'underline')
+call s:HL('markdownUrlTitle',          s:yellow, s:none,  '')
+call s:HL('markdownUrlDelimiter',      s:fg_darker,s:none,'')
+call s:HL('markdownUrlTitleDelimiter', s:fg_darker,s:none,'')
 call s:HL('markdownLinkText',          s:purple, s:none,  '')
-call s:HL('markdownLinkDelimiter',     s:fg_alt, s:none,  '')
-call s:HL('markdownLinkTextDelimiter', s:fg_alt, s:none,  '')
+call s:HL('markdownLinkDelimiter',     s:fg_darker,s:none,'')
+call s:HL('markdownLinkTextDelimiter', s:fg_darker,s:none,'')
+call s:HL('markdownId',                s:cyan,   s:none,  '')
+call s:HL('markdownIdDeclaration',     s:purple, s:none,  '')
+call s:HL('markdownIdDelimiter',       s:fg_darker,s:none,'')
+
+" Lists
 call s:HL('markdownListMarker',        s:red,    s:none,  '')
 call s:HL('markdownOrderedListMarker', s:red,    s:none,  '')
+
+" Blockquotes and Rules
+call s:HL('markdownBlockquote',        s:fg_dark,s:none,  'italic')
+call s:HL('markdownRule',              s:fg_darker,s:none,'')
+
+" Footnotes
+call s:HL('markdownFootnote',          s:cyan,   s:none,  '')
+call s:HL('markdownFootnoteDefinition',s:cyan,   s:none,  '')
+
+" Special
+call s:HL('markdownEscape',            s:orange, s:none,  '')
+call s:HL('markdownError',             s:red,    s:bg,    '')
 
 " JSON
 call s:HL('jsonKeyword',         s:cyan,   s:none,       '')
