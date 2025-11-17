@@ -30,7 +30,7 @@ endif
 " ===============================================================
 
 " Background & Foreground
-let s:bg         = {'gui': '#222222', 'cterm': '234'}
+let s:bg         = {'gui': '#181818', 'cterm': '234'}
 let s:bg_alt     = {'gui': '#363537', 'cterm': '236'}
 let s:bg_alt2    = {'gui': '#525053', 'cterm': '239'}
 let s:fg_dark    = {'gui': '#69676c', 'cterm': '242'}
