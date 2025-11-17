@@ -732,21 +732,35 @@ if has('nvim-0.5')
   call s:HL('DiagnosticWarn',      s:yellow,     s:none, '')
   call s:HL('DiagnosticInfo',      s:cyan,       s:none, '')
   call s:HL('DiagnosticHint',      s:purple,     s:none, '')
+  call s:HL('DiagnosticOk',        s:green,      s:none, '')
 
+  " Diagnostic Signs
   call s:HL('DiagnosticSignError', s:red,        s:bg,   '')
   call s:HL('DiagnosticSignWarn',  s:yellow,     s:bg,   '')
   call s:HL('DiagnosticSignInfo',  s:cyan,       s:bg,   '')
   call s:HL('DiagnosticSignHint',  s:purple,     s:bg,   '')
+  call s:HL('DiagnosticSignOk',    s:green,      s:bg,   '')
 
-  call s:HL('DiagnosticUnderlineError', s:none,  s:none, 'underline')
-  call s:HL('DiagnosticUnderlineWarn',  s:none,  s:none, 'underline')
-  call s:HL('DiagnosticUnderlineInfo',  s:none,  s:none, 'underline')
-  call s:HL('DiagnosticUnderlineHint',  s:none,  s:none, 'underline')
+  " Diagnostic Underlines
+  call s:HL('DiagnosticUnderlineError', s:red,   s:none, 'underline')
+  call s:HL('DiagnosticUnderlineWarn',  s:yellow,s:none, 'underline')
+  call s:HL('DiagnosticUnderlineInfo',  s:cyan,  s:none, 'underline')
+  call s:HL('DiagnosticUnderlineHint',  s:purple,s:none, 'underline')
+  call s:HL('DiagnosticUnderlineOk',    s:green, s:none, 'underline')
 
+  " Diagnostic Virtual Text
   call s:HL('DiagnosticVirtualTextError', s:red,    s:none, '')
   call s:HL('DiagnosticVirtualTextWarn',  s:yellow, s:none, '')
   call s:HL('DiagnosticVirtualTextInfo',  s:cyan,   s:none, '')
   call s:HL('DiagnosticVirtualTextHint',  s:purple, s:none, '')
+  call s:HL('DiagnosticVirtualTextOk',    s:green,  s:none, '')
+
+  " Diagnostic Floating Windows
+  call s:HL('DiagnosticFloatingError', s:red,    s:bg_alt, '')
+  call s:HL('DiagnosticFloatingWarn',  s:yellow, s:bg_alt, '')
+  call s:HL('DiagnosticFloatingInfo',  s:cyan,   s:bg_alt, '')
+  call s:HL('DiagnosticFloatingHint',  s:purple, s:bg_alt, '')
+  call s:HL('DiagnosticFloatingOk',    s:green,  s:bg_alt, '')
 
   " LSP References
   call s:HL('LspReferenceText',    s:none,       s:bg_alt2, '')
@@ -756,6 +770,57 @@ if has('nvim-0.5')
   " LSP Code Lens
   call s:HL('LspCodeLens',         s:fg_dark,    s:none, 'italic')
   call s:HL('LspCodeLensSeparator',s:fg_dark,    s:none, 'italic')
+
+  " LSP Signature Help
+  call s:HL('LspSignatureActiveParameter', s:orange, s:bg_alt2, '')
+
+  " LSP Inlay Hints (very useful for type hints, parameter names, etc.)
+  call s:HL('LspInlayHint',        s:fg_dark,    s:none, 'italic')
+
+  " LSP Info Window
+  call s:HL('LspInfoBorder',       s:fg_alt,     s:bg_alt, '')
+endif
+
+" LSP Semantic Token Support (Neovim 0.9+)
+if has('nvim-0.9')
+  " Semantic token types
+  call s:HL('@lsp.type.class',        s:cyan,   s:none, '')
+  call s:HL('@lsp.type.decorator',    s:orange, s:none, '')
+  call s:HL('@lsp.type.enum',         s:cyan,   s:none, '')
+  call s:HL('@lsp.type.enumMember',   s:purple, s:none, '')
+  call s:HL('@lsp.type.function',     s:green,  s:none, '')
+  call s:HL('@lsp.type.interface',    s:cyan,   s:none, '')
+  call s:HL('@lsp.type.macro',        s:cyan,   s:none, '')
+  call s:HL('@lsp.type.method',       s:green,  s:none, '')
+  call s:HL('@lsp.type.namespace',    s:cyan,   s:none, '')
+  call s:HL('@lsp.type.parameter',    s:orange, s:none, '')
+  call s:HL('@lsp.type.property',     s:fg,     s:none, '')
+  call s:HL('@lsp.type.struct',       s:cyan,   s:none, '')
+  call s:HL('@lsp.type.type',         s:cyan,   s:none, '')
+  call s:HL('@lsp.type.typeParameter',s:cyan,   s:none, '')
+  call s:HL('@lsp.type.variable',     s:fg,     s:none, '')
+  call s:HL('@lsp.type.comment',      s:fg_dark,s:none, 'italic')
+  call s:HL('@lsp.type.keyword',      s:red,    s:none, '')
+  call s:HL('@lsp.type.string',       s:yellow, s:none, '')
+  call s:HL('@lsp.type.number',       s:purple, s:none, '')
+  call s:HL('@lsp.type.operator',     s:red,    s:none, '')
+
+  " Semantic token modifiers
+  call s:HL('@lsp.mod.readonly',      s:purple, s:none, '')
+  call s:HL('@lsp.mod.deprecated',    s:fg_dark,s:none, 'strikethrough')
+  call s:HL('@lsp.mod.abstract',      s:cyan,   s:none, 'italic')
+  call s:HL('@lsp.mod.static',        s:purple, s:none, '')
+  call s:HL('@lsp.mod.defaultLibrary',s:cyan,   s:none, '')
+  call s:HL('@lsp.mod.async',         s:red,    s:none, 'italic')
+  call s:HL('@lsp.mod.declaration',   s:fg,     s:none, '')
+  call s:HL('@lsp.mod.definition',    s:fg,     s:none, '')
+
+  " Language-specific semantic tokens
+  call s:HL('@lsp.typemod.variable.readonly', s:purple, s:none, '')
+  call s:HL('@lsp.typemod.function.defaultLibrary', s:cyan, s:none, '')
+  call s:HL('@lsp.typemod.method.defaultLibrary', s:cyan, s:none, '')
+  call s:HL('@lsp.typemod.variable.defaultLibrary', s:purple, s:none, '')
+  call s:HL('@lsp.typemod.variable.global', s:orange, s:none, '')
 endif
 
 " }}}
