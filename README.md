@@ -16,7 +16,7 @@ A beautiful dark Vim colorscheme based on Monokai Pro Spectrum, designed for com
   - And many more
 - **Plugin integration** - Built-in support for popular plugins:
   - GitGutter, Signify, fugitive
-  - NERDTree
+  - NERDTree and netrw (built-in file browser)
   - ALE, CoC
   - fzf, CtrlP
   - Telescope
