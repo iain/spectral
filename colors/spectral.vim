@@ -342,6 +342,15 @@ call s:HL('rubyComment',               s:fg_dark,s:none, 'italic')
 call s:HL('rubyDocumentation',         s:fg_dark,s:none, 'italic')
 call s:HL('rubySharpBang',             s:fg_dark,s:none, 'italic')
 
+" Sorbet Type Signatures (non-italic, comment color)
+" Note: Syntax patterns are defined in plugin/sorbet.vim
+" Highlight Sorbet groups (same color as comments, but not italic)
+call s:HL('rubySorbetExtend',          s:fg_dark,s:none, '')
+call s:HL('rubySorbetSig',             s:fg_dark,s:none, '')
+call s:HL('rubySorbetSigBlock',        s:fg_dark,s:none, '')
+call s:HL('rubySorbetKeywords',        s:fg_dark,s:none, '')
+call s:HL('rubySorbetTypes',           s:fg_dark,s:none, '')
+
 " Go
 call s:HL('goDeclaration',       s:red,    s:none,       '')
 call s:HL('goBuiltins',          s:cyan,   s:none,       '')
