@@ -157,6 +157,10 @@ call s:HL('SpecialKey',      s:fg_dark,    s:none,       '')
 call s:HL('Title',           s:purple,     s:none,       'bold')
 call s:HL('WildMenu',        s:bg,         s:cyan,       'bold')
 
+" Terminal
+call s:HL('Terminal',        s:fg,         s:bg,         '')
+call s:HL('TerminalNC',      s:fg_alt,     s:bg,         '')
+
 " }}}
 " Syntax Highlighting {{{
 " ===============================================================
@@ -441,7 +445,7 @@ call s:HL('TelescopeMatching',   s:cyan,   s:none,       'bold')
 " ===============================================================
 
 if has('nvim')
-  let g:terminal_color_0  = s:bg.gui
+  let g:terminal_color_0  = s:bg_alt2.gui
   let g:terminal_color_1  = s:red.gui
   let g:terminal_color_2  = s:green.gui
   let g:terminal_color_3  = s:yellow.gui
@@ -459,7 +463,7 @@ if has('nvim')
   let g:terminal_color_15 = s:white.gui
 elseif has('terminal')
   let g:terminal_ansi_colors = [
-    \ s:bg.gui,
+    \ s:bg_alt2.gui,
     \ s:red.gui,
     \ s:green.gui,
     \ s:yellow.gui,
