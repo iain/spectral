@@ -99,10 +99,10 @@ call s:HL('SignColumn',      s:fg_dark,    s:bg,         '')
 call s:HL('FoldColumn',      s:fg_darker,  s:bg,         '')
 
 " Statusline
-call s:HL('StatusLine',      s:fg,         s:bg_alt2,    'NONE')
-call s:HL('StatusLineNC',    s:fg_darker,  s:bg_alt,     'NONE')
-call s:HL('StatusLineTerm',  s:fg,         s:bg_alt2,    'NONE')
-call s:HL('StatusLineTermNC',s:fg_darker,  s:bg_alt,     'NONE')
+call s:HL('StatusLine',      s:fg_darker,  s:bg,         'NONE')
+call s:HL('StatusLineNC',    s:fg_dark,    s:bg,         'NONE')
+call s:HL('StatusLineTerm',  s:fg_darker,  s:bg,         'NONE')
+call s:HL('StatusLineTermNC',s:fg_dark,    s:bg,         'NONE')
 
 " Tabline
 call s:HL('TabLine',         s:fg_alt,     s:black,      'NONE')
