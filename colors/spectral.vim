@@ -49,6 +49,7 @@ let s:cyan       = {'gui': '#5ad4e6', 'cterm': '81'}
 let s:purple     = {'gui': '#948ae3', 'cterm': '141'}
 
 " Special
+let s:black      = {'gui': '#000000', 'cterm': '16'}
 let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
 
 " }}}
@@ -104,9 +105,9 @@ call s:HL('StatusLineTerm',  s:fg,         s:bg_alt2,    'NONE')
 call s:HL('StatusLineTermNC',s:fg_darker,  s:bg_alt,     'NONE')
 
 " Tabline
-call s:HL('TabLine',         s:fg_alt,     s:bg_alt,     'NONE')
-call s:HL('TabLineFill',     s:fg_dark,    s:bg_alt,     'NONE')
-call s:HL('TabLineSel',      s:fg_light,   s:bg_alt2,    '')
+call s:HL('TabLine',         s:fg_alt,     s:black,      'NONE')
+call s:HL('TabLineFill',     s:fg_dark,    s:black,      'NONE')
+call s:HL('TabLineSel',      s:fg_light,   s:bg,         '')
 
 " Vertical Split
 call s:HL('VertSplit',       s:bg_alt2,    s:bg,         'NONE')
