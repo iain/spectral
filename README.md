@@ -114,7 +114,7 @@ set termguicolors
 
 Spectral uses a carefully selected color palette based on Monokai Pro Spectrum:
 
-- Background: `#222222`
+- Background: `#181818`
 - Foreground: `#fbf8ff`
 - Red: `#fc618d`
 - Orange: `#fd9353`
