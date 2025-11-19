@@ -25,6 +25,9 @@ if has('termguicolors')
   endif
 endif
 
+" UI Characters
+set fillchars+=vert:│
+
 " }}}
 " Color Palette {{{
 " ===============================================================
@@ -112,6 +115,11 @@ call s:HL('TabLineSel',      s:fg_light,   s:bg,         '')
 
 " Vertical Split
 call s:HL('VertSplit',       s:bg_alt2,    s:bg,         'NONE')
+
+" Transparency overrides for terminal
+highlight Normal ctermbg=NONE
+highlight SignColumn ctermfg=9 ctermbg=NONE guibg=NONE
+highlight VertSplit ctermbg=NONE guibg=NONE
 
 " Visual Selection
 call s:HL('Visual',          s:none,       s:bg_alt2,    '')
