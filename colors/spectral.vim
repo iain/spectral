@@ -50,6 +50,7 @@ let s:purple     = {'gui': '#948ae3', 'cterm': '141'}
 
 " Special
 let s:black      = {'gui': '#000000', 'cterm': '16'}
+let s:tab_bg     = {'gui': '#101010', 'cterm': '233'}
 let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
 
 " }}}
@@ -105,8 +106,8 @@ call s:HL('StatusLineTerm',  s:fg_darker,  s:bg,         'NONE')
 call s:HL('StatusLineTermNC',s:fg_dark,    s:bg,         'NONE')
 
 " Tabline
-call s:HL('TabLine',         s:fg_alt,     s:black,      'NONE')
-call s:HL('TabLineFill',     s:fg_dark,    s:black,      'NONE')
+call s:HL('TabLine',         s:fg_alt,     s:tab_bg,     'NONE')
+call s:HL('TabLineFill',     s:fg_dark,    s:tab_bg,     'NONE')
 call s:HL('TabLineSel',      s:fg_light,   s:bg,         '')
 
 " Vertical Split
@@ -149,8 +150,10 @@ call s:HL('DiffDelete',      s:red,        s:bg_alt,     '')
 call s:HL('DiffText',        s:cyan,       s:bg_alt2,    '')
 
 " Spelling
-call s:HL('SpellBad',        s:red,        s:none,       'underline')
-call s:HL('SpellCap',        s:yellow,     s:none,       'underline')
+call s:HL('SpellBad',        s:none,       s:none,       'underline')
+execute 'highlight SpellBad guisp=' . s:red.gui
+call s:HL('SpellCap',        s:none,       s:none,       'underline')
+execute 'highlight SpellCap guisp=' . s:yellow.gui
 call s:HL('SpellLocal',      s:orange,     s:none,       'underline')
 call s:HL('SpellRare',       s:cyan,       s:none,       'underline')
 
@@ -567,8 +570,10 @@ call s:HL('netrwTilde',          s:fg_dark,s:none,       '')
 call s:HL('netrwTmp',            s:fg_dark,s:none,       '')
 
 " ALE (Asynchronous Lint Engine)
-call s:HL('ALEError',            s:red,    s:none,       'underline')
-call s:HL('ALEWarning',          s:yellow, s:none,       'underline')
+call s:HL('ALEError',            s:none,   s:none,       'underline')
+execute 'highlight ALEError guisp=' . s:red.gui
+call s:HL('ALEWarning',          s:none,   s:none,       'underline')
+execute 'highlight ALEWarning guisp=' . s:yellow.gui
 call s:HL('ALEInfo',             s:cyan,   s:none,       'underline')
 call s:HL('ALEErrorSign',        s:red,    s:bg,         '')
 call s:HL('ALEWarningSign',      s:yellow, s:bg,         '')
@@ -781,8 +786,10 @@ if has('nvim-0.5')
   call s:HL('DiagnosticSignOk',    s:green,      s:bg,   '')
 
   " Diagnostic Underlines
-  call s:HL('DiagnosticUnderlineError', s:red,   s:none, 'underline')
-  call s:HL('DiagnosticUnderlineWarn',  s:yellow,s:none, 'underline')
+  call s:HL('DiagnosticUnderlineError', s:none,  s:none, 'underline')
+  execute 'highlight DiagnosticUnderlineError guisp=' . s:red.gui
+  call s:HL('DiagnosticUnderlineWarn',  s:none,  s:none, 'underline')
+  execute 'highlight DiagnosticUnderlineWarn guisp=' . s:yellow.gui
   call s:HL('DiagnosticUnderlineInfo',  s:cyan,  s:none, 'underline')
   call s:HL('DiagnosticUnderlineHint',  s:purple,s:none, 'underline')
   call s:HL('DiagnosticUnderlineOk',    s:green, s:none, 'underline')
