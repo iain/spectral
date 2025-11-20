@@ -1,6 +1,6 @@
 # Spectral
 
-A beautiful dark Vim colorscheme based on Monokai Pro Spectrum, designed for comfortable long coding sessions with vibrant, carefully balanced colors.
+A beautiful Vim colorscheme based on Monokai Pro, designed for comfortable long coding sessions with vibrant, carefully balanced colors. Available in both dark and light variants.
 
 ## Features
 
@@ -84,10 +84,16 @@ cp spectral.vim ~/.config/nvim/colors/
 
 ## Usage
 
-Add the following to your `.vimrc` or `init.vim`:
+Add one of the following to your `.vimrc` or `init.vim`:
 
+**For the dark variant:**
 ```vim
 colorscheme spectral
+```
+
+**For the light variant:**
+```vim
+colorscheme spectral-light
 ```
 
 ### Recommended Terminal Settings
@@ -112,8 +118,10 @@ set termguicolors
 
 ## Color Palette
 
-Spectral uses a carefully selected color palette based on Monokai Pro Spectrum:
+Spectral uses a carefully selected color palette based on Monokai Pro.
 
+### Dark Variant (Spectral)
+Based on Monokai Pro Spectrum:
 - Background: `#181818`
 - Foreground: `#fbf8ff`
 - Red: `#fc618d`
@@ -122,6 +130,17 @@ Spectral uses a carefully selected color palette based on Monokai Pro Spectrum:
 - Green: `#7bd88f`
 - Cyan: `#5ad4e6`
 - Purple: `#948ae3`
+
+### Light Variant (Spectral Light)
+Based on Monokai Pro Light:
+- Background: `#fafafa`
+- Foreground: `#373431`
+- Red: `#c33c67`
+- Orange: `#c36a2d`
+- Yellow: `#8c8a00`
+- Green: `#259338`
+- Cyan: `#0089a1`
+- Purple: `#6251b3`
 
 ## Screenshots
 
