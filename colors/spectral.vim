@@ -53,7 +53,7 @@ let s:purple     = {'gui': '#948ae3', 'cterm': '141'}
 
 " Special
 let s:black      = {'gui': '#000000', 'cterm': '16'}
-let s:tab_bg     = {'gui': '#101010', 'cterm': '233'}
+let s:tab_bg     = {'gui': '#000000', 'cterm': '16'}
 let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
 
 " }}}
@@ -411,6 +411,7 @@ call s:HL('rubySorbetExtend',          s:fg_dark,s:none, '')
 call s:HL('rubySorbetSig',             s:fg_dark,s:none, '')
 call s:HL('rubySorbetSigBlock',        s:fg_dark,s:none, '')
 call s:HL('rubySorbetKeywords',        s:fg_dark,s:none, '')
+call s:HL('rubySorbetSigContent',     s:fg_dark,s:none, '')
 call s:HL('rubySorbetTypes',           s:fg_dark,s:none, '')
 
 " Go

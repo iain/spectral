@@ -14,31 +14,16 @@ function! s:SetupSorbetSyntax()
   " Match 'extend T::Sig'
   syn match rubySorbetExtend "\<extend\s\+T::Sig\>"
 
-  " Match 'sig' keyword (both with blocks and do..end)
-  syn match rubySorbetSig "\<sig\>\s*{"me=e-1
-  syn match rubySorbetSig "\<sig\>\s*do"me=e-2
+  " Single-line sig blocks: mute the entire sig { ... } line
+  syn match rubySorbetSigBlock "^\s*sig\s*{[^}]*}"
 
-  " Match sig blocks
-  syn region rubySorbetSigBlock start="\<sig\>\s*{" end="}" contains=rubySorbetKeywords,rubySorbetTypes,rubySymbol,rubyString,rubyConstant,rubyBoolean,rubyInteger,rubyFloat,rubyInterpolation
-  syn region rubySorbetSigBlock start="\<sig\>\s*do" end="\<end\>" contains=rubySorbetKeywords,rubySorbetTypes,rubySymbol,rubyString,rubyConstant,rubyBoolean,rubyInteger,rubyFloat,rubyInterpolation
+  " Multi-line sig blocks: sig do ... end
+  " matchgroup ensures delimiters are highlighted as part of the block
+  syn region rubySorbetSigBlock matchgroup=rubySorbetSigBlock start="^\s*sig\s\+do\s*$" end="^\s*end\s*$"
 
-  " Sorbet method keywords
-  syn keyword rubySorbetKeywords params returns void abstract override type_parameters contained
-
-  " Sorbet type annotations (T::, T.)
+  " Sorbet type annotations outside sig blocks (T::, T.)
   syn match rubySorbetTypes "\<T::\w\+"
   syn match rubySorbetTypes "\<T\.\w\+"
-
-  " Additional Sorbet-specific patterns
-  syn match rubySorbetTypes "\<T\.nilable"
-  syn match rubySorbetTypes "\<T\.any"
-  syn match rubySorbetTypes "\<T\.all"
-  syn match rubySorbetTypes "\<T\.untyped"
-  syn match rubySorbetTypes "\<T\.noreturn"
-  syn match rubySorbetTypes "\<T\.self_type"
-  syn match rubySorbetTypes "\<T\.attached_class"
-  syn match rubySorbetTypes "\<T\.class_of"
-  syn match rubySorbetTypes "\<T\.enum"
 endfunction
 
 augroup SpectralSorbet

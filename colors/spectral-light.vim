@@ -411,6 +411,7 @@ call s:HL('rubySorbetExtend',          s:fg_dark,s:none, '')
 call s:HL('rubySorbetSig',             s:fg_dark,s:none, '')
 call s:HL('rubySorbetSigBlock',        s:fg_dark,s:none, '')
 call s:HL('rubySorbetKeywords',        s:fg_dark,s:none, '')
+call s:HL('rubySorbetSigContent',     s:fg_dark,s:none, '')
 call s:HL('rubySorbetTypes',           s:fg_dark,s:none, '')
 
 " Go
