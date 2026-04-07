@@ -17,16 +17,6 @@ endif
 set background=light
 let g:colors_name = 'spectral-light'
 
-" Check for 24-bit color support
-if has('termguicolors')
-  set termguicolors
-  if has('nvim')
-    let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-  endif
-endif
-
-" UI Characters
-set fillchars+=vert:│
 
 " }}}
 " Color Palette {{{
@@ -117,10 +107,6 @@ call s:HL('TabLineSel',      s:fg_light,   s:bg,         '')
 call s:HL('VertSplit',       s:bg_alt2,    s:bg,         'NONE')
 
 " Transparency overrides for terminal
-highlight Normal ctermbg=NONE
-highlight SignColumn ctermfg=9 ctermbg=NONE guibg=NONE
-highlight VertSplit ctermbg=NONE guibg=NONE
-
 " Visual Selection
 call s:HL('Visual',          s:none,       s:bg_alt2,    '')
 call s:HL('VisualNOS',       s:none,       s:bg_alt2,    '')
