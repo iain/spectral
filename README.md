@@ -1,163 +1,119 @@
 # Spectral
 
-A beautiful Vim colorscheme based on Monokai Pro, designed for comfortable long coding sessions with vibrant, carefully balanced colors. Available in both dark and light variants.
+A Vim/Neovim colorscheme based on Monokai Pro. Available in dark and light variants with true color (24-bit) and 256-color terminal support.
 
-## Features
+## Variants
 
-- **True color support** - Full 24-bit color support for modern terminals
-- **Comprehensive syntax highlighting** - Optimized for multiple languages including:
-  - JavaScript/TypeScript
-  - Python
-  - Ruby
-  - Go
-  - HTML/CSS
-  - Markdown
-  - JSON/YAML/TOML
-  - And many more
-- **Plugin integration** - Built-in support for popular plugins:
-  - GitGutter, Signify, fugitive
-  - NERDTree and netrw (built-in file browser)
-  - ALE, CoC
-  - fzf, CtrlP
-  - Telescope
-  - vim-which-key
-  - And more
-- **Treesitter and LSP support** - Native support for modern Neovim features
-- **Carefully crafted UI** - Thoughtfully designed interface elements for better readability
+- **Spectral** (dark) - Based on Monokai Pro Spectrum
+- **Spectral Light** - Based on Monokai Pro Light
 
 ## Installation
 
 ### vim-plug
 
-Add the following to your `.vimrc` or `init.vim`:
-
 ```vim
 Plug 'iain/spectral'
 ```
 
-Then run:
-
-```vim
-:PlugInstall
-```
-
-### Vundle
-
-Add the following to your `.vimrc`:
-
-```vim
-Plugin 'iain/spectral'
-```
-
-Then run:
-
-```vim
-:PluginInstall
-```
-
 ### Pathogen
-
-Run the following in your terminal:
 
 ```bash
 cd ~/.vim/bundle
 git clone https://github.com/iain/spectral.git
 ```
 
-### Manual Installation
+### Manual
 
-1. Download the `spectral.vim` file
-2. Create the colors directory if it doesn't exist:
-   ```bash
-   mkdir -p ~/.vim/colors
-   ```
-3. Copy the file to your colors directory:
-   ```bash
-   cp spectral.vim ~/.vim/colors/
-   ```
-
-For Neovim:
-```bash
-mkdir -p ~/.config/nvim/colors
-cp spectral.vim ~/.config/nvim/colors/
-```
+Copy the files from `colors/` to `~/.vim/colors/` (Vim) or `~/.config/nvim/colors/` (Neovim).
 
 ## Usage
 
-Add one of the following to your `.vimrc` or `init.vim`:
+Add to your `.vimrc` or `init.vim`:
 
-**For the dark variant:**
 ```vim
+set termguicolors
 colorscheme spectral
-```
-
-**For the light variant:**
-```vim
+" or
 colorscheme spectral-light
 ```
 
-### Recommended Terminal Settings
+## Features
 
-For the best experience, ensure your terminal supports 24-bit true colors and has the following settings enabled:
+### Language Support
 
-**For Vim:**
-```vim
-set termguicolors
-```
+Syntax highlighting for:
 
-**For Neovim:**
-```vim
-set termguicolors
-```
+- Ruby (including Sorbet type annotations)
+- Python
+- JavaScript / TypeScript
+- Go
+- HTML / CSS
+- Markdown (per-level heading colors, formatting, links, code blocks)
+- JSON / YAML / TOML
+- XML
+- Vim script
+
+### Plugin Support
+
+- GitGutter / Signify
+- fugitive
+- NERDTree
+- netrw
+- ALE
+- CoC
+- fzf / CtrlP
+- Telescope
+- Startify
+- vim-which-key
+
+### Neovim Support
+
+- Treesitter highlighting (Neovim 0.8+)
+- LSP diagnostics, references, code lens, inlay hints, and signature help (Neovim 0.5+)
+- LSP semantic tokens (Neovim 0.9+)
+- Floating windows, WinBar, WinSeparator
+
+### Ruby Sorbet
+
+Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendered in a muted color to visually separate type signatures from application code. This is handled by `plugin/sorbet.vim` which loads automatically for Ruby files.
+
+## Color Palette
+
+### Dark Variant
+
+| Color  | Hex       | Usage                              |
+|--------|-----------|------------------------------------|
+| Red    | `#fc618d` | Keywords, control flow             |
+| Orange | `#fd9353` | Parameters, special characters     |
+| Yellow | `#fce566` | Strings                            |
+| Green  | `#7bd88f` | Functions, methods                 |
+| Cyan   | `#5ad4e6` | Types, built-in functions          |
+| Purple | `#948ae3` | Constants, numbers, booleans       |
+
+Background: `#181818` / Foreground: `#fbf8ff`
+
+### Light Variant
+
+| Color  | Hex       | Usage                              |
+|--------|-----------|------------------------------------|
+| Red    | `#c33c67` | Keywords, control flow             |
+| Orange | `#c36a2d` | Parameters, special characters     |
+| Yellow | `#8c8a00` | Strings                            |
+| Green  | `#259338` | Functions, methods                 |
+| Cyan   | `#0089a1` | Types, built-in functions          |
+| Purple | `#6251b3` | Constants, numbers, booleans       |
+
+Background: `#fafafa` / Foreground: `#373431`
 
 ## Requirements
 
 - Vim 7.4+ or Neovim 0.5+
-- Terminal with true color support (recommended)
-- A font with good glyph coverage (optional, for plugin icons)
-
-## Color Palette
-
-Spectral uses a carefully selected color palette based on Monokai Pro.
-
-### Dark Variant (Spectral)
-Based on Monokai Pro Spectrum:
-- Background: `#181818`
-- Foreground: `#fbf8ff`
-- Red: `#fc618d`
-- Orange: `#fd9353`
-- Yellow: `#fce566`
-- Green: `#7bd88f`
-- Cyan: `#5ad4e6`
-- Purple: `#948ae3`
-
-### Light Variant (Spectral Light)
-Based on Monokai Pro Light:
-- Background: `#fafafa`
-- Foreground: `#373431`
-- Red: `#c33c67`
-- Orange: `#c36a2d`
-- Yellow: `#8c8a00`
-- Green: `#259338`
-- Cyan: `#0089a1`
-- Purple: `#6251b3`
-
-## Screenshots
-
-*Coming soon*
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-## License
-
-MIT License - See LICENSE file for details
+- True color terminal support (recommended)
 
 ## Credits
 
-Inspired by [Monokai Pro Spectrum](https://monokai.pro/) by Monokai.
+Based on [Monokai Pro](https://monokai.pro/) by Monokai.
 
----
+## License
 
-Made with care for developers who spend hours in their editor.
+MIT
