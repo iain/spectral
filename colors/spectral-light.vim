@@ -83,7 +83,7 @@ call s:HL('NormalNC',        s:fg_alt,     s:bg,         '')
 
 " Cursor
 call s:HL('Cursor',          s:bg,         s:fg,         '')
-call s:HL('CursorLine',      s:none,       s:bg_alt,     'NONE')
+call s:HL('CursorLine',      s:none,       s:bg_alt,     '')
 call s:HL('CursorLineNr',    s:fg_light,   s:bg_alt,     '')
 call s:HL('CursorColumn',    s:none,       s:bg_alt,     '')
 
@@ -93,18 +93,18 @@ call s:HL('SignColumn',      s:fg_dark,    s:bg,         '')
 call s:HL('FoldColumn',      s:fg_darker,  s:bg,         '')
 
 " Statusline
-call s:HL('StatusLine',      s:fg_darker,  s:bg,         'NONE')
-call s:HL('StatusLineNC',    s:fg_dark,    s:bg,         'NONE')
-call s:HL('StatusLineTerm',  s:fg_darker,  s:bg,         'NONE')
-call s:HL('StatusLineTermNC',s:fg_dark,    s:bg,         'NONE')
+call s:HL('StatusLine',      s:fg_darker,  s:bg,         '')
+call s:HL('StatusLineNC',    s:fg_dark,    s:bg,         '')
+call s:HL('StatusLineTerm',  s:fg_darker,  s:bg,         '')
+call s:HL('StatusLineTermNC',s:fg_dark,    s:bg,         '')
 
 " Tabline
-call s:HL('TabLine',         s:fg_alt,     s:tab_bg,     'NONE')
-call s:HL('TabLineFill',     s:fg_dark,    s:tab_bg,     'NONE')
+call s:HL('TabLine',         s:fg_alt,     s:tab_bg,     '')
+call s:HL('TabLineFill',     s:fg_dark,    s:tab_bg,     '')
 call s:HL('TabLineSel',      s:fg_light,   s:bg,         '')
 
 " Vertical Split
-call s:HL('VertSplit',       s:bg_alt2,    s:bg,         'NONE')
+call s:HL('VertSplit',       s:bg_alt2,    s:bg,         '')
 
 " Transparency overrides for terminal
 " Visual Selection
@@ -207,32 +207,32 @@ endif
 call s:HL('Comment',         s:fg_dark,    s:none,       'italic')
 call s:HL('Constant',        s:purple,     s:none,       '')
 call s:HL('String',          s:yellow,     s:none,       '')
-call s:HL('Character',       s:yellow,     s:none,       '')
-call s:HL('Number',          s:purple,     s:none,       '')
-call s:HL('Boolean',         s:purple,     s:none,       '')
-call s:HL('Float',           s:purple,     s:none,       '')
+hi link Character String
+hi link Number    Constant
+hi link Boolean   Constant
+hi link Float     Constant
 
 call s:HL('Identifier',      s:fg,         s:none,       '')
 call s:HL('Function',        s:green,      s:none,       '')
 
 call s:HL('Statement',       s:red,        s:none,       '')
-call s:HL('Conditional',     s:red,        s:none,       '')
-call s:HL('Repeat',          s:red,        s:none,       '')
-call s:HL('Label',           s:red,        s:none,       '')
-call s:HL('Operator',        s:red,        s:none,       '')
-call s:HL('Keyword',         s:red,        s:none,       '')
-call s:HL('Exception',       s:red,        s:none,       '')
+hi link Conditional Statement
+hi link Repeat      Statement
+hi link Label       Statement
+hi link Operator    Statement
+hi link Keyword     Statement
+hi link Exception   Statement
 
 call s:HL('PreProc',         s:red,        s:none,       '')
-call s:HL('Include',         s:red,        s:none,       '')
-call s:HL('Define',          s:red,        s:none,       '')
+hi link Include   PreProc
+hi link Define    PreProc
+hi link PreCondit PreProc
 call s:HL('Macro',           s:cyan,       s:none,       '')
-call s:HL('PreCondit',       s:red,        s:none,       '')
 
 call s:HL('Type',            s:cyan,       s:none,       '')
 call s:HL('StorageClass',    s:red,        s:none,       '')
-call s:HL('Structure',       s:cyan,       s:none,       '')
-call s:HL('Typedef',         s:cyan,       s:none,       '')
+hi link Structure Type
+hi link Typedef   Type
 
 call s:HL('Special',         s:cyan,       s:none,       '')
 call s:HL('SpecialChar',     s:orange,     s:none,       '')
@@ -325,35 +325,35 @@ call s:HL('pythonDottedName',    s:green,  s:none,       '')
 
 " Ruby
 " Keywords and Definitions
-call s:HL('rubyClass',                 s:red,    s:none, '')
-call s:HL('rubyModule',                s:red,    s:none, '')
-call s:HL('rubyDefine',                s:red,    s:none, '')
-call s:HL('rubyKeyword',               s:red,    s:none, '')
-call s:HL('rubyConditional',           s:red,    s:none, '')
-call s:HL('rubyConditionalModifier',   s:red,    s:none, '')
-call s:HL('rubyRepeat',                s:red,    s:none, '')
-call s:HL('rubyRepeatModifier',        s:red,    s:none, '')
-call s:HL('rubyControl',               s:red,    s:none, '')
-call s:HL('rubyBeginEnd',              s:red,    s:none, '')
-call s:HL('rubyInclude',               s:red,    s:none, '')
-call s:HL('rubyAccess',                s:red,    s:none, '')
-call s:HL('rubyOperator',              s:red,    s:none, '')
+hi link rubyClass               Statement
+hi link rubyModule              Statement
+hi link rubyDefine              Statement
+hi link rubyKeyword             Statement
+hi link rubyConditional         Statement
+hi link rubyConditionalModifier Statement
+hi link rubyRepeat              Statement
+hi link rubyRepeatModifier      Statement
+hi link rubyControl             Statement
+hi link rubyBeginEnd            Statement
+hi link rubyInclude             Statement
+hi link rubyAccess              Statement
+hi link rubyOperator            Statement
 
 " Exception Handling
-call s:HL('rubyException',             s:red,    s:none, '')
-call s:HL('rubyExceptionHandler',      s:red,    s:none, '')
-call s:HL('rubyRescueModifier',        s:red,    s:none, '')
+hi link rubyException           Statement
+hi link rubyExceptionHandler    Statement
+hi link rubyRescueModifier      Statement
 
 " Methods and Attributes
-call s:HL('rubyFunction',              s:green,  s:none, '')
-call s:HL('rubyMethodName',            s:green,  s:none, '')
-call s:HL('rubyAttribute',             s:cyan,   s:none, '')
-call s:HL('rubyMacro',                 s:cyan,   s:none, '')
-call s:HL('rubyEval',                  s:red,    s:none, '')
+hi link rubyFunction            Function
+hi link rubyMethodName          Function
+hi link rubyAttribute           Type
+hi link rubyMacro               Type
+hi link rubyEval                Statement
 
 " Constants and Types
-call s:HL('rubyConstant',              s:cyan,   s:none, '')
-call s:HL('rubyPredefinedConstant',    s:purple, s:none, '')
+hi link rubyConstant            Type
+hi link rubyPredefinedConstant  Constant
 
 " Variables
 call s:HL('rubyBlockParameter',        s:orange, s:none, '')
@@ -362,17 +362,17 @@ call s:HL('rubyGlobalVariable',        s:orange, s:none, '')
 call s:HL('rubyPredefinedVariable',    s:orange, s:none, '')
 call s:HL('rubyInstanceVariable',      s:orange, s:none, '')
 call s:HL('rubyClassVariable',         s:orange, s:none, '')
-call s:HL('rubyPseudoVariable',        s:purple, s:none, '')
+hi link rubyPseudoVariable      Constant
 
 " Literals
-call s:HL('rubyBoolean',               s:purple, s:none, '')
-call s:HL('rubyInteger',               s:purple, s:none, '')
-call s:HL('rubyFloat',                 s:purple, s:none, '')
-call s:HL('rubySymbol',                s:purple, s:none, '')
+hi link rubyBoolean             Constant
+hi link rubyInteger             Constant
+hi link rubyFloat               Constant
+hi link rubySymbol              Constant
 
 " Strings
-call s:HL('rubyString',                s:yellow, s:none, '')
-call s:HL('rubyStringDelimiter',       s:yellow, s:none, '')
+hi link rubyString              String
+hi link rubyStringDelimiter     String
 call s:HL('rubyStringEscape',          s:orange, s:none, '')
 call s:HL('rubyEscape',                s:orange, s:none, '')
 call s:HL('rubyInterpolation',         s:cyan,   s:none, '')
