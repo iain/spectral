@@ -1,5 +1,5 @@
 " ===============================================================
-" Spectral Amber
+" Spectral Dark
 " Amber CRT phosphor on OLED black, with cool accents for balance.
 " Maintainer:   iain
 " License:      MIT
@@ -11,7 +11,7 @@ if exists('syntax_on')
 endif
 
 set background=dark
-let g:colors_name = 'spectral-amber'
+let g:colors_name = 'spectral-dark'
 
 let s:amber = {'gui': '#FFB000', 'cterm': '214'}
 

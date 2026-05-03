@@ -1,0 +1,31 @@
+# Spectral Dark — neutral dark with amber signature
+# Mirrors colors/spectral-dark.vim
+
+background = 181818
+foreground = D8D4CC
+
+cursor-color = FFB000
+cursor-text = 181818
+
+selection-background = 3D3D3D
+selection-foreground = D8D4CC
+
+# ANSI palette
+palette = 0=#262626
+palette = 1=#FF3B30
+palette = 2=#B5E853
+palette = 3=#FFD60A
+palette = 4=#4A9EFF
+palette = 5=#C678DD
+palette = 6=#30D5C8
+palette = 7=#D8D4CC
+
+# Bright
+palette = 8=#5C5C5C
+palette = 9=#FF6B5A
+palette = 10=#C5F873
+palette = 11=#FFE63A
+palette = 12=#6AB4FF
+palette = 13=#D698FD
+palette = 14=#50E5D8
+palette = 15=#FFFFFF

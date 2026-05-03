@@ -1,11 +1,13 @@
 # Spectral
 
-A Vim/Neovim colorscheme based on Monokai Pro. Available in dark and light variants with true color (24-bit) and 256-color terminal support.
+A warm, high-contrast colorscheme for Vim and Neovim with an amber-CRT signature. Available in dark and light variants with true color (24-bit) and 256-color terminal support.
 
 ## Variants
 
-- **Spectral** (dark) - Based on Monokai Pro Spectrum
-- **Spectral Light** - Based on Monokai Pro Light
+- **Spectral Dark** — amber phosphor on OLED black, with cool accents for balance
+- **Spectral Light** — warm cream paper with the same amber signature
+
+`:colorscheme spectral` picks the variant matching `&background`, so toggling between dark and light is just `set background=light \| colorscheme spectral` (or `dark`).
 
 ## Installation
 
@@ -32,8 +34,9 @@ Add to your `.vimrc` or `init.vim`:
 
 ```vim
 set termguicolors
-colorscheme spectral
-" or
+colorscheme spectral        " auto-picks dark or light from &background
+" or force a variant explicitly:
+colorscheme spectral-dark
 colorscheme spectral-light
 ```
 
@@ -79,40 +82,45 @@ Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendere
 
 ## Color Palette
 
-### Dark Variant
+### Spectral (dark)
 
-| Color  | Hex       | Usage                              |
-|--------|-----------|------------------------------------|
-| Red    | `#fc618d` | Keywords, control flow             |
-| Orange | `#fd9353` | Parameters, special characters     |
-| Yellow | `#fce566` | Strings                            |
-| Green  | `#7bd88f` | Functions, methods                 |
-| Cyan   | `#5ad4e6` | Types, built-in functions          |
-| Purple | `#948ae3` | Constants, numbers, booleans       |
+| Color             | Hex       | Usage                              |
+|-------------------|-----------|------------------------------------|
+| Amber (signature) | `#FFB000` | Directories, Ruby symbols          |
+| Red               | `#FF3B30` | Keywords, control flow             |
+| Orange            | `#FF7A1C` | Parameters, special characters     |
+| Yellow            | `#FFD60A` | Strings                            |
+| Green             | `#B5E853` | Functions, methods                 |
+| Cyan              | `#30D5C8` | Types, built-in functions          |
+| Purple            | `#C678DD` | Constants, numbers, booleans       |
 
-Background: `#181818` / Foreground: `#fbf8ff`
+Background: `#181818` / Foreground: `#D8D4CC`
 
-### Light Variant
+### Spectral Light
 
-| Color  | Hex       | Usage                              |
-|--------|-----------|------------------------------------|
-| Red    | `#c33c67` | Keywords, control flow             |
-| Orange | `#c36a2d` | Parameters, special characters     |
-| Yellow | `#8c8a00` | Strings                            |
-| Green  | `#259338` | Functions, methods                 |
-| Cyan   | `#0089a1` | Types, built-in functions          |
-| Purple | `#6251b3` | Constants, numbers, booleans       |
+| Color             | Hex       | Usage                              |
+|-------------------|-----------|------------------------------------|
+| Amber (signature) | `#A35F00` | Directories, Ruby symbols          |
+| Red               | `#C42828` | Keywords, control flow             |
+| Orange            | `#B45418` | Parameters, special characters     |
+| Yellow            | `#7D6700` | Strings                            |
+| Green             | `#1F6B25` | Functions, methods                 |
+| Cyan              | `#006978` | Types, built-in functions          |
+| Purple            | `#6A3DAA` | Constants, numbers, booleans       |
 
-Background: `#fafafa` / Foreground: `#373431`
+Background: `#FAF6EC` / Foreground: `#2A241B`
+
+## Terminal config
+
+Matching terminal themes are included:
+
+- **Ghostty** — `ghostty/spectral-dark`. Copy or symlink it into Ghostty's themes directory and reference it from your config.
+- **iTerm2** — `iterm2/Spectral Dark.itermcolors` and `iterm2/Spectral Light.itermcolors`. Import via Settings → Profiles → Colors → Color Presets → Import. To apply both variants to a profile so iTerm2's automatic dark/light switching works, run `iterm2/sync.py <path-to-com.googlecode.iterm2.plist> [profile-name]` (default profile name is `Default`); the script writes the dark preset to the unsuffixed and `(Dark)` color keys and the light preset to the `(Light)` keys.
 
 ## Requirements
 
 - Vim 7.4+ or Neovim 0.5+
 - True color terminal support (recommended)
-
-## Credits
-
-Based on [Monokai Pro](https://monokai.pro/) by Monokai.
 
 ## License
 
