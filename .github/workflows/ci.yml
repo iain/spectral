@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  generated-files-up-to-date:
+    name: Generated files match palette spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regenerate from tools/palette.py
+        run: python3 tools/palette.py
+      - name: Fail if any generated file drifted
+        run: |
+          if ! git diff --exit-code; then
+            echo "::error::Generated files are out of sync with tools/palette.py."
+            echo "Run 'python3 tools/palette.py' locally and commit the result."
+            exit 1
+          fi
