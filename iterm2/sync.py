@@ -7,6 +7,10 @@ preset in the UI just copies the colors into the profile dict. This script
 does the same thing from the command line so the .itermcolors files in this
 repo can be the source of truth for a dotfiles-managed plist.
 
+It also registers both presets under the top-level `Custom Color Presets`
+key so they appear in Settings → Profiles → Colors → Color Presets, which
+makes the GUI agree with whatever the profile actually has.
+
 Usage:
     iterm2/sync.py <path-to-com.googlecode.iterm2.plist> [profile-name]
 
@@ -22,8 +26,10 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DARK_PRESET  = HERE / "Spectral Dark.itermcolors"
-LIGHT_PRESET = HERE / "Spectral Light.itermcolors"
+PRESETS = {
+    "Spectral Dark":  HERE / "Spectral Dark.itermcolors",
+    "Spectral Light": HERE / "Spectral Light.itermcolors",
+}
 
 
 def load_preset(path: Path) -> dict:
@@ -38,12 +44,18 @@ def find_profile(plist: dict, name: str) -> dict:
     raise SystemExit(f"profile {name!r} not found")
 
 
-def apply(profile: dict, dark: dict, light: dict) -> None:
+def apply_to_profile(profile: dict, dark: dict, light: dict) -> None:
     for key, value in dark.items():
         profile[key] = value
         profile[f"{key} (Dark)"] = value
     for key, value in light.items():
         profile[f"{key} (Light)"] = value
+
+
+def register_presets(plist: dict, presets: dict[str, dict]) -> None:
+    library = plist.setdefault("Custom Color Presets", {})
+    for name, preset in presets.items():
+        library[name] = preset
 
 
 def main(argv: list[str]) -> int:
@@ -56,13 +68,16 @@ def main(argv: list[str]) -> int:
     with target.open("rb") as f:
         plist = plistlib.load(f)
 
+    presets = {name: load_preset(path) for name, path in PRESETS.items()}
+    register_presets(plist, presets)
+
     profile = find_profile(plist, profile_name)
-    apply(profile, load_preset(DARK_PRESET), load_preset(LIGHT_PRESET))
+    apply_to_profile(profile, presets["Spectral Dark"], presets["Spectral Light"])
 
     with target.open("wb") as f:
         plistlib.dump(plist, f)
 
-    print(f"updated {profile_name!r} in {target}")
+    print(f"registered presets {list(presets)} and updated profile {profile_name!r}")
     return 0
 
 

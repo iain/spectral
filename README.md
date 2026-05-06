@@ -80,35 +80,39 @@ Syntax highlighting for:
 
 Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendered in a muted color to visually separate type signatures from application code. This is handled by `plugin/sorbet.vim` which loads automatically for Ruby files.
 
+## Editing the palette
+
+The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, and the two `iterm2/*.itermcolors` presets in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/` and `ghostty/` files are generated; do not hand-edit them.
+
 ## Color Palette
 
-### Spectral (dark)
+### Spectral Dark
 
 | Color             | Hex       | Usage                              |
 |-------------------|-----------|------------------------------------|
-| Amber (signature) | `#FFB000` | Directories, Ruby symbols          |
-| Red               | `#FF3B30` | Keywords, control flow             |
-| Orange            | `#FF7A1C` | Parameters, special characters     |
-| Yellow            | `#FFD60A` | Strings                            |
-| Green             | `#B5E853` | Functions, methods                 |
-| Cyan              | `#30D5C8` | Types, built-in functions          |
-| Purple            | `#C678DD` | Constants, numbers, booleans       |
+| Amber (signature) | `#F9AD26` | Directories, Ruby symbols          |
+| Red               | `#FF544C` | Keywords, control flow             |
+| Orange            | `#FF8432` | Parameters, special characters     |
+| Yellow            | `#F8D700` | Strings                            |
+| Green             | `#8DEF46` | Functions, methods                 |
+| Cyan              | `#2AD7D7` | Types, built-in functions          |
+| Purple            | `#CC77DF` | Constants, numbers, booleans       |
 
-Background: `#181818` / Foreground: `#D8D4CC`
+Background: `#1B1810` / Foreground: `#DCD0B5`
 
 ### Spectral Light
 
 | Color             | Hex       | Usage                              |
 |-------------------|-----------|------------------------------------|
-| Amber (signature) | `#A35F00` | Directories, Ruby symbols          |
-| Red               | `#C42828` | Keywords, control flow             |
-| Orange            | `#B45418` | Parameters, special characters     |
-| Yellow            | `#7D6700` | Strings                            |
-| Green             | `#1F6B25` | Functions, methods                 |
-| Cyan              | `#006978` | Types, built-in functions          |
-| Purple            | `#6A3DAA` | Constants, numbers, booleans       |
+| Amber (signature) | `#9D6300` | Directories, Ruby symbols          |
+| Red               | `#AC1A1C` | Keywords, control flow             |
+| Orange            | `#9C4700` | Parameters, special characters     |
+| Yellow            | `#906B00` | Strings                            |
+| Green             | `#357426` | Functions, methods                 |
+| Cyan              | `#00707E` | Types, built-in functions          |
+| Purple            | `#65389F` | Constants, numbers, booleans       |
 
-Background: `#FAF6EC` / Foreground: `#2A241B`
+Background: `#FEF4DF` / Foreground: `#2B2313`
 
 ## Terminal config
 
