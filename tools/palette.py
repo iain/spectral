@@ -38,12 +38,12 @@ NEUTRAL_HUE = 85.0
 
 PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
     "dark": {
-        # Backgrounds — warm dark. Chroma is set high enough to read as
-        # "warm gray" in a bare terminal context, where there's no syntax
-        # color to reinforce the tint by association.
-        "bg":        (0.21, 0.015, NEUTRAL_HUE),
-        "bg_alt":    (0.27, 0.018, NEUTRAL_HUE),
-        "bg_alt2":   (0.36, 0.022, NEUTRAL_HUE),
+        # Backgrounds — warm dark. Chroma stays low: real amber CRTs have
+        # near-black off-pixels, the warmth comes from the lit phosphor, not
+        # the field. Just enough tint to keep the neutrals from reading cool.
+        "bg":        (0.21, 0.006, NEUTRAL_HUE),
+        "bg_alt":    (0.27, 0.008, NEUTRAL_HUE),
+        "bg_alt2":   (0.36, 0.012, NEUTRAL_HUE),
         # Foregrounds
         "fg_dark":   (0.46, 0.022, NEUTRAL_HUE),
         "fg_darker": (0.56, 0.026, NEUTRAL_HUE),
@@ -63,7 +63,7 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
         # Constants
         "white":     (1.00, 0.00, 0),
         "black":     (0.00, 0.00, 0),
-        "tab_bg":    (0.12, 0.012, NEUTRAL_HUE),
+        "tab_bg":    (0.12, 0.005, NEUTRAL_HUE),
         # Signature — overrides Directory/netrwDir/rubySymbol
         "amber":     (0.80, 0.16, 75),
     },

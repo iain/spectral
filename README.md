@@ -100,7 +100,7 @@ Each variant is defined in OKLCH (L = lightness 0–1, C = chroma, H = hue in de
 | Cyan              | `0.80 / 0.13 / 195°` | `#2AD7D7` | Types, built-in functions          |
 | Purple            | `0.70 / 0.17 / 320°` | `#CC77DF` | Constants, numbers, booleans       |
 
-Background: `0.21 / 0.015 / 85°` → `#1B1810` / Foreground: `0.86 / 0.038 / 85°` → `#DCD0B5`
+Background: `0.21 / 0.006 / 85°` → `#1A1815` / Foreground: `0.86 / 0.038 / 85°` → `#DCD0B5`
 
 ### Spectral Light
 

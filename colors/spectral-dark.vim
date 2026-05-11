@@ -17,9 +17,9 @@ let g:colors_name = 'spectral-dark'
 let s:amber = {'gui': '#F9AD26', 'cterm': '214'}
 
 call spectral#apply({
-  \ 'bg':        {'gui': '#1B1810', 'cterm': '233'},
-  \ 'bg_alt':    {'gui': '#2A261C', 'cterm': '235'},
-  \ 'bg_alt2':   {'gui': '#423C30', 'cterm': '237'},
+  \ 'bg':        {'gui': '#1A1815', 'cterm': '234'},
+  \ 'bg_alt':    {'gui': '#282622', 'cterm': '235'},
+  \ 'bg_alt2':   {'gui': '#403D36', 'cterm': '237'},
   \ 'fg_dark':   {'gui': '#5E574A', 'cterm': '240'},
   \ 'fg_darker': {'gui': '#7B7463', 'cterm': '242'},
   \ 'fg_alt':    {'gui': '#A19784', 'cterm': '138'},
@@ -33,7 +33,7 @@ call spectral#apply({
   \ 'cyan':      {'gui': '#2AD7D7', 'cterm': '44'},
   \ 'purple':    {'gui': '#CC77DF', 'cterm': '176'},
   \ 'black':     {'gui': '#000000', 'cterm': '16'},
-  \ 'tab_bg':    {'gui': '#070502', 'cterm': '232'},
+  \ 'tab_bg':    {'gui': '#060604', 'cterm': '232'},
   \ })
 
 " Amber accents: anchor the palette on a few high-frequency elements so
