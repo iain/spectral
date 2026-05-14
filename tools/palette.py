@@ -12,6 +12,8 @@ downstream file:
   ghostty/spectral-light
   iterm2/Spectral Dark.itermcolors
   iterm2/Spectral Light.itermcolors
+  mattermost/spectral-dark.json
+  mattermost/spectral-light.json
 
 After regenerating, run iterm2/sync.py to push the iTerm2 presets to a
 target plist.
@@ -26,6 +28,7 @@ OKLCH triples are (L, C, H):
 """
 from __future__ import annotations
 
+import json
 import math
 import plistlib
 from pathlib import Path
@@ -358,6 +361,86 @@ def emit_itermcolors(variant: str, palette: dict, palette_oklch: dict) -> dict:
 
 
 # --------------------------------------------------------------------------
+# Mattermost custom theme emitter
+# --------------------------------------------------------------------------
+
+# Map Mattermost theme keys to palette slots. Order matches Mattermost's
+# documented theme element order so the generated JSON is legible top-to-bottom.
+MATTERMOST_KEYS: dict[str, dict[str, str]] = {
+    "dark": {
+        "sidebarBg":               "tab_bg",
+        "sidebarText":             "fg_alt",
+        "sidebarUnreadText":       "fg_light",
+        "sidebarTextHoverBg":      "bg_alt",
+        "sidebarTextActiveBorder": "amber",
+        "sidebarTextActiveColor":  "fg_light",
+        "sidebarHeaderBg":         "tab_bg",
+        "sidebarHeaderTextColor":  "amber",
+        "sidebarTeamBarBg":        "tab_bg",
+        "onlineIndicator":         "green",
+        "awayIndicator":           "yellow",
+        "dndIndicator":            "red",
+        "mentionBg":               "amber",
+        "mentionColor":            "bg",
+        "centerChannelBg":         "bg",
+        "centerChannelColor":      "fg",
+        "newMessageSeparator":     "red",
+        "errorTextColor":          "red",
+        "mentionHighlightLink":    "cyan",
+        "linkColor":               "cyan",
+        "buttonBg":                "amber",
+        "buttonColor":             "bg",
+    },
+    "light": {
+        "sidebarBg":               "bg_alt2",
+        "sidebarText":             "fg_alt",
+        "sidebarUnreadText":       "fg_light",
+        "sidebarTextHoverBg":      "bg_alt",
+        "sidebarTextActiveBorder": "amber",
+        "sidebarTextActiveColor":  "fg_light",
+        "sidebarHeaderBg":         "bg_alt2",
+        "sidebarHeaderTextColor":  "amber",
+        "sidebarTeamBarBg":        "bg_alt2",
+        "onlineIndicator":         "green",
+        "awayIndicator":           "yellow",
+        "dndIndicator":            "red",
+        "mentionBg":               "amber",
+        "mentionColor":            "bg",
+        "centerChannelBg":         "bg",
+        "centerChannelColor":      "fg",
+        "newMessageSeparator":     "red",
+        "errorTextColor":          "red",
+        "mentionHighlightLink":    "cyan",
+        "linkColor":               "cyan",
+        "buttonBg":                "amber",
+        "buttonColor":             "bg",
+    },
+}
+
+MATTERMOST_CODE_THEME = {"dark": "monokai", "light": "github"}
+
+
+def _mix(a: tuple[int, int, int], b: tuple[int, int, int], t: float) -> tuple[int, int, int]:
+    """Linear mix in sRGB. t=0 returns a, t=1 returns b."""
+    return tuple(round(a[i] * (1 - t) + b[i] * t) for i in range(3))  # type: ignore[return-value]
+
+
+def emit_mattermost(variant: str, palette: dict) -> str:
+    # mentionHighlightBg is a faint amber wash over the channel background —
+    # subtle enough that quoted/highlighted text stays readable.
+    highlight_rgb = _mix(palette["bg"]["rgb"], palette["amber"]["rgb"], 0.28)
+    highlight_hex = f"#{highlight_rgb[0]:02X}{highlight_rgb[1]:02X}{highlight_rgb[2]:02X}"
+
+    out: dict[str, str] = {"type": "custom"}
+    for key, slot in MATTERMOST_KEYS[variant].items():
+        out[key] = f"#{palette[slot]['gui']}"
+        if key == "errorTextColor":
+            out["mentionHighlightBg"] = highlight_hex
+    out["codeTheme"] = MATTERMOST_CODE_THEME[variant]
+    return json.dumps(out, indent=2) + "\n"
+
+
+# --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
 
@@ -377,6 +460,9 @@ def main() -> None:
         # iTerm2
         with (REPO / "iterm2" / f"{ITERM_NAMES[variant]}.itermcolors").open("wb") as f:
             plistlib.dump(emit_itermcolors(variant, palette, spec), f)
+
+        # Mattermost
+        (REPO / "mattermost" / f"spectral-{variant}.json").write_text(emit_mattermost(variant, palette))
 
         print(f"wrote {variant} variant")
 

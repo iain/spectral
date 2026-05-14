@@ -82,7 +82,7 @@ Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendere
 
 ## Editing the palette
 
-The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, and the two `iterm2/*.itermcolors` presets in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/` and `ghostty/` files are generated; do not hand-edit them.
+The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, and the two `mattermost/spectral-*.json` files in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, and `mattermost/` files are generated; do not hand-edit them.
 
 ## Color Palette
 
@@ -122,6 +122,10 @@ Matching terminal themes are included:
 
 - **Ghostty** — `ghostty/spectral-dark` and `ghostty/spectral-light`. Run `ghostty/install.sh` to symlink them into `${XDG_CONFIG_HOME:-~/.config}/ghostty/themes/`; your config can then reference them by name, e.g. `theme = dark:spectral-dark,light:spectral-light`. Pass `--force` to replace existing files at the destination.
 - **iTerm2** — `iterm2/Spectral Dark.itermcolors` and `iterm2/Spectral Light.itermcolors`. Import via Settings → Profiles → Colors → Color Presets → Import. To apply both variants to a profile so iTerm2's automatic dark/light switching works, run `iterm2/sync.py <path-to-com.googlecode.iterm2.plist> [profile-name]` (default profile name is `Default`); the script writes the dark preset to the unsuffixed and `(Dark)` color keys and the light preset to the `(Light)` keys.
+
+## Mattermost
+
+`mattermost/spectral-dark.json` and `mattermost/spectral-light.json` are custom themes for Mattermost. Open Settings → Display → Theme → Custom Theme, expand "Copy/Paste Theme Colors", and paste the contents of the desired file. The amber signature anchors mentions, buttons, and the active-channel border; the team rail is the darkest neutral so the leftmost column reads as an anchor.
 
 ## Requirements
 
