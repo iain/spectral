@@ -120,7 +120,7 @@ Background: `0.97 / 0.030 / 85°` → `#FEF4DF` / Foreground: `0.26 / 0.030 / 85
 
 Matching terminal themes are included:
 
-- **Ghostty** — `ghostty/spectral-dark`. Copy or symlink it into Ghostty's themes directory and reference it from your config.
+- **Ghostty** — `ghostty/spectral-dark` and `ghostty/spectral-light`. Run `ghostty/install.sh` to symlink them into `${XDG_CONFIG_HOME:-~/.config}/ghostty/themes/`; your config can then reference them by name, e.g. `theme = dark:spectral-dark,light:spectral-light`. Pass `--force` to replace existing files at the destination.
 - **iTerm2** — `iterm2/Spectral Dark.itermcolors` and `iterm2/Spectral Light.itermcolors`. Import via Settings → Profiles → Colors → Color Presets → Import. To apply both variants to a profile so iTerm2's automatic dark/light switching works, run `iterm2/sync.py <path-to-com.googlecode.iterm2.plist> [profile-name]` (default profile name is `Default`); the script writes the dark preset to the unsuffixed and `(Dark)` color keys and the light preset to the `(Light)` keys.
 
 ## Requirements
