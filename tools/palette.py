@@ -249,6 +249,87 @@ def emit_vim(variant: str, palette: dict) -> str:
 
 
 # --------------------------------------------------------------------------
+# lightline.vim emitter
+# --------------------------------------------------------------------------
+
+# Statusline palette, mapped to colorscheme slots. Each cell is [fg, bg];
+# lightline#colorscheme#flatten() merges the [gui, cterm] primitives into the
+# [guifg, guibg, ctermfg, ctermbg] form lightline expects. The mode block (the
+# first cell of every *.left) carries the signature accent — amber in normal,
+# the conventional green/red/purple for insert/replace/visual. Subkeys mirror
+# the set lightline's bundled themes define; missing modes fall back to normal.
+LIGHTLINE_SECTIONS: list[tuple[str, str, list[list[str]]]] = [
+    ("normal",   "left",    [["bg", "amber"], ["fg_light", "bg_alt2"]]),
+    ("normal",   "right",   [["fg_light", "bg_alt2"], ["fg_alt", "bg_alt"]]),
+    ("normal",   "middle",  [["fg_darker", "bg_alt"]]),
+    ("normal",   "error",   [["bg", "red"]]),
+    ("normal",   "warning", [["bg", "yellow"]]),
+    ("inactive", "left",    [["fg_dark", "bg_alt"], ["fg_dark", "bg"]]),
+    ("inactive", "right",   [["fg_dark", "bg_alt"], ["fg_dark", "bg"]]),
+    ("inactive", "middle",  [["fg_dark", "bg"]]),
+    ("insert",   "left",    [["bg", "green"], ["fg_light", "bg_alt2"]]),
+    ("replace",  "left",    [["bg", "red"], ["fg_light", "bg_alt2"]]),
+    ("visual",   "left",    [["bg", "purple"], ["fg_light", "bg_alt2"]]),
+    ("tabline",  "left",    [["fg_alt", "tab_bg"]]),
+    ("tabline",  "tabsel",  [["fg_light", "bg"]]),
+    ("tabline",  "middle",  [["fg_dark", "tab_bg"]]),
+    ("tabline",  "right",   [["fg_alt", "tab_bg"]]),
+]
+
+
+def emit_lightline(palettes: dict[str, dict]) -> str:
+    # Slots referenced by the sections, in first-seen order.
+    slots: list[str] = []
+    for _, _, cells in LIGHTLINE_SECTIONS:
+        for cell in cells:
+            for slot in cell:
+                if slot not in slots:
+                    slots.append(slot)
+
+    def primitives(variant: str) -> list[str]:
+        return [
+            f"  let s:{slot} = ['#{palettes[variant][slot]['gui']}', "
+            f"{palettes[variant][slot]['cterm']}]"
+            for slot in slots
+        ]
+
+    lines = [
+        '" ===============================================================',
+        '" Spectral — lightline.vim theme',
+        '" Statusline palette matching the editor colorscheme. Branches on',
+        '" &background, so `let g:lightline.colorscheme = \'spectral\'` tracks',
+        '" whichever variant is active.',
+        '" Maintainer:   iain',
+        '" License:      MIT',
+        '" GENERATED FILE — edit tools/palette.py and regenerate.',
+        '" ===============================================================',
+        '',
+        "let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, "
+        "'replace': {}, 'visual': {}, 'tabline': {}}",
+        '',
+        "if &background ==# 'light'",
+        *primitives("light"),
+        'else',
+        *primitives("dark"),
+        'endif',
+        '',
+    ]
+    for mode, sub, cells in LIGHTLINE_SECTIONS:
+        rendered = ", ".join(
+            "[" + ", ".join(f"s:{slot}" for slot in cell) + "]" for cell in cells
+        )
+        lines.append(f"let s:p.{mode}.{sub} = [ {rendered} ]")
+    lines.append('')
+    lines.append(
+        "let g:lightline#colorscheme#spectral#palette = "
+        "lightline#colorscheme#flatten(s:p)"
+    )
+    lines.append('')
+    lines.append('" vim: set sw=2 ts=2 sts=2 et tw=80 ft=vim:')
+    return "\n".join(lines) + "\n"
+
+
+# --------------------------------------------------------------------------
 # Ghostty emitter
 # --------------------------------------------------------------------------
 
@@ -448,8 +529,10 @@ ITERM_NAMES = {"dark": "Spectral Dark", "light": "Spectral Light"}
 
 
 def main() -> None:
+    resolved: dict[str, dict] = {}
     for variant, spec in PALETTES.items():
         palette = resolve(spec)
+        resolved[variant] = palette
 
         # Vim
         (REPO / "colors" / f"spectral-{variant}.vim").write_text(emit_vim(variant, palette))
@@ -465,6 +548,12 @@ def main() -> None:
         (REPO / "mattermost" / f"spectral-{variant}.json").write_text(emit_mattermost(variant, palette))
 
         print(f"wrote {variant} variant")
+
+    # lightline — one theme that branches on &background across both variants.
+    lightline = REPO / "autoload" / "lightline" / "colorscheme" / "spectral.vim"
+    lightline.parent.mkdir(parents=True, exist_ok=True)
+    lightline.write_text(emit_lightline(resolved))
+    print("wrote lightline theme")
 
 
 if __name__ == "__main__":

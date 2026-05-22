@@ -69,6 +69,16 @@ Syntax highlighting for:
 - Startify
 - vim-which-key
 
+### Statusline (lightline.vim)
+
+Spectral ships a matching [lightline.vim](https://github.com/itchyny/lightline.vim) theme. Once spectral is on your runtimepath, point lightline at it:
+
+```vim
+let g:lightline = { 'colorscheme': 'spectral' }
+```
+
+The theme branches on `&background`, so it follows the editor variant — toggling `set background=light` (or `dark`) keeps the statusline in step after lightline reloads.
+
 ### Neovim Support
 
 - Treesitter highlighting (Neovim 0.8+)
@@ -82,7 +92,7 @@ Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendere
 
 ## Editing the palette
 
-The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, and the two `mattermost/spectral-*.json` files in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, and `mattermost/` files are generated; do not hand-edit them.
+The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, and `autoload/lightline/` files are generated; do not hand-edit them.
 
 ## Color Palette
 
