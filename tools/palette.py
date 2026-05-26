@@ -71,7 +71,7 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
         "amber":     (0.80, 0.16, 75),
     },
     "light": {
-        "bg":        (0.97, 0.030, NEUTRAL_HUE),
+        "bg":        (0.985, 0.020, NEUTRAL_HUE),
         "bg_alt":    (0.94, 0.035, NEUTRAL_HUE),
         "bg_alt2":   (0.89, 0.040, NEUTRAL_HUE),
         "fg_dark":   (0.50, 0.040, NEUTRAL_HUE),
@@ -82,7 +82,7 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
         # Accents — equi-L band ~0.48 for legible contrast on cream paper.
         "red":       (0.48, 0.18, 27),
         "orange":    (0.50, 0.15, 50),
-        "yellow":    (0.55, 0.13, 85),
+        "yellow":    (0.65, 0.15, 95),
         "green":     (0.50, 0.13, 140),
         "cyan":      (0.50, 0.10, 210),
         "blue":      (0.42, 0.15, 255),

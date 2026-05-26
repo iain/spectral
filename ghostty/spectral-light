@@ -1,10 +1,10 @@
 # Spectral Light — generated from tools/palette.py
 
-background = FEF4DF
+background = FFFAEE
 foreground = 2B2313
 
 cursor-color = 9D6300
-cursor-text = FEF4DF
+cursor-text = FFFAEE
 
 selection-background = E7D9BD
 selection-foreground = 2B2313
@@ -13,7 +13,7 @@ selection-foreground = 2B2313
 palette = 0=#463C28
 palette = 1=#AC1A1C
 palette = 2=#357426
-palette = 3=#906B00
+palette = 3=#A98D00
 palette = 4=#004B96
 palette = 5=#65389F
 palette = 6=#00707E
@@ -23,7 +23,7 @@ palette = 7=#E7D9BD
 palette = 8=#6E6249
 palette = 9=#810009
 palette = 10=#165700
-palette = 11=#6D5000
+palette = 11=#867000
 palette = 12=#003167
 palette = 13=#4A177F
 palette = 14=#00515C

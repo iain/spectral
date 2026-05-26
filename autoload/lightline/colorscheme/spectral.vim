@@ -11,7 +11,7 @@
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 
 if &background ==# 'light'
-  let s:bg = ['#FEF4DF', 230]
+  let s:bg = ['#FFFAEE', 231]
   let s:amber = ['#9D6300', 130]
   let s:fg_light = ['#171105', 233]
   let s:bg_alt2 = ['#E7D9BD', 187]
@@ -19,7 +19,7 @@ if &background ==# 'light'
   let s:bg_alt = ['#F6EAD1', 224]
   let s:fg_darker = ['#5D5139', 59]
   let s:red = ['#AC1A1C', 124]
-  let s:yellow = ['#906B00', 94]
+  let s:yellow = ['#A98D00', 136]
   let s:fg_dark = ['#6E6249', 59]
   let s:green = ['#357426', 64]
   let s:purple = ['#65389F', 61]

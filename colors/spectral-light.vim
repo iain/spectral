@@ -17,7 +17,7 @@ let g:colors_name = 'spectral-light'
 let s:amber = {'gui': '#9D6300', 'cterm': '130'}
 
 call spectral#apply({
-  \ 'bg':        {'gui': '#FEF4DF', 'cterm': '230'},
+  \ 'bg':        {'gui': '#FFFAEE', 'cterm': '231'},
   \ 'bg_alt':    {'gui': '#F6EAD1', 'cterm': '224'},
   \ 'bg_alt2':   {'gui': '#E7D9BD', 'cterm': '187'},
   \ 'fg_dark':   {'gui': '#6E6249', 'cterm': '59'},
@@ -28,7 +28,7 @@ call spectral#apply({
   \ 'white':     {'gui': '#FFFFFF', 'cterm': '231'},
   \ 'red':       {'gui': '#AC1A1C', 'cterm': '124'},
   \ 'orange':    {'gui': '#9C4700', 'cterm': '130'},
-  \ 'yellow':    {'gui': '#906B00', 'cterm': '94'},
+  \ 'yellow':    {'gui': '#A98D00', 'cterm': '136'},
   \ 'green':     {'gui': '#357426', 'cterm': '64'},
   \ 'cyan':      {'gui': '#00707E', 'cterm': '24'},
   \ 'purple':    {'gui': '#65389F', 'cterm': '61'},

@@ -119,12 +119,12 @@ Background: `0.21 / 0.006 / 85°` → `#1A1815` / Foreground: `0.86 / 0.038 / 85
 | Amber (signature) | `0.55 / 0.13 / 70°`  | `#9D6300` | Directories, Ruby symbols          |
 | Red               | `0.48 / 0.18 / 27°`  | `#AC1A1C` | Keywords, control flow             |
 | Orange            | `0.50 / 0.15 / 50°`  | `#9C4700` | Parameters, special characters     |
-| Yellow            | `0.55 / 0.13 / 85°`  | `#906B00` | Strings                            |
+| Yellow            | `0.65 / 0.15 / 95°`  | `#A98D00` | Strings                            |
 | Green             | `0.50 / 0.13 / 140°` | `#357426` | Functions, methods                 |
 | Cyan              | `0.50 / 0.10 / 210°` | `#00707E` | Types, built-in functions          |
 | Purple            | `0.45 / 0.16 / 300°` | `#65389F` | Constants, numbers, booleans       |
 
-Background: `0.97 / 0.030 / 85°` → `#FEF4DF` / Foreground: `0.26 / 0.030 / 85°` → `#2B2313`
+Background: `0.985 / 0.020 / 85°` → `#FFFAEE` / Foreground: `0.26 / 0.030 / 85°` → `#2B2313`
 
 ## Terminal config
 
