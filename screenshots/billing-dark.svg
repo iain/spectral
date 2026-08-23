@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="851" height="898" viewBox="0 0 851 898" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.0">
+<rect width="851" height="898" rx="8.0" fill="#1a1815"/>
+<rect width="851" height="30.0" rx="8.0" fill="#282622"/>
+<rect y="8.0" width="851" height="22.0" fill="#282622"/>
+<circle cx="16" cy="15" r="4.5" fill="#ff544c"/>
+<circle cx="31" cy="15" r="4.5" fill="#f8d700"/>
+<circle cx="46" cy="15" r="4.5" fill="#8def46"/>
+<text x="425" y="19" text-anchor="middle" fill="#7b7463" font-size="11">billing.rb</text>
+<text x="18" y="59.8" xml:space="preserve"></text>
+<text x="18" y="80.8" xml:space="preserve"><tspan fill="#5e574a"> 1 </tspan><tspan fill="#5e574a" font-style="italic"># </tspan><tspan fill="#7b7463" font-style="italic">frozen_string_literal:</tspan><tspan fill="#5e574a" font-style="italic"> </tspan><tspan fill="#cc77df">true</tspan></text>
+<text x="18" y="101.8" xml:space="preserve"><tspan fill="#5e574a"> 2 </tspan></text>
+<text x="18" y="122.8" xml:space="preserve"><tspan fill="#5e574a"> 3 </tspan><tspan fill="#ff544c">require</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#f8d700">"</tspan><tspan fill="#f8d700">money</tspan><tspan fill="#f8d700">"</tspan></text>
+<text x="18" y="143.8" xml:space="preserve"><tspan fill="#5e574a"> 4 </tspan></text>
+<text x="18" y="164.8" xml:space="preserve"><tspan fill="#5e574a"> 5 </tspan><tspan fill="#ff544c">module</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#2ad7d7">Billing</tspan></text>
+<text x="18" y="185.8" xml:space="preserve"><tspan fill="#5e574a"> 6 </tspan><tspan fill="#dcd0b5">  </tspan><tspan fill="#5e574a" font-style="italic"># Adds VAT to a set of line items and renders an invoice total.</tspan></text>
+<text x="18" y="206.8" xml:space="preserve"><tspan fill="#5e574a"> 7 </tspan><tspan fill="#dcd0b5">  </tspan><tspan fill="#ff544c">class</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#2ad7d7">InvoiceCalculator</tspan></text>
+<text x="18" y="227.8" xml:space="preserve"><tspan fill="#5e574a"> 8 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#5e574a">extend T::Sig</tspan></text>
+<text x="18" y="248.8" xml:space="preserve"><tspan fill="#5e574a"> 9 </tspan></text>
+<text x="18" y="269.8" xml:space="preserve"><tspan fill="#5e574a">10 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#2ad7d7">VAT_RATE</tspan><tspan fill="#dcd0b5"> = </tspan><tspan fill="#cc77df">0.21</tspan></text>
+<text x="18" y="290.8" xml:space="preserve"><tspan fill="#5e574a">11 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#2ad7d7">CURRENCIES</tspan><tspan fill="#dcd0b5"> = </tspan><tspan fill="#f9ad26">%i[</tspan><tspan fill="#f9ad26">eur gbp usd</tspan><tspan fill="#f9ad26">]</tspan><tspan fill="#dcd0b5">.freeze</tspan></text>
+<text x="18" y="311.8" xml:space="preserve"><tspan fill="#5e574a">12 </tspan></text>
+<text x="18" y="332.8" xml:space="preserve"><tspan fill="#5e574a">13 </tspan><tspan fill="#5e574a">    sig { params(items: T::Array[LineItem]).returns(Money) }</tspan></text>
+<text x="18" y="353.8" xml:space="preserve"><tspan fill="#5e574a">14 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">def</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#cc77df">self</tspan><tspan fill="#dcd0b5">.</tspan><tspan fill="#8def46">total_for</tspan><tspan fill="#dcd0b5">(items)</tspan></text>
+<text x="18" y="374.8" xml:space="preserve"><tspan fill="#5e574a">15 </tspan><tspan fill="#dcd0b5">      items.sum(</tspan><tspan fill="#2ad7d7">Money</tspan><tspan fill="#dcd0b5">.zero) { </tspan><tspan fill="#ff8432">|item|</tspan><tspan fill="#dcd0b5"> item.amount * (</tspan><tspan fill="#cc77df">1</tspan><tspan fill="#dcd0b5"> + </tspan><tspan fill="#2ad7d7">VAT_RATE</tspan><tspan fill="#dcd0b5">) }</tspan></text>
+<text x="18" y="395.8" xml:space="preserve"><tspan fill="#5e574a">16 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">end</tspan></text>
+<text x="18" y="416.8" xml:space="preserve"><tspan fill="#5e574a">17 </tspan></text>
+<text x="18" y="437.8" xml:space="preserve"><tspan fill="#5e574a">18 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">def</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#8def46">initialize</tspan><tspan fill="#dcd0b5">(</tspan><tspan fill="#f9ad26">customer</tspan><tspan fill="#dcd0b5">:, </tspan><tspan fill="#f9ad26">currency</tspan><tspan fill="#dcd0b5">: </tspan><tspan fill="#f9ad26">:</tspan><tspan fill="#f9ad26">eur</tspan><tspan fill="#dcd0b5">)</tspan></text>
+<text x="18" y="458.8" xml:space="preserve"><tspan fill="#5e574a">19 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#ff544c">raise</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#2ad7d7">ArgumentError</tspan><tspan fill="#dcd0b5">, </tspan><tspan fill="#f8d700">"</tspan><tspan fill="#f8d700">unknown currency </tspan><tspan fill="#ff8432">#{</tspan><tspan fill="#2ad7d7">currency</tspan><tspan fill="#ff8432">}</tspan><tspan fill="#f8d700">"</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#ff544c">unless</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#2ad7d7">CURRENCIES</tspan><tspan fill="#dcd0b5">.include?(currency)</tspan></text>
+<text x="18" y="479.8" xml:space="preserve"><tspan fill="#5e574a">20 </tspan></text>
+<text x="18" y="500.8" xml:space="preserve"><tspan fill="#5e574a">21 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#ff8432">@customer</tspan><tspan fill="#dcd0b5"> = customer</tspan></text>
+<text x="18" y="521.8" xml:space="preserve"><tspan fill="#5e574a">22 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#ff8432">@currency</tspan><tspan fill="#dcd0b5"> = currency</tspan></text>
+<text x="18" y="542.8" xml:space="preserve"><tspan fill="#5e574a">23 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#ff8432">@lines</tspan><tspan fill="#dcd0b5">    = []</tspan></text>
+<text x="18" y="563.8" xml:space="preserve"><tspan fill="#5e574a">24 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">end</tspan></text>
+<text x="18" y="584.8" xml:space="preserve"><tspan fill="#5e574a">25 </tspan></text>
+<text x="18" y="605.8" xml:space="preserve"><tspan fill="#5e574a">26 </tspan><tspan fill="#5e574a">    sig { params(description: String, cents: Integer).returns(T.self_type) }</tspan></text>
+<text x="18" y="626.8" xml:space="preserve"><tspan fill="#5e574a">27 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">def</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#8def46">add</tspan><tspan fill="#dcd0b5">(description, cents)</tspan></text>
+<text x="18" y="647.8" xml:space="preserve"><tspan fill="#5e574a">28 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#ff544c">return</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#cc77df">self</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#ff544c">if</tspan><tspan fill="#dcd0b5"> cents.zero?</tspan></text>
+<text x="18" y="668.8" xml:space="preserve"><tspan fill="#5e574a">29 </tspan></text>
+<text x="18" y="689.8" xml:space="preserve"><tspan fill="#5e574a">30 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#ff8432">@lines</tspan><tspan fill="#dcd0b5"> &lt;&lt; { </tspan><tspan fill="#f9ad26">description</tspan><tspan fill="#dcd0b5">: description, </tspan><tspan fill="#f9ad26">cents</tspan><tspan fill="#dcd0b5">: cents, </tspan><tspan fill="#f9ad26">added_at</tspan><tspan fill="#dcd0b5">: </tspan><tspan fill="#2ad7d7">Time</tspan><tspan fill="#dcd0b5">.now }</tspan></text>
+<text x="18" y="710.8" xml:space="preserve"><tspan fill="#5e574a">31 </tspan><tspan fill="#dcd0b5">      </tspan><tspan fill="#cc77df">self</tspan></text>
+<text x="18" y="731.8" xml:space="preserve"><tspan fill="#5e574a">32 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">end</tspan></text>
+<text x="18" y="752.8" xml:space="preserve"><tspan fill="#5e574a">33 </tspan></text>
+<text x="18" y="773.8" xml:space="preserve"><tspan fill="#5e574a">34 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">def</tspan><tspan fill="#dcd0b5"> </tspan><tspan fill="#8def46">to_s</tspan></text>
+<text x="18" y="794.8" xml:space="preserve"><tspan fill="#5e574a">35 </tspan><tspan fill="#dcd0b5">      format(</tspan><tspan fill="#f8d700">"</tspan><tspan fill="#f8d700">%&lt;name&gt;s owes %&lt;total&gt;.2f %&lt;cur&gt;s</tspan><tspan fill="#f8d700">"</tspan><tspan fill="#dcd0b5">,</tspan></text>
+<text x="18" y="815.8" xml:space="preserve"><tspan fill="#5e574a">36 </tspan><tspan fill="#dcd0b5">             </tspan><tspan fill="#f9ad26">name</tspan><tspan fill="#dcd0b5">: </tspan><tspan fill="#ff8432">@customer</tspan><tspan fill="#dcd0b5">.name, </tspan><tspan fill="#f9ad26">total</tspan><tspan fill="#dcd0b5">: total / </tspan><tspan fill="#cc77df">100.0</tspan><tspan fill="#dcd0b5">, </tspan><tspan fill="#f9ad26">cur</tspan><tspan fill="#dcd0b5">: </tspan><tspan fill="#ff8432">@currency</tspan><tspan fill="#dcd0b5">.to_s.upcase)</tspan></text>
+<text x="18" y="836.8" xml:space="preserve"><tspan fill="#5e574a">37 </tspan><tspan fill="#dcd0b5">    </tspan><tspan fill="#ff544c">end</tspan></text>
+<text x="18" y="857.8" xml:space="preserve"><tspan fill="#5e574a">38 </tspan><tspan fill="#dcd0b5">  </tspan><tspan fill="#ff544c">end</tspan></text>
+<text x="18" y="878.8" xml:space="preserve"><tspan fill="#5e574a">39 </tspan><tspan fill="#ff544c">end</tspan></text>
+</svg>
