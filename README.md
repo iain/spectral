@@ -30,6 +30,7 @@ Click through for the full-size render. Python samples are in
 |--------------|---------------------------------------------------------|
 | Vim / Neovim | colorscheme, lightline theme, Sorbet syntax plugin      |
 | VS Code      | extension — workbench, TextMate scopes, semantic tokens |
+| Zed          | extension — one theme family with both variants         |
 | Ghostty      | two themes, plus an install script                      |
 | iTerm2       | two presets, plus a profile sync script                 |
 | Mattermost   | two custom themes                                       |
@@ -111,6 +112,58 @@ is internally inconsistent:
 
 Sorbet signatures are not dimmed here; that relies on the syntax regions in
 `plugin/sorbet.vim`, which have no TextMate scope to hook.
+
+## Zed
+
+`zed/` is an extension carrying `zed/themes/spectral.json` — one theme family
+with both variants, so Zed's `system` mode switches between them:
+
+```json
+{
+  "theme": {
+    "mode": "system",
+    "light": "Spectral Light",
+    "dark": "Spectral Dark"
+  }
+}
+```
+
+To use it without publishing, either drop the theme file in Zed's themes
+directory:
+
+```bash
+ln -s "$PWD/zed/themes/spectral.json" ~/.config/zed/themes/spectral.json
+```
+
+or install the whole directory from the extensions page with **Install Dev
+Extension**, which is what publishing to Zed's extension store expects.
+
+Two mappings depart from the Vim theme, both because Zed's captures are
+coarser than Neovim's:
+
+- **Keys** keep the amber signature only in JSON, which has a capture of its
+  own (`property.json_key`). YAML, TOML and CSS share the generic `property`
+  capture with member access on an object, so amber there would paint every
+  `obj.field` amber too; they follow body text instead.
+- **Markdown headings** are one color rather than a ladder of six — Zed
+  captures every level as `title`.
+
+If you would rather have the keys and take the member access with them, Zed's
+`theme_overrides` flips that one capture without touching the theme file:
+
+```json
+{
+  "theme_overrides": {
+    "Spectral Dark":  { "syntax": { "property": { "color": "#F9AD26" } } },
+    "Spectral Light": { "syntax": { "property": { "color": "#A76C01" } } }
+  }
+}
+```
+
+Ruby symbols, Python decorators and Markdown list markers carry the signature
+as they do everywhere else. Regular expressions follow the VS Code reading:
+Zed injects a regex grammar, so escapes stay orange inside the cyan body.
+Sorbet signatures are not dimmed, for the same reason they are not in VS Code.
 
 ## Ghostty
 
@@ -217,7 +270,7 @@ python3 tools/palette.py
 That writes `colors/spectral-*.vim`, `ghostty/spectral-*`,
 `iterm2/*.itermcolors`, `mattermost/spectral-*.json`,
 `vscode/themes/spectral-*.json`, `vscode/icon.png`,
-`screenshots/palette-*.svg`, and
+`zed/themes/spectral.json`, `screenshots/palette-*.svg`, and
 `autoload/lightline/colorscheme/spectral.vim`. All of those are generated — do
 not hand-edit them. After regenerating the iTerm2 presets, run
 `iterm2/sync.py <plist>` to push them into your own plist.

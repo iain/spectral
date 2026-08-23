@@ -1235,6 +1235,323 @@ def emit_vscode(variant: str, palette: dict, palette_oklch: dict) -> str:
 
 
 # --------------------------------------------------------------------------
+# Zed emitter
+# --------------------------------------------------------------------------
+
+# Zed writes every color as #RRGGBBAA, so the VS Code value specs carry over
+# unchanged — plain slot, ("alpha", slot, a) or ("mix", a, b, t) — and only
+# the opaque ones need the alpha spelled out.
+
+def _zed(palette: dict, value) -> str:
+    color = _vsc(palette, value)
+    return color if len(color) == 9 else color + "FF"
+
+
+# Workbench colors, in the order Zed's own themes list them. Slots are
+# semantic, so one map serves both variants, and the placements follow the VS
+# Code map wherever the two apps have the same surface.
+#
+# Keys Zed does not know are ignored, and keys the theme omits are derived
+# from the ones it sets — so this covers the published v0.2.0 schema plus the
+# version_control.* family that Zed's bundled themes have since added.
+ZED_UI: dict[str, object] = {
+    # Borders
+    "border":                             "bg_alt2",
+    "border.variant":                     "bg_alt",
+    "border.focused":                     "cyan",
+    "border.selected":                    ("mix", "bg", "cyan", 0.45),
+    "border.transparent":                 ("alpha", "black", 0.0),
+    "border.disabled":                    "bg_alt",
+
+    # Surfaces — the window frame is the darkest neutral, the way the activity
+    # bar is in VS Code and the team rail is in Mattermost, so the editor sits
+    # on it as the lightest field.
+    "background":                         "tab_bg",
+    "elevated_surface.background":        "bg_alt",
+    "surface.background":                 "bg_alt",
+
+    # Elements — buttons, inputs, list rows
+    "element.background":                 "bg_alt",
+    "element.hover":                      "bg_alt2",
+    "element.active":                     "bg_alt2",
+    "element.selected":                   "bg_alt2",
+    "element.disabled":                   "bg_alt",
+    "drop_target.background":             ("alpha", "bg_alt2", 0.60),
+    "ghost_element.background":           ("alpha", "black", 0.0),
+    "ghost_element.hover":                "bg_alt",
+    "ghost_element.active":               "bg_alt2",
+    "ghost_element.selected":             "bg_alt2",
+    "ghost_element.disabled":             ("alpha", "black", 0.0),
+
+    # Text and icons — the accent pair is the matched-character highlight in
+    # the file finder and command palette, which is where VS Code's amber
+    # lands too.
+    "text":                               "fg",
+    "text.muted":                         "fg_darker",
+    "text.placeholder":                   "fg_dark",
+    "text.disabled":                      "fg_dark",
+    "text.accent":                        "amber",
+    "icon":                               "fg_alt",
+    "icon.muted":                         "fg_darker",
+    "icon.disabled":                      "fg_dark",
+    "icon.placeholder":                   "fg_dark",
+    "icon.accent":                        "amber",
+
+    # Chrome
+    "status_bar.background":              "tab_bg",
+    "title_bar.background":               "tab_bg",
+    "title_bar.inactive_background":      "tab_bg",
+    "toolbar.background":                 "bg",
+    "tab_bar.background":                 "tab_bg",
+    "tab.inactive_background":            "tab_bg",
+    "tab.active_background":              "bg",
+
+    # Search — yellow for the field of matches, orange for the one you are on,
+    # washed the way the vim theme's Search/IncSearch pair is.
+    "search.match_background":            ("mix", "bg", "yellow", 0.22),
+    "search.active_match_background":     ("mix", "bg", "orange", 0.42),
+
+    # Panels and panes
+    "panel.background":                   "bg_alt",
+    "panel.focused_border":               "cyan",
+    "panel.indent_guide":                 "bg_alt2",
+    "panel.indent_guide_hover":           "fg_dark",
+    "panel.indent_guide_active":          "fg_dark",
+    "pane.focused_border":                "cyan",
+    "pane_group.border":                  "bg_alt2",
+
+    # Scrollbar — translucent, it sits over live text.
+    "scrollbar.thumb.background":         ("alpha", "bg_alt2", 0.60),
+    "scrollbar.thumb.hover_background":   ("alpha", "fg_dark", 0.60),
+    "scrollbar.thumb.border":             ("alpha", "black", 0.0),
+    "scrollbar.track.background":         ("alpha", "black", 0.0),
+    "scrollbar.track.border":             "bg_alt",
+
+    # Editor
+    "editor.foreground":                  "fg",
+    "editor.background":                  "bg",
+    "editor.gutter.background":           "bg",
+    "editor.subheader.background":        "bg_alt",
+    "editor.active_line.background":      "bg_alt",
+    "editor.highlighted_line.background": "bg_alt2",
+    "editor.line_number":                 "fg_dark",
+    "editor.active_line_number":          "fg_light",
+    "editor.hover_line_number":           "fg_darker",
+    "editor.invisible":                   "fg_dark",
+    "editor.wrap_guide":                  "bg_alt2",
+    "editor.active_wrap_guide":           "fg_dark",
+    "editor.indent_guide":                "bg_alt2",
+    "editor.indent_guide_active":         "fg_dark",
+    "editor.document_highlight.read_background":    ("alpha", "bg_alt2", 0.70),
+    "editor.document_highlight.write_background":   "bg_alt2",
+    "editor.document_highlight.bracket_background": "bg_alt2",
+
+    # Terminal — the ANSI palette itself is derived below.
+    "terminal.background":                "bg",
+    "terminal.foreground":                "fg",
+    "terminal.bright_foreground":         "fg_light",
+    "terminal.dim_foreground":            "fg_dark",
+    "terminal.ansi.background":           "bg",
+
+    # A hovered link is the active link, which is amber in VS Code too.
+    "link_text.hover":                    "amber",
+
+    # Version control — the git panel and the gutter.
+    "version_control.added":              "green",
+    "version_control.deleted":            "red",
+    "version_control.modified":           "yellow",
+    "version_control.renamed":            "blue",
+    "version_control.conflict":           "orange",
+    "version_control.ignored":            "fg_dark",
+    "version_control.word_added":         ("mix", "bg", "green", 0.30),
+    "version_control.word_deleted":       ("mix", "bg", "red", 0.30),
+    "version_control.conflict_marker.ours":   ("mix", "bg", "green", 0.12),
+    "version_control.conflict_marker.theirs": ("mix", "bg", "blue", 0.12),
+}
+
+# Status colors. Each one is a foreground plus a wash for the row it marks and
+# a border for the block it outlines; spelling all three out per status would
+# be forty lines of the same two blends.
+ZED_STATUS: dict[str, str] = {
+    "conflict":    "orange",
+    "created":     "green",
+    "deleted":     "red",
+    "error":       "red",
+    "hidden":      "fg_dark",
+    "hint":        "purple",
+    "ignored":     "fg_dark",
+    "info":        "cyan",
+    "modified":    "yellow",
+    "predictive":  "fg_dark",
+    "renamed":     "blue",
+    "success":     "green",
+    "unreachable": "fg_dark",
+    "warning":     "yellow",
+}
+
+# Collaboration cursors. The first is your own — amber, as the cursor is in
+# every other target — and its selection stays the neutral wash the vim theme
+# uses for Visual rather than tinting live text amber.
+ZED_PLAYERS = [
+    "amber", "cyan", "green", "purple", "orange", "blue", "red", "yellow",
+]
+
+ZED_ACCENTS = [
+    "amber", "red", "orange", "yellow", "green", "cyan", "blue", "purple",
+]
+
+# Syntax captures. Zed resolves a dotted capture against the longest prefix
+# the theme defines, so @keyword.import lands on `keyword` and
+# @punctuation.list_marker.markup on `punctuation.list_marker` without either
+# being named here.
+#
+# Two places where this departs from the vim theme:
+#   property — Zed's grammars use one capture for the key in a key/value pair
+#     and for member access on an object, so it cannot be amber the way
+#     Neovim 0.10's @property is without painting every obj.field amber too.
+#     JSON keys have their own capture and keep the signature.
+#   string.regex — cyan rather than orange, following the VS Code mapping;
+#     Zed injects a regex grammar, so escapes stay orange inside the cyan body.
+ZED_SYNTAX: dict[str, tuple[str, str]] = {
+    "attribute":               ("amber",   ""),
+    "boolean":                 ("purple",  ""),
+    "comment":                 ("fg_dark", "italic"),
+    "comment.doc":             ("fg_dark", "italic"),
+    "constant":                ("purple",  ""),
+    "constructor":             ("cyan",    ""),
+    "diff.minus":              ("red",     ""),
+    "diff.plus":               ("green",   ""),
+    "embedded":                ("fg",      ""),
+    "emphasis":                ("purple",  "italic"),
+    "emphasis.strong":         ("orange",  "bold"),
+    "enum":                    ("cyan",    ""),
+    "function":                ("green",   ""),
+    "function.builtin":        ("cyan",    ""),
+    # Python's decorators, and the annotations and attributes that Rust, C#
+    # and Java spell with the same sigil.
+    "function.decorator":      ("amber",   ""),
+    "hint":                    ("fg_dark", ""),
+    "keyword":                 ("red",     ""),
+    "label":                   ("red",     ""),
+    "link_text":               ("purple",  ""),
+    "link_uri":                ("blue",    ""),
+    "namespace":               ("blue",    ""),
+    "number":                  ("purple",  ""),
+    "operator":                ("red",     ""),
+    "predictive":              ("fg_dark", ""),
+    "preproc":                 ("red",     ""),
+    "primary":                 ("fg",      ""),
+    "property":                ("fg",      ""),
+    "property.json_key":       ("amber",   ""),
+    "punctuation":             ("fg_alt",  ""),
+    "punctuation.bracket":     ("fg_alt",  ""),
+    "punctuation.delimiter":   ("fg_alt",  ""),
+    "punctuation.list_marker": ("amber",   ""),
+    "punctuation.markup":      ("fg_dark", ""),
+    "punctuation.special":     ("orange",  ""),
+    "selector":                ("cyan",    ""),
+    "selector.pseudo":         ("purple",  ""),
+    "strikethrough":           ("fg_dark", ""),
+    "string":                  ("yellow",  ""),
+    "string.escape":           ("orange",  ""),
+    "string.regex":            ("cyan",    ""),
+    "string.special":          ("orange",  ""),
+    # Ruby symbols, which are hash keys most of the time.
+    "string.special.symbol":   ("amber",   ""),
+    "tag":                     ("red",     ""),
+    "text.literal":            ("green",   ""),
+    # Zed has one capture for every heading level, so the vim theme's ladder
+    # of six colors collapses onto the color it starts from.
+    "title":                   ("red",     "bold"),
+    "type":                    ("cyan",    ""),
+    "variable":                ("fg",      ""),
+    "variable.parameter":      ("orange",  ""),
+    "variable.special":        ("orange",  ""),
+    "variant":                 ("purple",  ""),
+}
+
+ZED_ANSI_NAMES = [
+    "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white",
+]
+
+
+def _zed_style(style: str) -> dict:
+    # Zed carries weight and slant separately, and has no underline or
+    # strikethrough — those groups make do with color alone.
+    out: dict[str, object] = {}
+    if "italic" in style:
+        out["font_style"] = "italic"
+    if "bold" in style:
+        out["font_weight"] = 700
+    return out
+
+
+def emit_zed(resolved: dict[str, dict], specs: dict[str, dict]) -> str:
+    themes = []
+    for variant in ("dark", "light"):
+        palette, spec = resolved[variant], specs[variant]
+        style: dict[str, object] = {
+            key: _zed(palette, value) for key, value in ZED_UI.items()
+        }
+        style["background.appearance"] = "opaque"
+
+        for name, slot in ZED_STATUS.items():
+            style[name] = _zed(palette, slot)
+            style[f"{name}.background"] = _zed(palette, ("alpha", slot, 0.10))
+            style[f"{name}.border"] = _zed(palette, ("mix", "bg", slot, 0.30))
+
+        # ANSI — the same mapping and the same "bright" derivation the Ghostty
+        # and iTerm2 presets use. Dim has no counterpart there: it is the base
+        # color pulled toward the field, which is what dim means on a terminal
+        # that has a field this warm.
+        base_map = GHOSTTY_ANSI[variant]
+        for i, name in enumerate(ZED_ANSI_NAMES):
+            slot = base_map[i]
+            style[f"terminal.ansi.{name}"] = _zed(palette, slot)
+            if i == 0:
+                bright = palette[base_map[8]]["rgb"]
+            elif i == 7:
+                bright = palette["white"]["rgb"]
+            else:
+                bright = oklch_to_rgb(*_bright(spec, slot, variant))
+            style[f"terminal.ansi.bright_{name}"] = (
+                f"#{bright[0]:02X}{bright[1]:02X}{bright[2]:02X}FF"
+            )
+            style[f"terminal.ansi.dim_{name}"] = _zed(
+                palette, ("mix", slot, "bg", 0.40),
+            )
+
+        style["players"] = [
+            {
+                "cursor": _zed(palette, slot),
+                "background": _zed(palette, slot),
+                "selection": _zed(palette, "bg_alt2" if i == 0
+                                  else ("alpha", slot, 0.24)),
+            }
+            for i, slot in enumerate(ZED_PLAYERS)
+        ]
+        style["accents"] = [_zed(palette, slot) for slot in ZED_ACCENTS]
+        style["syntax"] = {
+            capture: {"color": _zed(palette, slot), **_zed_style(font_style)}
+            for capture, (slot, font_style) in ZED_SYNTAX.items()
+        }
+
+        themes.append({
+            "name": "Spectral " + ("Dark" if variant == "dark" else "Light"),
+            "appearance": variant,
+            "style": style,
+        })
+
+    family = {
+        "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
+        "name": "Spectral",
+        "author": "iain",
+        "themes": themes,
+    }
+    return json.dumps(family, indent=2) + "\n"
+
+
+# --------------------------------------------------------------------------
 # Marketplace icon emitter
 # --------------------------------------------------------------------------
 
@@ -1449,6 +1766,12 @@ def main() -> None:
     # Marketplace icon — drawn from the dark palette only.
     (REPO / "vscode" / "icon.png").write_bytes(emit_icon(resolved["dark"]))
     print("wrote vscode icon")
+
+    # Zed — one theme family carrying both variants, as Zed's own themes do.
+    zed = REPO / "zed" / "themes"
+    zed.mkdir(parents=True, exist_ok=True)
+    (zed / "spectral.json").write_text(emit_zed(resolved, PALETTES))
+    print("wrote zed theme family")
 
     # lightline — one theme that branches on &background across both variants.
     lightline = REPO / "autoload" / "lightline" / "colorscheme" / "spectral.vim"

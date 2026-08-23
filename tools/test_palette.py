@@ -104,6 +104,96 @@ class VSCodeTheme(unittest.TestCase):
                 self.assertGreaterEqual(ratio, 7.0)
 
 
+class ZedTheme(unittest.TestCase):
+    # Zed takes #RRGGBBAA and nothing else — a six-digit color is dropped.
+    HEX8 = re.compile(r"^#[0-9A-Fa-f]{8}$")
+
+    def family(self) -> dict:
+        return json.loads(palette.emit_zed(
+            {v: resolved(v) for v in VARIANTS}, palette.PALETTES,
+        ))
+
+    def styles(self):
+        for theme in self.family()["themes"]:
+            yield theme["name"], theme["style"]
+
+    def test_is_a_theme_family_with_both_variants(self):
+        family = self.family()
+        self.assertEqual(family["name"], "Spectral")
+        self.assertIn("author", family)
+        self.assertEqual(
+            [(t["name"], t["appearance"]) for t in family["themes"]],
+            [("Spectral Dark", "dark"), ("Spectral Light", "light")],
+        )
+
+    def test_every_color_is_valid_hex(self):
+        for name, style in self.styles():
+            for key, value in style.items():
+                if key in ("players", "accents", "syntax"):
+                    continue
+                with self.subTest(theme=name, key=key):
+                    # The one style value that is a keyword, not a color.
+                    if key == "background.appearance":
+                        self.assertEqual(value, "opaque")
+                    else:
+                        self.assertRegex(value, self.HEX8)
+            for i, player in enumerate(style["players"]):
+                for key, value in player.items():
+                    with self.subTest(theme=name, player=i, key=key):
+                        self.assertRegex(value, self.HEX8)
+            for i, accent in enumerate(style["accents"]):
+                with self.subTest(theme=name, accent=i):
+                    self.assertRegex(accent, self.HEX8)
+            for capture, settings in style["syntax"].items():
+                with self.subTest(theme=name, capture=capture):
+                    self.assertRegex(settings["color"], self.HEX8)
+
+    def test_no_style_key_is_written_twice(self):
+        # ZED_UI, the status triples and the terminal palette all land in one
+        # flat dict, so an overlap between them would silently drop whichever
+        # emitter ran first.
+        status = {
+            key
+            for name in palette.ZED_STATUS
+            for key in (name, f"{name}.background", f"{name}.border")
+        }
+        terminal = {
+            f"terminal.ansi.{prefix}{name}"
+            for name in palette.ZED_ANSI_NAMES
+            for prefix in ("", "bright_", "dim_")
+        }
+        for a, b in ((palette.ZED_UI.keys(), status),
+                     (palette.ZED_UI.keys(), terminal),
+                     (status, terminal)):
+            self.assertEqual(set(a) & set(b), set())
+
+    def test_terminal_palette_is_complete(self):
+        for name, style in self.styles():
+            for ansi in palette.ZED_ANSI_NAMES:
+                for prefix in ("", "bright_", "dim_"):
+                    with self.subTest(theme=name, color=prefix + ansi):
+                        self.assertIn(f"terminal.ansi.{prefix}{ansi}", style)
+
+    def test_every_player_has_a_full_set_of_colors(self):
+        for name, style in self.styles():
+            self.assertEqual(len(style["players"]), 8)
+            self.assertEqual(len(style["accents"]), 8)
+            for i, player in enumerate(style["players"]):
+                with self.subTest(theme=name, player=i):
+                    self.assertEqual(
+                        set(player), {"cursor", "background", "selection"},
+                    )
+
+    def test_syntax_colors_stay_legible_on_the_editor_background(self):
+        for name, style in self.styles():
+            bg = style["editor.background"]
+            for capture, settings in style["syntax"].items():
+                with self.subTest(theme=name, capture=capture):
+                    self.assertGreaterEqual(
+                        contrast(settings["color"][:7], bg[:7]), 2.0,
+                    )
+
+
 class MarketplaceIcon(unittest.TestCase):
     def test_is_a_valid_256px_rgba_png(self):
         data = palette.emit_icon(resolved("dark"))
