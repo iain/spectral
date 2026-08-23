@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check generated-output invariants
+        run: python3 -m unittest discover -s tools --verbose
       - name: Regenerate from tools/palette.py
         run: python3 tools/palette.py
       - name: Fail if any generated file drifted

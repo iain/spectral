@@ -14,9 +14,14 @@ downstream file:
   iterm2/Spectral Light.itermcolors
   mattermost/spectral-dark.json
   mattermost/spectral-light.json
+  vscode/themes/spectral-dark.json
+  vscode/themes/spectral-light.json
 
 After regenerating, run iterm2/sync.py to push the iTerm2 presets to a
 target plist.
+
+Invariants for the generated output live in tools/test_palette.py:
+  python3 -m unittest discover -s tools
 
 OKLCH triples are (L, C, H):
   L  lightness, 0=black 1=white. Perceptually uniform.
@@ -522,6 +527,677 @@ def emit_mattermost(variant: str, palette: dict) -> str:
 
 
 # --------------------------------------------------------------------------
+# VS Code emitter
+# --------------------------------------------------------------------------
+
+# Values in the maps below are one of:
+#   "slot"                     — the palette slot, opaque
+#   ("alpha", "slot", a)       — the slot at alpha a (VS Code takes #RRGGBBAA)
+#   ("mix", "a", "b", t)       — a blended t of the way toward b, opaque
+#
+# Blends exist because VS Code paints some states as a background wash over
+# live text (find matches, diff lines) where a solid accent would swallow it.
+
+def _vsc(palette: dict, value) -> str:
+    if isinstance(value, str):
+        return f"#{palette[value]['gui']}"
+    kind = value[0]
+    if kind == "alpha":
+        _, slot, a = value
+        return f"#{palette[slot]['gui']}{round(a * 255):02X}"
+    if kind == "mix":
+        _, a_slot, b_slot, t = value
+        rgb = _mix(palette[a_slot]["rgb"], palette[b_slot]["rgb"], t)
+        return f"#{rgb[0]:02X}{rgb[1]:02X}{rgb[2]:02X}"
+    raise ValueError(f"unknown color spec: {value!r}")
+
+
+# Workbench colors. Slots are semantic (bg is "the editor field", fg is "body
+# text"), so one map serves both variants — the palette flips underneath it.
+#
+# The amber signature is placed the way it is in the vim theme and Mattermost:
+# on the things the eye returns to constantly rather than on body text — the
+# cursor, badges, the active tab's top edge, the breadcrumb leaf, and buttons.
+VSCODE_UI: dict[str, object] = {
+    # Base
+    "focusBorder":                        "cyan",
+    "foreground":                         "fg",
+    "disabledForeground":                 "fg_dark",
+    "descriptionForeground":              "fg_darker",
+    "errorForeground":                    "red",
+    "widget.border":                      "bg_alt2",
+    "widget.shadow":                      ("alpha", "tab_bg", 0.50),
+    "selection.background":               "bg_alt2",
+    "icon.foreground":                    "fg_alt",
+    "sash.hoverBorder":                   "amber",
+
+    # Text (rendered markdown in hovers, walkthroughs, release notes)
+    "textLink.foreground":                "cyan",
+    "textLink.activeForeground":          "amber",
+    "textBlockQuote.background":          "bg_alt",
+    "textBlockQuote.border":              "fg_dark",
+    "textCodeBlock.background":           "bg_alt",
+    "textPreformat.foreground":           "green",
+    "textSeparator.foreground":           "fg_dark",
+
+    # Buttons
+    "button.background":                  "amber",
+    "button.foreground":                  "bg",
+    "button.hoverBackground":             ("mix", "amber", "fg_light", 0.20),
+    "button.secondaryBackground":         "bg_alt2",
+    "button.secondaryForeground":         "fg",
+    "button.secondaryHoverBackground":    "fg_dark",
+    "badge.background":                   "amber",
+    "badge.foreground":                   "bg",
+    "progressBar.background":             "amber",
+
+    # Lists and trees
+    "list.activeSelectionBackground":     "bg_alt2",
+    "list.activeSelectionForeground":     "fg_light",
+    "list.inactiveSelectionBackground":   "bg_alt",
+    "list.inactiveSelectionForeground":   "fg",
+    "list.hoverBackground":               "bg_alt",
+    "list.hoverForeground":               "fg_light",
+    "list.focusBackground":               "bg_alt2",
+    "list.focusForeground":               "fg_light",
+    # Fuzzy-match highlight — the vim theme's amber lands on Directory, which
+    # has no VS Code equivalent; the quick-open match is where a file list
+    # picks up the signature instead.
+    "list.highlightForeground":           "amber",
+    "list.focusHighlightForeground":      "amber",
+    "list.errorForeground":               "red",
+    "list.warningForeground":             "yellow",
+    "list.dropBackground":                "bg_alt2",
+    "listFilterWidget.background":        "bg_alt",
+    "listFilterWidget.outline":           "amber",
+    "listFilterWidget.noMatchesOutline":  "red",
+    "tree.indentGuidesStroke":            "fg_dark",
+    "tree.inactiveIndentGuidesStroke":    "bg_alt2",
+
+    # Activity bar — the darkest neutral, so the leftmost rail anchors the
+    # window (same reasoning as the Mattermost team rail).
+    "activityBar.background":             "tab_bg",
+    "activityBar.foreground":             "fg_light",
+    # A step up from fg_dark: these icons are click targets, not chrome.
+    "activityBar.inactiveForeground":     "fg_darker",
+    "activityBar.border":                 "bg_alt",
+    "activityBar.activeBorder":           "amber",
+    "activityBarBadge.background":        "amber",
+    "activityBarBadge.foreground":        "bg",
+
+    # Side bar
+    "sideBar.background":                 "bg_alt",
+    "sideBar.foreground":                 "fg_alt",
+    "sideBar.border":                     "bg_alt2",
+    "sideBarTitle.foreground":            "fg_darker",
+    "sideBarSectionHeader.background":    "bg_alt2",
+    "sideBarSectionHeader.foreground":    "fg",
+    "sideBarSectionHeader.border":        "bg_alt2",
+
+    # Editor groups and tabs
+    "editorGroup.border":                 "bg_alt2",
+    "editorGroup.dropBackground":         ("alpha", "bg_alt2", 0.60),
+    "editorGroupHeader.tabsBackground":   "tab_bg",
+    "editorGroupHeader.tabsBorder":       "bg_alt",
+    "editorGroupHeader.noTabsBackground": "tab_bg",
+    "tab.activeBackground":               "bg",
+    "tab.activeForeground":               "fg_light",
+    "tab.activeBorderTop":                "amber",
+    "tab.inactiveBackground":             "tab_bg",
+    "tab.inactiveForeground":             "fg_alt",
+    "tab.hoverBackground":                "bg_alt",
+    "tab.hoverForeground":                "fg",
+    "tab.border":                         "tab_bg",
+    "tab.unfocusedActiveForeground":      "fg_alt",
+    "tab.unfocusedInactiveForeground":    "fg_dark",
+    "tab.lastPinnedBorder":               "bg_alt2",
+
+    # Editor
+    "editor.background":                  "bg",
+    "editor.foreground":                  "fg",
+    "editorLineNumber.foreground":        "fg_dark",
+    "editorLineNumber.activeForeground":  "fg_light",
+    "editorCursor.foreground":            "amber",
+    "editorCursor.background":            "bg",
+    "editor.selectionBackground":         "bg_alt2",
+    "editor.selectionHighlightBackground": ("alpha", "bg_alt2", 0.60),
+    "editor.inactiveSelectionBackground": "bg_alt",
+    "editor.wordHighlightBackground":     ("alpha", "bg_alt2", 0.70),
+    "editor.wordHighlightStrongBackground": "bg_alt2",
+    "editor.lineHighlightBackground":     "bg_alt",
+    "editor.rangeHighlightBackground":    "bg_alt",
+    "editor.hoverHighlightBackground":    "bg_alt2",
+    # Search: yellow for the field of matches, orange for the one you are on —
+    # mirrors Search/IncSearch in the vim theme, washed so text stays legible.
+    "editor.findMatchBackground":         ("mix", "bg", "orange", 0.42),
+    "editor.findMatchHighlightBackground": ("mix", "bg", "yellow", 0.22),
+    "editor.findRangeHighlightBackground": "bg_alt",
+    "editorLink.activeForeground":        "cyan",
+    "editorWhitespace.foreground":        "fg_dark",
+    "editorIndentGuide.background1":      "bg_alt2",
+    "editorIndentGuide.activeBackground1": "fg_dark",
+    "editorRuler.foreground":             "bg_alt2",
+    "editorCodeLens.foreground":          "fg_dark",
+    "editorInlayHint.foreground":         "fg_dark",
+    "editorInlayHint.background":         "bg_alt",
+    "editorBracketMatch.background":      "bg_alt2",
+    "editorBracketMatch.border":          "yellow",
+    "editorBracketHighlight.foreground1": "fg_alt",
+    "editorBracketHighlight.foreground2": "purple",
+    "editorBracketHighlight.foreground3": "cyan",
+    "editorBracketHighlight.foreground4": "green",
+    "editorBracketHighlight.foreground5": "orange",
+    "editorBracketHighlight.foreground6": "amber",
+    "editorBracketHighlight.unexpectedBracket.foreground": "red",
+
+    # Diagnostics
+    "editorError.foreground":             "red",
+    "editorWarning.foreground":           "yellow",
+    "editorInfo.foreground":              "cyan",
+    "editorHint.foreground":              "purple",
+    "problemsErrorIcon.foreground":       "red",
+    "problemsWarningIcon.foreground":     "yellow",
+    "problemsInfoIcon.foreground":        "cyan",
+
+    # Gutter
+    "editorGutter.background":            "bg",
+    "editorGutter.addedBackground":       "green",
+    "editorGutter.modifiedBackground":    "yellow",
+    "editorGutter.deletedBackground":     "red",
+
+    # Overview ruler
+    "editorOverviewRuler.border":         "bg_alt",
+    "editorOverviewRuler.findMatchForeground":  "yellow",
+    "editorOverviewRuler.errorForeground":      "red",
+    "editorOverviewRuler.warningForeground":    "yellow",
+    "editorOverviewRuler.infoForeground":       "cyan",
+    "editorOverviewRuler.addedForeground":      "green",
+    "editorOverviewRuler.modifiedForeground":   "yellow",
+    "editorOverviewRuler.deletedForeground":    "red",
+    "editorOverviewRuler.selectionHighlightForeground": "fg_dark",
+    "editorOverviewRuler.wordHighlightForeground":      "fg_darker",
+
+    # Diff
+    "diffEditor.insertedTextBackground":  ("mix", "bg", "green", 0.16),
+    "diffEditor.removedTextBackground":   ("mix", "bg", "red", 0.16),
+    "diffEditor.insertedLineBackground":  ("mix", "bg", "green", 0.10),
+    "diffEditor.removedLineBackground":   ("mix", "bg", "red", 0.10),
+    "diffEditor.border":                  "bg_alt2",
+
+    # Widgets
+    "editorWidget.background":            "bg_alt",
+    "editorWidget.foreground":            "fg",
+    "editorWidget.border":                "bg_alt2",
+    "editorWidget.resizeBorder":          "amber",
+    "editorSuggestWidget.background":     "bg_alt",
+    "editorSuggestWidget.border":         "bg_alt2",
+    "editorSuggestWidget.foreground":     "fg",
+    "editorSuggestWidget.highlightForeground":      "cyan",
+    "editorSuggestWidget.focusHighlightForeground": "cyan",
+    "editorSuggestWidget.selectedBackground":       "bg_alt2",
+    "editorSuggestWidget.selectedForeground":       "fg_light",
+    "editorHoverWidget.background":       "bg_alt",
+    "editorHoverWidget.foreground":       "fg",
+    "editorHoverWidget.border":           "bg_alt2",
+    "editorGhostText.foreground":         "fg_dark",
+
+    # Peek view
+    "peekView.border":                    "cyan",
+    "peekViewEditor.background":          "bg_alt",
+    "peekViewEditor.matchHighlightBackground": ("mix", "bg_alt", "yellow", 0.28),
+    "peekViewResult.background":          "bg_alt",
+    "peekViewResult.selectionBackground": "bg_alt2",
+    "peekViewResult.selectionForeground": "fg_light",
+    "peekViewResult.lineForeground":      "fg",
+    "peekViewResult.fileForeground":      "fg_light",
+    "peekViewResult.matchHighlightBackground": ("mix", "bg_alt", "yellow", 0.28),
+    "peekViewTitle.background":           "bg_alt2",
+    "peekViewTitleLabel.foreground":      "fg_light",
+    "peekViewTitleDescription.foreground": "fg_darker",
+
+    # Panel and terminal
+    "panel.background":                   "bg",
+    "panel.border":                       "bg_alt2",
+    "panelTitle.activeForeground":        "fg_light",
+    "panelTitle.activeBorder":            "amber",
+    "panelTitle.inactiveForeground":      "fg_dark",
+    "panelSection.border":                "bg_alt2",
+    "terminal.background":                "bg",
+    "terminal.foreground":                "fg",
+    "terminal.selectionBackground":       "bg_alt2",
+    "terminalCursor.foreground":          "amber",
+    "terminalCursor.background":          "bg",
+
+    # Status bar
+    "statusBar.background":               "tab_bg",
+    "statusBar.foreground":               "fg_darker",
+    "statusBar.border":                   "bg_alt",
+    "statusBar.noFolderBackground":       "tab_bg",
+    "statusBar.noFolderForeground":       "fg_dark",
+    "statusBar.debuggingBackground":      "orange",
+    "statusBar.debuggingForeground":      "bg",
+    "statusBarItem.hoverBackground":      "bg_alt2",
+    "statusBarItem.activeBackground":     "bg_alt2",
+    "statusBarItem.remoteBackground":     "amber",
+    "statusBarItem.remoteForeground":     "bg",
+    "statusBarItem.errorBackground":      "red",
+    "statusBarItem.errorForeground":      "bg",
+    "statusBarItem.warningBackground":    "yellow",
+    "statusBarItem.warningForeground":    "bg",
+    "statusBarItem.prominentBackground":  "bg_alt2",
+    "statusBarItem.prominentForeground":  "fg_light",
+
+    # Title bar
+    "titleBar.activeBackground":          "tab_bg",
+    "titleBar.activeForeground":          "fg_alt",
+    "titleBar.inactiveBackground":        "tab_bg",
+    "titleBar.inactiveForeground":        "fg_dark",
+    "titleBar.border":                    "bg_alt",
+
+    # Menus
+    "menu.background":                    "bg_alt",
+    "menu.foreground":                    "fg",
+    "menu.selectionBackground":           "bg_alt2",
+    "menu.selectionForeground":           "fg_light",
+    "menu.separatorBackground":           "bg_alt2",
+    "menu.border":                        "bg_alt2",
+    "menubar.selectionBackground":        "bg_alt2",
+    "menubar.selectionForeground":        "fg_light",
+
+    # Inputs
+    "input.background":                   "bg_alt",
+    "input.foreground":                   "fg",
+    "input.border":                       "bg_alt2",
+    "input.placeholderForeground":        "fg_darker",
+    "inputOption.activeBorder":           "amber",
+    "inputOption.activeForeground":       "fg_light",
+    "inputOption.activeBackground":       ("alpha", "amber", 0.20),
+    "inputValidation.errorBackground":    "bg_alt",
+    "inputValidation.errorForeground":    "red",
+    "inputValidation.errorBorder":        "red",
+    "inputValidation.warningBackground":  "bg_alt",
+    "inputValidation.warningForeground":  "yellow",
+    "inputValidation.warningBorder":      "yellow",
+    "inputValidation.infoBackground":     "bg_alt",
+    "inputValidation.infoForeground":     "cyan",
+    "inputValidation.infoBorder":         "cyan",
+    "dropdown.background":                "bg_alt",
+    "dropdown.listBackground":            "bg_alt",
+    "dropdown.foreground":                "fg",
+    "dropdown.border":                    "bg_alt2",
+
+    # Scrollbars — translucent, they sit over live text.
+    "scrollbar.shadow":                   ("alpha", "tab_bg", 0.60),
+    "scrollbarSlider.background":         ("alpha", "bg_alt2", 0.60),
+    "scrollbarSlider.hoverBackground":    ("alpha", "fg_dark", 0.60),
+    "scrollbarSlider.activeBackground":   ("alpha", "fg_darker", 0.70),
+    "minimapSlider.background":           ("alpha", "bg_alt2", 0.40),
+    "minimapSlider.hoverBackground":      ("alpha", "bg_alt2", 0.60),
+    "minimapSlider.activeBackground":     ("alpha", "fg_dark", 0.60),
+    "minimap.findMatchHighlight":         "yellow",
+    "minimap.errorHighlight":             "red",
+    "minimap.warningHighlight":           "yellow",
+
+    # Git decorations
+    "gitDecoration.addedResourceForeground":       "green",
+    "gitDecoration.modifiedResourceForeground":    "yellow",
+    "gitDecoration.deletedResourceForeground":     "red",
+    "gitDecoration.untrackedResourceForeground":   "cyan",
+    "gitDecoration.ignoredResourceForeground":     "fg_dark",
+    "gitDecoration.conflictingResourceForeground": "orange",
+    "gitDecoration.stageModifiedResourceForeground": "yellow",
+    "gitDecoration.stageDeletedResourceForeground":  "red",
+    "gitDecoration.submoduleResourceForeground":   "purple",
+
+    # Notifications
+    "notifications.background":           "bg_alt",
+    "notifications.foreground":           "fg",
+    "notifications.border":               "bg_alt2",
+    "notificationCenterHeader.background": "bg_alt2",
+    "notificationCenterHeader.foreground": "fg_alt",
+    "notificationLink.foreground":        "cyan",
+    "notificationsErrorIcon.foreground":  "red",
+    "notificationsWarningIcon.foreground": "yellow",
+    "notificationsInfoIcon.foreground":   "cyan",
+
+    # Breadcrumbs — the leaf segment is the closest analogue to the vim
+    # theme's amber Directory.
+    "breadcrumb.background":              "bg",
+    "breadcrumb.foreground":              "fg_dark",
+    "breadcrumb.focusForeground":         "fg",
+    "breadcrumb.activeSelectionForeground": "amber",
+    "breadcrumbPicker.background":        "bg_alt",
+
+    # Quick input / command palette
+    "quickInput.background":              "bg_alt",
+    "quickInput.foreground":              "fg",
+    "quickInputTitle.background":         "bg_alt2",
+    "pickerGroup.border":                 "bg_alt2",
+    "pickerGroup.foreground":             "amber",
+    "keybindingLabel.background":         "bg_alt2",
+    "keybindingLabel.foreground":         "fg",
+    "keybindingLabel.border":             "bg_alt2",
+    "keybindingLabel.bottomBorder":       "bg_alt2",
+
+    # Debug
+    "debugToolBar.background":            "bg_alt",
+    "debugToolBar.border":                "bg_alt2",
+    "debugIcon.breakpointForeground":     "red",
+    "debugIcon.breakpointDisabledForeground": "fg_dark",
+    "debugConsoleInputIcon.foreground":   "amber",
+    "editor.stackFrameHighlightBackground":        ("mix", "bg", "yellow", 0.18),
+    "editor.focusedStackFrameHighlightBackground": ("mix", "bg", "green", 0.18),
+
+    # Testing
+    "testing.iconFailed":                 "red",
+    "testing.iconErrored":                "orange",
+    "testing.iconPassed":                 "green",
+    "testing.iconQueued":                 "yellow",
+    "testing.iconSkipped":                "fg_dark",
+
+    # Settings
+    "settings.headerForeground":          "fg_light",
+    "settings.modifiedItemIndicator":     "amber",
+
+    # Symbol icons (outline, suggest widget) — follow the syntax mapping so
+    # the completion list reads the same way the buffer does.
+    "symbolIcon.classForeground":            "cyan",
+    "symbolIcon.interfaceForeground":        "cyan",
+    "symbolIcon.structForeground":           "cyan",
+    "symbolIcon.enumeratorForeground":       "cyan",
+    "symbolIcon.moduleForeground":           "cyan",
+    "symbolIcon.namespaceForeground":        "cyan",
+    "symbolIcon.typeParameterForeground":    "cyan",
+    "symbolIcon.functionForeground":         "green",
+    "symbolIcon.methodForeground":           "green",
+    "symbolIcon.constructorForeground":      "cyan",
+    "symbolIcon.variableForeground":         "fg",
+    "symbolIcon.propertyForeground":         "fg",
+    "symbolIcon.fieldForeground":            "fg",
+    "symbolIcon.constantForeground":         "purple",
+    "symbolIcon.enumeratorMemberForeground": "purple",
+    "symbolIcon.numberForeground":           "purple",
+    "symbolIcon.booleanForeground":          "purple",
+    "symbolIcon.keywordForeground":          "red",
+    "symbolIcon.operatorForeground":         "red",
+    "symbolIcon.stringForeground":           "yellow",
+    "symbolIcon.snippetForeground":          "fg_alt",
+}
+
+# TextMate scopes, as (name, slot, font_style, [scopes]). Mirrors the group
+# assignments in autoload/spectral.vim — the two must agree or a file looks
+# different in vim and VS Code.
+#
+# Two places where the vim theme is internally inconsistent and this map had
+# to pick a side:
+#   punctuation — per-language groups (jsonBraces, cssBraces) use fg, while
+#     the treesitter captures use fg_alt. fg_alt wins: dimmer punctuation is
+#     the more deliberate of the two and reads better in dense code.
+#   regexp — @string.regex is orange but the richer rubyRegexp* family paints
+#     the body cyan with orange escapes and purple char classes. The Ruby
+#     treatment wins because TextMate scopes are granular enough to express it.
+VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
+    ("Comment", "fg_dark", "italic", [
+        "comment",
+        "punctuation.definition.comment",
+        "string.comment",
+    ]),
+    ("Keyword", "red", "", [
+        "keyword",
+        "keyword.control",
+        "keyword.operator",
+        "keyword.other",
+        "storage",
+        "storage.type",
+        "storage.modifier",
+        "meta.preprocessor",
+        "punctuation.definition.keyword",
+    ]),
+    ("Tag", "red", "", [
+        "entity.name.tag",
+        "meta.tag.sgml",
+    ]),
+    ("String", "yellow", "", [
+        "string",
+        "string.quoted",
+        "punctuation.definition.string",
+        "meta.string",
+    ]),
+    # Ruby symbols carry the amber signature, as they do in the vim theme.
+    ("Ruby symbol", "amber", "", [
+        "constant.other.symbol",
+    ]),
+    ("Regular expression", "cyan", "", [
+        "string.regexp",
+        "punctuation.definition.string.regexp",
+    ]),
+    ("Regexp character class", "purple", "", [
+        "constant.other.character-class.regexp",
+        "constant.other.character-class.set.regexp",
+    ]),
+    ("Escape and special character", "orange", "", [
+        "constant.character.escape",
+        "constant.other.character-class.escape",
+        "punctuation.definition.template-expression",
+        "punctuation.section.embedded",
+    ]),
+    ("Function", "green", "", [
+        "entity.name.function",
+        "meta.function-call",
+        "variable.function",
+        "entity.name.method",
+        "meta.function-call.generic",
+    ]),
+    ("Built-in function", "cyan", "", [
+        "support.function",
+        "support.macro",
+    ]),
+    ("Type", "cyan", "", [
+        "entity.name.type",
+        "entity.name.class",
+        "entity.name.namespace",
+        "entity.other.inherited-class",
+        "support.type",
+        "support.class",
+        "storage.type.annotation",
+        "entity.name.scope-resolution",
+    ]),
+    ("Parameter", "orange", "", [
+        "variable.parameter",
+        "meta.parameter",
+    ]),
+    ("Built-in variable", "orange", "", [
+        "variable.language",
+        "variable.other.global",
+        "variable.other.readwrite.instance",
+        "variable.other.readwrite.class",
+    ]),
+    ("Decorator", "orange", "", [
+        "meta.decorator",
+        "entity.name.function.decorator",
+        "punctuation.decorator",
+    ]),
+    ("Constant", "purple", "", [
+        "constant",
+        "constant.numeric",
+        "constant.language",
+        "constant.other",
+        "support.constant",
+        "variable.other.constant",
+        "entity.name.constant",
+    ]),
+    ("Variable", "fg", "", [
+        "variable",
+        "variable.other",
+        "meta.definition.variable",
+    ]),
+    ("Property", "fg", "", [
+        "variable.other.property",
+        "support.variable.property",
+        "meta.object-literal.key",
+    ]),
+    # Data-format keys read as types, matching jsonKeyword/yamlKey/tomlKey.
+    ("Data key", "cyan", "", [
+        "support.type.property-name.json",
+        "support.type.property-name.toml",
+        "entity.name.tag.yaml",
+    ]),
+    ("Attribute name", "green", "", [
+        "entity.other.attribute-name",
+    ]),
+    ("CSS class", "cyan", "", [
+        "entity.other.attribute-name.class.css",
+        "entity.other.attribute-name.id.css",
+    ]),
+    ("Punctuation", "fg_alt", "", [
+        "punctuation",
+        "punctuation.separator",
+        "punctuation.terminator",
+        "punctuation.definition.tag",
+        "meta.brace",
+    ]),
+    ("Markdown heading 1", "red", "bold", [
+        "markup.heading.1",
+        "markup.heading.setext.1",
+    ]),
+    ("Markdown heading 2", "orange", "bold", [
+        "markup.heading.2",
+        "markup.heading.setext.2",
+    ]),
+    ("Markdown heading 3", "yellow", "bold", ["markup.heading.3"]),
+    ("Markdown heading 4", "green",  "bold", ["markup.heading.4"]),
+    ("Markdown heading 5", "cyan",   "bold", ["markup.heading.5"]),
+    ("Markdown heading 6", "purple", "bold", ["markup.heading.6"]),
+    ("Markdown bold", "orange", "bold", ["markup.bold"]),
+    ("Markdown italic", "purple", "italic", ["markup.italic"]),
+    ("Markdown strikethrough", "fg_darker", "strikethrough", [
+        "markup.strikethrough",
+    ]),
+    ("Markdown code", "green", "", [
+        "markup.inline.raw",
+        "markup.fenced_code",
+        "markup.raw",
+    ]),
+    ("Markdown link", "cyan", "underline", [
+        "markup.underline.link",
+        "string.other.link",
+    ]),
+    ("Markdown link text", "purple", "", [
+        "string.other.link.title",
+        "string.other.link.description",
+    ]),
+    ("Markdown list marker", "red", "", [
+        "punctuation.definition.list.begin",
+        "markup.list",
+    ]),
+    ("Markdown quote", "fg_dark", "italic", ["markup.quote"]),
+    ("Markdown separator", "fg_darker", "", [
+        "meta.separator",
+        "punctuation.definition.heading",
+    ]),
+    ("Diff inserted", "green", "", ["markup.inserted"]),
+    ("Diff deleted", "red", "", ["markup.deleted"]),
+    ("Diff changed", "yellow", "", ["markup.changed"]),
+    ("Invalid", "red", "", ["invalid", "invalid.illegal"]),
+    ("Deprecated", "fg_dark", "strikethrough", ["invalid.deprecated"]),
+]
+
+# LSP semantic tokens, mirroring the @lsp.type.* / @lsp.mod.* groups.
+VSCODE_SEMANTIC: dict[str, tuple[str, str]] = {
+    "class":                        ("cyan", ""),
+    "interface":                    ("cyan", ""),
+    "struct":                       ("cyan", ""),
+    "enum":                         ("cyan", ""),
+    "type":                         ("cyan", ""),
+    "typeParameter":                ("cyan", ""),
+    "namespace":                    ("cyan", ""),
+    "macro":                        ("cyan", ""),
+    "decorator":                    ("orange", ""),
+    "enumMember":                   ("purple", ""),
+    "function":                     ("green", ""),
+    "method":                       ("green", ""),
+    "parameter":                    ("orange", ""),
+    "property":                     ("fg", ""),
+    "variable":                     ("fg", ""),
+    "comment":                      ("fg_dark", "italic"),
+    "keyword":                      ("red", ""),
+    "operator":                     ("red", ""),
+    "string":                       ("yellow", ""),
+    "number":                       ("purple", ""),
+    "*.readonly":                   ("purple", ""),
+    "*.deprecated":                 ("fg_dark", "strikethrough"),
+    "*.abstract":                   ("cyan", "italic"),
+    "*.async":                      ("red", "italic"),
+    "variable.defaultLibrary":      ("purple", ""),
+    "function.defaultLibrary":      ("cyan", ""),
+    "method.defaultLibrary":        ("cyan", ""),
+    "variable.global":              ("orange", ""),
+}
+
+VSCODE_NAMES = {"dark": "Spectral Dark", "light": "Spectral Light"}
+
+
+def _font_style(style: str) -> dict:
+    # VS Code treats an absent fontStyle as "inherit" and "" as "reset to
+    # plain"; emit "" so nothing leaks in from a base grammar.
+    return {"fontStyle": style}
+
+
+def emit_vscode(variant: str, palette: dict, palette_oklch: dict) -> str:
+    colors = {key: _vsc(palette, value) for key, value in VSCODE_UI.items()}
+
+    # Integrated terminal ANSI — same mapping and same "bright" derivation the
+    # Ghostty and iTerm2 presets use, so a terminal inside VS Code matches one
+    # outside it.
+    ansi_names = [
+        "Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White",
+    ]
+    base_map = GHOSTTY_ANSI[variant]
+    for i, name in enumerate(ansi_names):
+        colors[f"terminal.ansi{name}"] = f"#{palette[base_map[i]]['gui']}"
+    for i, name in enumerate(ansi_names):
+        idx = i + 8
+        if idx == 8:
+            rgb = palette[base_map[8]]["rgb"]
+        elif idx == 15:
+            rgb = palette["white"]["rgb"]
+        else:
+            rgb = oklch_to_rgb(*_bright(palette_oklch, base_map[i], variant))
+        colors[f"terminal.ansiBright{name}"] = f"#{rgb[0]:02X}{rgb[1]:02X}{rgb[2]:02X}"
+
+    token_colors = [
+        {
+            "name": name,
+            "scope": scopes,
+            "settings": {
+                "foreground": f"#{palette[slot]['gui']}",
+                **_font_style(style),
+            },
+        }
+        for name, slot, style, scopes in VSCODE_TOKENS
+    ]
+
+    semantic = {
+        token: {
+            "foreground": f"#{palette[slot]['gui']}",
+            **_font_style(style),
+        }
+        for token, (slot, style) in VSCODE_SEMANTIC.items()
+    }
+
+    theme = {
+        "$schema": "vscode://schemas/color-theme",
+        "name": VSCODE_NAMES[variant],
+        "type": variant,
+        "semanticHighlighting": True,
+        "colors": colors,
+        "semanticTokenColors": semantic,
+        "tokenColors": token_colors,
+    }
+    return json.dumps(theme, indent=2) + "\n"
+
+
+# --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
 
@@ -546,6 +1222,11 @@ def main() -> None:
 
         # Mattermost
         (REPO / "mattermost" / f"spectral-{variant}.json").write_text(emit_mattermost(variant, palette))
+
+        # VS Code
+        vscode = REPO / "vscode" / "themes"
+        vscode.mkdir(parents=True, exist_ok=True)
+        (vscode / f"spectral-{variant}.json").write_text(emit_vscode(variant, palette, spec))
 
         print(f"wrote {variant} variant")
 

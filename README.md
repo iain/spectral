@@ -1,6 +1,6 @@
 # Spectral
 
-A warm, high-contrast colorscheme for Vim and Neovim with an amber-CRT signature. Available in dark and light variants with true color (24-bit) and 256-color terminal support.
+A warm, high-contrast colorscheme for Vim and Neovim with an amber-CRT signature. Available in dark and light variants with true color (24-bit) and 256-color terminal support. Matching themes ship for VS Code, Ghostty, iTerm2, and Mattermost.
 
 ## Variants
 
@@ -92,7 +92,9 @@ Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendere
 
 ## Editing the palette
 
-The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, and `autoload/lightline/` files are generated; do not hand-edit them.
+The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, the two `vscode/themes/spectral-*.json` themes, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, `vscode/themes/`, and `autoload/lightline/` files are generated; do not hand-edit them.
+
+`tools/test_palette.py` asserts invariants on the generated output — valid hex everywhere, no TextMate scope claimed by two entries, and a contrast floor so nothing disappears into the background. Run it with `python3 -m unittest discover -s tools`; CI runs it alongside the drift check.
 
 ## Color Palette
 
@@ -125,6 +127,39 @@ Background: `0.21 / 0.006 / 85°` → `#1A1815` / Foreground: `0.86 / 0.038 / 85
 | Purple            | `0.45 / 0.16 / 300°` | `#65389F` | Constants, numbers, booleans       |
 
 Background: `0.985 / 0.020 / 85°` → `#FFFAEE` / Foreground: `0.26 / 0.030 / 85°` → `#2B2313`
+
+## VS Code
+
+The `vscode/` directory is a self-contained extension. The themes themselves —
+`vscode/themes/spectral-dark.json` and `spectral-light.json` — are generated
+from the same palette as everything else, and cover the workbench, the
+integrated terminal's ANSI palette, TextMate scopes, and LSP semantic tokens.
+
+To use it without publishing, symlink or copy `vscode/` into your extensions
+directory and reload:
+
+```bash
+ln -s "$PWD/vscode" ~/.vscode/extensions/spectral
+```
+
+To build a `.vsix`:
+
+```bash
+cd vscode && npx @vscode/vsce package
+```
+
+Two places where the VS Code mapping deliberately departs from the Vim theme,
+both because the Vim theme is internally inconsistent there:
+
+- **Punctuation** is `fg_alt`, following the treesitter captures rather than
+  the brighter per-language groups (`jsonBraces`, `cssBraces`).
+- **Regular expressions** follow the richer `rubyRegexp*` treatment — cyan
+  body, orange escapes, purple character classes — rather than the flat orange
+  of `@string.regex`.
+
+Sorbet type signatures are not dimmed in VS Code. That effect relies on the
+custom syntax regions in `plugin/sorbet.vim`, which have no TextMate scope to
+hook.
 
 ## Terminal config
 
