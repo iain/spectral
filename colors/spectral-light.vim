@@ -14,7 +14,7 @@ endif
 set background=light
 let g:colors_name = 'spectral-light'
 
-let s:amber = {'gui': '#9D6300', 'cterm': '130'}
+let s:amber = {'gui': '#A76C01', 'cterm': '130'}
 
 call spectral#apply({
   \ 'bg':        {'gui': '#FFFAEE', 'cterm': '231'},
@@ -26,12 +26,12 @@ call spectral#apply({
   \ 'fg_light':  {'gui': '#171105', 'cterm': '233'},
   \ 'fg':        {'gui': '#2B2313', 'cterm': '234'},
   \ 'white':     {'gui': '#FFFFFF', 'cterm': '231'},
-  \ 'red':       {'gui': '#AC1A1C', 'cterm': '124'},
-  \ 'orange':    {'gui': '#9C4700', 'cterm': '130'},
-  \ 'yellow':    {'gui': '#A98D00', 'cterm': '136'},
-  \ 'green':     {'gui': '#357426', 'cterm': '64'},
-  \ 'cyan':      {'gui': '#00707E', 'cterm': '24'},
-  \ 'purple':    {'gui': '#65389F', 'cterm': '61'},
+  \ 'red':       {'gui': '#BB0916', 'cterm': '124'},
+  \ 'orange':    {'gui': '#C83E01', 'cterm': '166'},
+  \ 'yellow':    {'gui': '#AD8600', 'cterm': '136'},
+  \ 'green':     {'gui': '#1A7F11', 'cterm': '28'},
+  \ 'cyan':      {'gui': '#007A85', 'cterm': '30'},
+  \ 'purple':    {'gui': '#791DC7', 'cterm': '92'},
   \ 'black':     {'gui': '#000000', 'cterm': '16'},
   \ 'tab_bg':    {'gui': '#EFE3CB', 'cterm': '224'},
   \ })

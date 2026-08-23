@@ -3,7 +3,7 @@
 background = FFFAEE
 foreground = 2B2313
 
-cursor-color = 9D6300
+cursor-color = A76C01
 cursor-text = FFFAEE
 
 selection-background = E7D9BD
@@ -11,20 +11,20 @@ selection-foreground = 2B2313
 
 # ANSI palette
 palette = 0=#463C28
-palette = 1=#AC1A1C
-palette = 2=#357426
-palette = 3=#A98D00
-palette = 4=#004B96
-palette = 5=#65389F
-palette = 6=#00707E
+palette = 1=#BB0916
+palette = 2=#1A7F11
+palette = 3=#AD8600
+palette = 4=#0053A4
+palette = 5=#791DC7
+palette = 6=#007A85
 palette = 7=#E7D9BD
 
 # Bright
 palette = 8=#6E6249
-palette = 9=#810009
-palette = 10=#165700
-palette = 11=#867000
-palette = 12=#003167
-palette = 13=#4A177F
-palette = 14=#00515C
+palette = 9=#8B000B
+palette = 10=#065E00
+palette = 11=#896A00
+palette = 12=#003974
+palette = 13=#590098
+palette = 14=#005B63
 palette = 15=#FFFFFF

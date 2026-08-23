@@ -12,17 +12,17 @@ let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': 
 
 if &background ==# 'light'
   let s:bg = ['#FFFAEE', 231]
-  let s:amber = ['#9D6300', 130]
+  let s:amber = ['#A76C01', 130]
   let s:fg_light = ['#171105', 233]
   let s:bg_alt2 = ['#E7D9BD', 187]
   let s:fg_alt = ['#463C28', 58]
   let s:bg_alt = ['#F6EAD1', 224]
   let s:fg_darker = ['#5D5139', 59]
-  let s:red = ['#AC1A1C', 124]
-  let s:yellow = ['#A98D00', 136]
+  let s:red = ['#BB0916', 124]
+  let s:yellow = ['#AD8600', 136]
   let s:fg_dark = ['#6E6249', 59]
-  let s:green = ['#357426', 64]
-  let s:purple = ['#65389F', 61]
+  let s:green = ['#1A7F11', 28]
+  let s:purple = ['#791DC7', 92]
   let s:tab_bg = ['#EFE3CB', 224]
 else
   let s:bg = ['#1A1815', 234]

@@ -3,30 +3,30 @@
 <text x="28" y="42" font-size="17" fill="#2b2313">Spectral Light</text>
 <text x="28" y="72" font-size="10" letter-spacing="1.5" fill="#6e6249">ACCENTS</text>
 <text x="28" y="218" font-size="10" letter-spacing="1.5" fill="#6e6249">NEUTRALS</text>
-<rect x="28" y="86.0" width="92" height="56" rx="6" fill="#9d6300" stroke="#e7d9bd"/>
+<rect x="28" y="86.0" width="92" height="56" rx="6" fill="#a76c01" stroke="#e7d9bd"/>
 <text x="74" y="162" text-anchor="middle" font-size="11" fill="#463c28">amber</text>
-<text x="74" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#9D6300</text>
-<rect x="132" y="86.0" width="92" height="56" rx="6" fill="#ac1a1c" stroke="#e7d9bd"/>
+<text x="74" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#A76C01</text>
+<rect x="132" y="86.0" width="92" height="56" rx="6" fill="#bb0916" stroke="#e7d9bd"/>
 <text x="178" y="162" text-anchor="middle" font-size="11" fill="#463c28">red</text>
-<text x="178" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#AC1A1C</text>
-<rect x="236" y="86.0" width="92" height="56" rx="6" fill="#9c4700" stroke="#e7d9bd"/>
+<text x="178" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#BB0916</text>
+<rect x="236" y="86.0" width="92" height="56" rx="6" fill="#c83e01" stroke="#e7d9bd"/>
 <text x="282" y="162" text-anchor="middle" font-size="11" fill="#463c28">orange</text>
-<text x="282" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#9C4700</text>
-<rect x="340" y="86.0" width="92" height="56" rx="6" fill="#a98d00" stroke="#e7d9bd"/>
+<text x="282" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#C83E01</text>
+<rect x="340" y="86.0" width="92" height="56" rx="6" fill="#ad8600" stroke="#e7d9bd"/>
 <text x="386" y="162" text-anchor="middle" font-size="11" fill="#463c28">yellow</text>
-<text x="386" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#A98D00</text>
-<rect x="444" y="86.0" width="92" height="56" rx="6" fill="#357426" stroke="#e7d9bd"/>
+<text x="386" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#AD8600</text>
+<rect x="444" y="86.0" width="92" height="56" rx="6" fill="#1a7f11" stroke="#e7d9bd"/>
 <text x="490" y="162" text-anchor="middle" font-size="11" fill="#463c28">green</text>
-<text x="490" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#357426</text>
-<rect x="548" y="86.0" width="92" height="56" rx="6" fill="#00707e" stroke="#e7d9bd"/>
+<text x="490" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#1A7F11</text>
+<rect x="548" y="86.0" width="92" height="56" rx="6" fill="#007a85" stroke="#e7d9bd"/>
 <text x="594" y="162" text-anchor="middle" font-size="11" fill="#463c28">cyan</text>
-<text x="594" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#00707E</text>
-<rect x="652" y="86.0" width="92" height="56" rx="6" fill="#004b96" stroke="#e7d9bd"/>
+<text x="594" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#007A85</text>
+<rect x="652" y="86.0" width="92" height="56" rx="6" fill="#0053a4" stroke="#e7d9bd"/>
 <text x="698" y="162" text-anchor="middle" font-size="11" fill="#463c28">blue</text>
-<text x="698" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#004B96</text>
-<rect x="756" y="86.0" width="92" height="56" rx="6" fill="#65389f" stroke="#e7d9bd"/>
+<text x="698" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#0053A4</text>
+<rect x="756" y="86.0" width="92" height="56" rx="6" fill="#791dc7" stroke="#e7d9bd"/>
 <text x="802" y="162" text-anchor="middle" font-size="11" fill="#463c28">purple</text>
-<text x="802" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#65389F</text>
+<text x="802" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#791DC7</text>
 <rect x="28" y="232.0" width="92" height="56" rx="6" fill="#fffaee" stroke="#e7d9bd"/>
 <text x="74" y="308" text-anchor="middle" font-size="11" fill="#463c28">bg</text>
 <text x="74" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#FFFAEE</text>

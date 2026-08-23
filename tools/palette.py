@@ -89,18 +89,28 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
         "fg_alt":    (0.36, 0.035, NEUTRAL_HUE),
         "fg":        (0.26, 0.030, NEUTRAL_HUE),
         "fg_light":  (0.18, 0.025, NEUTRAL_HUE),
-        # Accents — equi-L band ~0.48 for legible contrast on cream paper.
-        "red":       (0.48, 0.18, 27),
-        "orange":    (0.50, 0.15, 50),
-        "yellow":    (0.65, 0.15, 95),
-        "green":     (0.50, 0.13, 140),
-        "cyan":      (0.50, 0.10, 210),
-        "blue":      (0.42, 0.15, 255),
-        "purple":    (0.45, 0.16, 300),
+        # Accents — equi-L band ~0.53, each hue sitting at (or just under) its
+        # sRGB chroma ceiling. Warm hues peak in chroma at high lightness, so
+        # a dark orange has nowhere to go but brown; the band is lifted as far
+        # as the contrast budget on cream paper allows, and no further.
+        #
+        # Orange sits at 38° rather than 50°: only 20° from amber, the two
+        # collapsed into the same brown down here, where there is not enough
+        # chroma to separate them by saturation alone.
+        "red":       (0.50, 0.200, 27),
+        "orange":    (0.56, 0.183, 38),
+        # Yellow is the one hue a light theme cannot win. Its chroma peak sits
+        # near L=0.85, where contrast on cream falls to ~1.5:1, so it stays a
+        # dark gold. 88° rather than 95° reads gold instead of olive.
+        "yellow":    (0.64, 0.131, 88),
+        "green":     (0.52, 0.166, 142),
+        "cyan":      (0.53, 0.091, 205),
+        "blue":      (0.45, 0.148, 255),
+        "purple":    (0.48, 0.233, 302),
         "white":     (1.00, 0.00, 0),
         "black":     (0.00, 0.00, 0),
         "tab_bg":    (0.92, 0.035, NEUTRAL_HUE),
-        "amber":     (0.55, 0.13, 70),
+        "amber":     (0.58, 0.124, 72),
     },
 }
 

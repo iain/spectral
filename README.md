@@ -162,13 +162,13 @@ Background: `0.21 / 0.006 / 85°` → `#1A1815` / Foreground: `0.86 / 0.038 / 85
 
 | Color             | OKLCH              | Hex       | Usage                              |
 |-------------------|--------------------|-----------|------------------------------------|
-| Amber (signature) | `0.55 / 0.13 / 70°`  | `#9D6300` | Directories, Ruby symbols          |
-| Red               | `0.48 / 0.18 / 27°`  | `#AC1A1C` | Keywords, control flow             |
-| Orange            | `0.50 / 0.15 / 50°`  | `#9C4700` | Parameters, special characters     |
-| Yellow            | `0.65 / 0.15 / 95°`  | `#A98D00` | Strings                            |
-| Green             | `0.50 / 0.13 / 140°` | `#357426` | Functions, methods                 |
-| Cyan              | `0.50 / 0.10 / 210°` | `#00707E` | Types, built-in functions          |
-| Purple            | `0.45 / 0.16 / 300°` | `#65389F` | Constants, numbers, booleans       |
+| Amber (signature) | `0.58 / 0.124 / 72°`  | `#A76C01` | Directories, Ruby symbols          |
+| Red               | `0.50 / 0.200 / 27°`  | `#BB0916` | Keywords, control flow             |
+| Orange            | `0.56 / 0.183 / 38°`  | `#C83E01` | Parameters, special characters     |
+| Yellow            | `0.64 / 0.131 / 88°`  | `#AD8600` | Strings                            |
+| Green             | `0.52 / 0.166 / 142°` | `#1A7F11` | Functions, methods                 |
+| Cyan              | `0.53 / 0.091 / 205°` | `#007A85` | Types, built-in functions          |
+| Purple            | `0.48 / 0.233 / 302°` | `#791DC7` | Constants, numbers, booleans       |
 
 Background: `0.985 / 0.020 / 85°` → `#FFFAEE` / Foreground: `0.26 / 0.030 / 85°` → `#2B2313`
 
