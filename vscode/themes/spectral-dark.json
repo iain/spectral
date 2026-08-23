@@ -354,7 +354,7 @@
       "fontStyle": ""
     },
     "decorator": {
-      "foreground": "#FF8432",
+      "foreground": "#F9AD26",
       "fontStyle": ""
     },
     "enumMember": {
@@ -617,7 +617,7 @@
         "punctuation.decorator"
       ],
       "settings": {
-        "foreground": "#FF8432",
+        "foreground": "#F9AD26",
         "fontStyle": ""
       }
     },

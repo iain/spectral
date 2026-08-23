@@ -1046,7 +1046,7 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "variable.other.readwrite.instance",
         "variable.other.readwrite.class",
     ]),
-    ("Decorator", "orange", "", [
+    ("Decorator", "amber", "", [
         "meta.decorator",
         "entity.name.function.decorator",
         "punctuation.decorator",
@@ -1149,7 +1149,7 @@ VSCODE_SEMANTIC: dict[str, tuple[str, str]] = {
     "typeParameter":                ("cyan", ""),
     "namespace":                    ("blue", ""),
     "macro":                        ("cyan", ""),
-    "decorator":                    ("orange", ""),
+    "decorator":                    ("amber", ""),
     "enumMember":                   ("purple", ""),
     "function":                     ("green", ""),
     "method":                       ("green", ""),

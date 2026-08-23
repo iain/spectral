@@ -280,7 +280,7 @@ function! spectral#apply(p) abort
   call s:HL('pythonBuiltinFunc',   s:cyan,   s:none,       '')
   call s:HL('pythonBuiltinType',   s:cyan,   s:none,       '')
   call s:HL('pythonFunction',      s:green,  s:none,       '')
-  call s:HL('pythonDecorator',     s:orange, s:none,       '')
+  call s:HL('pythonDecorator',     s:amber,  s:none,       '')
   call s:HL('pythonInclude',       s:red,    s:none,       '')
   call s:HL('pythonImport',        s:red,    s:none,       '')
   call s:HL('pythonRun',           s:cyan,   s:none,       '')
@@ -646,7 +646,7 @@ function! spectral#apply(p) abort
     call s:HL('@type.definition',    s:cyan,       s:none, '')
     call s:HL('@type.qualifier',     s:red,        s:none, '')
     call s:HL('@storageclass',       s:red,        s:none, '')
-    call s:HL('@attribute',          s:purple,     s:none, '')
+    call s:HL('@attribute',          s:amber,      s:none, '')
     call s:HL('@field',              s:fg,         s:none, '')
     call s:HL('@property',           s:fg,         s:none, '')
 
@@ -699,7 +699,7 @@ function! spectral#apply(p) abort
     call s:HL('@module.builtin',      s:blue,       s:none, '')
     call s:HL('@string.regexp',       s:orange,     s:none, '')
     call s:HL('@string.special.symbol', s:purple,   s:none, '')
-    call s:HL('@attribute.builtin',   s:purple,     s:none, '')
+    call s:HL('@attribute.builtin',   s:amber,      s:none, '')
 
     call s:HL('@keyword.conditional', s:red,        s:none, '')
     call s:HL('@keyword.conditional.ternary', s:red, s:none, '')
@@ -801,7 +801,7 @@ function! spectral#apply(p) abort
 
   if has('nvim-0.9')
     call s:HL('@lsp.type.class',        s:cyan,   s:none, '')
-    call s:HL('@lsp.type.decorator',    s:orange, s:none, '')
+    call s:HL('@lsp.type.decorator',    s:amber,  s:none, '')
     call s:HL('@lsp.type.enum',         s:cyan,   s:none, '')
     call s:HL('@lsp.type.enumMember',   s:purple, s:none, '')
     call s:HL('@lsp.type.function',     s:green,  s:none, '')

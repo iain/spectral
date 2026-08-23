@@ -17,6 +17,11 @@ class RetryPolicy:
     retry_on: tuple[type[Exception], ...] = (TimeoutError, ConnectionError)
     _clock: callable = field(default=time.monotonic, repr=False)
 
+    @property
+    def max_delay(self) -> float:
+        """Longest wait this policy can produce, for logging and tests."""
+        return self.base * (2 ** (self.attempts - 1))
+
     def delay_for(self, attempt: int) -> float:
         """Full-jitter backoff: uniform over [0, base * 2**attempt]."""
         if attempt < 0:
