@@ -23,13 +23,17 @@ that happen to be near each other.
 | Functions and methods       | Green   |
 | Types and classes           | Cyan    |
 | Namespaces, links           | Blue    |
+| Keys, symbols, list markers | Amber   |
 | Parameters, escapes         | Orange  |
 | Constants, numbers, booleans| Purple  |
 | Comments                    | Dimmed, italic |
 
-Amber is reserved for the things the eye returns to constantly rather than for
-body text: the cursor, badges, the active tab's top edge, the current
-breadcrumb segment, buttons, and Ruby symbols.
+Amber is the signature. In syntax it marks the key in a key/value pair — Ruby
+symbols, JSON/YAML/TOML keys, CSS property names, object-literal keys — and
+Markdown list markers, which have no key to mark. In the workbench it is
+reserved for what the eye returns to constantly rather than for body text: the
+cursor, badges, the active tab's top edge, the current breadcrumb segment, and
+buttons.
 
 ## What's covered
 

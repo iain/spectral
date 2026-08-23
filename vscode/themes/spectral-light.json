@@ -653,8 +653,7 @@
       "name": "Property",
       "scope": [
         "variable.other.property",
-        "support.variable.property",
-        "meta.object-literal.key"
+        "support.variable.property"
       ],
       "settings": {
         "foreground": "#2B2313",
@@ -662,14 +661,16 @@
       }
     },
     {
-      "name": "Data key",
+      "name": "Key",
       "scope": [
         "support.type.property-name.json",
         "support.type.property-name.toml",
-        "entity.name.tag.yaml"
+        "support.type.property-name.css",
+        "entity.name.tag.yaml",
+        "meta.object-literal.key"
       ],
       "settings": {
-        "foreground": "#007A85",
+        "foreground": "#A76C01",
         "fontStyle": ""
       }
     },
@@ -841,7 +842,7 @@
         "markup.list"
       ],
       "settings": {
-        "foreground": "#BB0916",
+        "foreground": "#A76C01",
         "fontStyle": ""
       }
     },

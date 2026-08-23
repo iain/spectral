@@ -1,0 +1,37 @@
+# Deployment pipeline for the billing service.
+version: "3.9"
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  api:
+    <<: *defaults
+    image: registry.example.com/billing/api:1.4.2
+    command: ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+    environment:
+      RACK_ENV: production
+      DATABASE_URL: postgres://billing@db:5432/billing
+      VAT_RATE: "0.21"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - cache
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/healthz"]
+      interval: 30s
+      retries: 3
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}

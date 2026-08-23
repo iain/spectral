@@ -160,11 +160,18 @@ for a coherent paper/phosphor character.
 
 ![Spectral Light palette — accents and the warm neutral ramp](screenshots/palette-light.svg)
 
+Amber is the signature, and it marks the key in a key/value pair — Ruby symbols
+(which are usually hash keys), JSON, YAML and TOML keys, CSS property names, and
+object-literal keys in JavaScript and Go. Markdown has no key/value pairs, so
+there it marks list markers instead.
+
+![Spectral Dark rendering a YAML file with keys in amber](screenshots/deploy-dark.svg)
+
 ### Spectral Dark
 
 | Color             | OKLCH                | Hex       | Usage                          |
 |-------------------|----------------------|-----------|--------------------------------|
-| Amber (signature) | `0.80 / 0.16 / 75°`  | `#F9AD26` | Directories, Ruby symbols      |
+| Amber (signature) | `0.80 / 0.16 / 75°`  | `#F9AD26` | Keys, symbols, list markers    |
 | Red               | `0.68 / 0.22 / 27°`  | `#FF544C` | Keywords, control flow         |
 | Orange            | `0.74 / 0.20 / 50°`  | `#FF8432` | Parameters, special characters |
 | Yellow            | `0.88 / 0.20 / 98°`  | `#F8D700` | Strings                        |
@@ -179,7 +186,7 @@ Background `0.21 / 0.006 / 85°` → `#1A1815` · Foreground `0.86 / 0.038 / 85�
 
 | Color             | OKLCH                 | Hex       | Usage                          |
 |-------------------|-----------------------|-----------|--------------------------------|
-| Amber (signature) | `0.58 / 0.124 / 72°`  | `#A76C01` | Directories, Ruby symbols      |
+| Amber (signature) | `0.58 / 0.124 / 72°`  | `#A76C01` | Keys, symbols, list markers    |
 | Red               | `0.50 / 0.200 / 27°`  | `#BB0916` | Keywords, control flow         |
 | Orange            | `0.56 / 0.183 / 38°`  | `#C83E01` | Parameters, special characters |
 | Yellow            | `0.64 / 0.131 / 88°`  | `#AD8600` | Strings                        |

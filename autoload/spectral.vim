@@ -46,6 +46,7 @@ function! spectral#apply(p) abort
   let s:purple     = a:p.purple
   let s:black      = a:p.black
   let s:tab_bg     = a:p.tab_bg
+  let s:amber      = a:p.amber
   let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
 
   " Editor UI {{{
@@ -244,7 +245,7 @@ function! spectral#apply(p) abort
   call s:HL('cssBraces',       s:fg,         s:none,       '')
   call s:HL('cssClassName',    s:cyan,       s:none,       '')
   call s:HL('cssClassNameDot', s:cyan,       s:none,       '')
-  call s:HL('cssProp',         s:fg,         s:none,       '')
+  call s:HL('cssProp',         s:amber,      s:none,       '')
   call s:HL('cssAttr',         s:purple,     s:none,       '')
   call s:HL('cssColor',        s:purple,     s:none,       '')
   call s:HL('cssValueLength',  s:purple,     s:none,       '')
@@ -394,8 +395,8 @@ function! spectral#apply(p) abort
   call s:HL('markdownId',                s:cyan,   s:none,  '')
   call s:HL('markdownIdDeclaration',     s:purple, s:none,  '')
   call s:HL('markdownIdDelimiter',       s:fg_darker,s:none,'')
-  call s:HL('markdownListMarker',        s:red,    s:none,  '')
-  call s:HL('markdownOrderedListMarker', s:red,    s:none,  '')
+  call s:HL('markdownListMarker',        s:amber,  s:none,  '')
+  call s:HL('markdownOrderedListMarker', s:amber,  s:none,  '')
   call s:HL('markdownBlockquote',        s:fg_dark,s:none,  'italic')
   call s:HL('markdownRule',              s:fg_darker,s:none,'')
   call s:HL('markdownFootnote',          s:cyan,   s:none,  '')
@@ -404,19 +405,19 @@ function! spectral#apply(p) abort
   call s:HL('markdownError',             s:red,    s:bg,    '')
 
   " JSON
-  call s:HL('jsonKeyword',         s:cyan,   s:none,       '')
+  call s:HL('jsonKeyword',         s:amber,  s:none,       '')
   call s:HL('jsonQuote',           s:fg_alt, s:none,       '')
   call s:HL('jsonBraces',          s:fg,     s:none,       '')
   call s:HL('jsonString',          s:yellow, s:none,       '')
 
   " YAML
-  call s:HL('yamlKey',             s:cyan,   s:none,       '')
+  call s:HL('yamlKey',             s:amber,  s:none,       '')
   call s:HL('yamlConstant',        s:purple, s:none,       '')
-  call s:HL('yamlBlockMappingKey', s:cyan,   s:none,       '')
+  call s:HL('yamlBlockMappingKey', s:amber,  s:none,       '')
 
   " TOML
   call s:HL('tomlTable',           s:purple, s:none,       '')
-  call s:HL('tomlKey',             s:cyan,   s:none,       '')
+  call s:HL('tomlKey',             s:amber,  s:none,       '')
 
   " Vim
   call s:HL('vimCommand',          s:red,    s:none,       '')
@@ -693,6 +694,7 @@ function! spectral#apply(p) abort
     call s:HL('@variable.parameter',  s:orange,     s:none, '')
     call s:HL('@variable.parameter.builtin', s:orange, s:none, '')
     call s:HL('@variable.member',     s:fg,         s:none, '')
+    call s:HL('@property',          s:amber,      s:none, '')
     call s:HL('@module',              s:blue,       s:none, '')
     call s:HL('@module.builtin',      s:blue,       s:none, '')
     call s:HL('@string.regexp',       s:orange,     s:none, '')
@@ -737,7 +739,7 @@ function! spectral#apply(p) abort
     call s:HL('@markup.link.url',     s:blue,       s:none, 'underline')
     call s:HL('@markup.raw',          s:green,      s:none, '')
     call s:HL('@markup.raw.block',    s:green,      s:none, '')
-    call s:HL('@markup.list',         s:red,        s:none, '')
+    call s:HL('@markup.list',         s:amber,      s:none, '')
     call s:HL('@markup.list.checked', s:green,      s:none, '')
     call s:HL('@markup.list.unchecked', s:fg_dark,  s:none, '')
 

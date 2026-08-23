@@ -235,7 +235,7 @@ VIM_PALETTE_KEYS = [
     "fg_dark", "fg_darker", "fg_alt", "fg_light", "fg",
     "white",
     "red", "orange", "yellow", "green", "cyan", "blue", "purple",
-    "black", "tab_bg",
+    "black", "tab_bg", "amber",
 ]
 
 VIM_DESC = {
@@ -1068,13 +1068,15 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
     ("Property", "fg", "", [
         "variable.other.property",
         "support.variable.property",
-        "meta.object-literal.key",
     ]),
-    # Data-format keys read as types, matching jsonKeyword/yamlKey/tomlKey.
-    ("Data key", "cyan", "", [
+    # The key in a key/value pair carries the amber signature, generalising
+    # what Ruby symbols already did — they are hash keys most of the time.
+    ("Key", "amber", "", [
         "support.type.property-name.json",
         "support.type.property-name.toml",
+        "support.type.property-name.css",
         "entity.name.tag.yaml",
+        "meta.object-literal.key",
     ]),
     ("Attribute name", "green", "", [
         "entity.other.attribute-name",
@@ -1121,7 +1123,7 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "string.other.link.title",
         "string.other.link.description",
     ]),
-    ("Markdown list marker", "red", "", [
+    ("Markdown list marker", "amber", "", [
         "punctuation.definition.list.begin",
         "markup.list",
     ]),
