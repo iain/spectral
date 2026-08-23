@@ -270,9 +270,14 @@ function! spectral#apply(p) abort
   call s:HL('typescriptArrowFunc',        s:red,   s:none,  '')
 
   " Python
+  " Builtins are cyan, as in every other language and in @function.builtin.
+  " python-syntax's pythonBuiltinFunc covers len/map/range — the same tokens
+  " treesitter captures as @function.builtin, so it cannot be green here and
+  " cyan there without the token changing color between Vim and Neovim.
   call s:HL('pythonBuiltin',       s:cyan,   s:none,       '')
   call s:HL('pythonBuiltinObj',    s:cyan,   s:none,       '')
-  call s:HL('pythonBuiltinFunc',   s:green,  s:none,       '')
+  call s:HL('pythonBuiltinFunc',   s:cyan,   s:none,       '')
+  call s:HL('pythonBuiltinType',   s:cyan,   s:none,       '')
   call s:HL('pythonFunction',      s:green,  s:none,       '')
   call s:HL('pythonDecorator',     s:orange, s:none,       '')
   call s:HL('pythonInclude',       s:red,    s:none,       '')
