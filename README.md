@@ -9,9 +9,9 @@ light variants.
 Every target is generated from one palette definition, so the colors match
 across your editor, your terminal, and everything else.
 
-| Spectral Dark | Spectral Light |
-|---------------|----------------|
-| <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/palette-dark.svg"><img src="screenshots/palette-dark.svg" width="390" alt="Spectral Dark palette — accents and the warm neutral ramp"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/palette-light.svg"><img src="screenshots/palette-light.svg" width="390" alt="Spectral Light palette — accents and the warm neutral ramp"></a> |
+![Spectral Dark palette — accents and the warm neutral ramp](screenshots/palette-dark.svg)
+
+![Spectral Light palette — accents and the warm neutral ramp](screenshots/palette-light.svg)
 
 Ruby with Sorbet type signatures, Markdown headings, and YAML keys in amber:
 
@@ -21,7 +21,7 @@ Ruby with Sorbet type signatures, Markdown headings, and YAML keys in amber:
 | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/notes-dark.svg"><img src="screenshots/notes-dark.svg" width="390" alt="Spectral Dark rendering a Markdown file with headings and links"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/notes-light.svg"><img src="screenshots/notes-light.svg" width="390" alt="Spectral Light rendering the same Markdown file"></a> |
 | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/deploy-dark.svg"><img src="screenshots/deploy-dark.svg" width="390" alt="Spectral Dark rendering a YAML file with keys in amber"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/deploy-light.svg"><img src="screenshots/deploy-light.svg" width="390" alt="Spectral Light rendering the same YAML file"></a> |
 
-Screenshots link to the full-size render. Python samples are in
+Click through for the full-size render. Python samples are in
 [`screenshots/`](screenshots/).
 
 ## Where it runs
