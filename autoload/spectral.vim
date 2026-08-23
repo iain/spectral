@@ -597,7 +597,7 @@ function! spectral#apply(p) abort
   endif
   " }}}
 
-  " Treesitter (Neovim 0.8+) {{{
+  " Treesitter — legacy capture names, Neovim 0.8 and 0.9 {{{
   if has('nvim-0.8')
     call s:HL('@comment',            s:fg_dark,    s:none, 'italic')
     call s:HL('@error',              s:red,        s:none, '')
@@ -676,6 +676,76 @@ function! spectral#apply(p) abort
     call s:HL('@tag',                s:red,        s:none, '')
     call s:HL('@tag.attribute',      s:green,      s:none, '')
     call s:HL('@tag.delimiter',      s:fg_alt,     s:none, '')
+  endif
+  " }}}
+
+  " Treesitter — Neovim 0.10+ capture names {{{
+  " 0.10 renamed the standard captures: @text.* became @markup.*, @parameter
+  " became @variable.parameter, @namespace became @module, and the old
+  " @conditional / @repeat / @include / @exception / @preproc family all moved
+  " under @keyword. The block above still covers 0.8 and 0.9, which emit the
+  " old names; nothing here changes a color, it only re-points it at the name
+  " a current Neovim actually emits.
+  if has('nvim-0.10')
+    call s:HL('@number.float',        s:purple,     s:none, '')
+    call s:HL('@function.method',     s:green,      s:none, '')
+    call s:HL('@function.method.call',s:green,      s:none, '')
+    call s:HL('@variable.parameter',  s:orange,     s:none, '')
+    call s:HL('@variable.parameter.builtin', s:orange, s:none, '')
+    call s:HL('@variable.member',     s:fg,         s:none, '')
+    call s:HL('@module',              s:blue,       s:none, '')
+    call s:HL('@module.builtin',      s:blue,       s:none, '')
+    call s:HL('@string.regexp',       s:orange,     s:none, '')
+    call s:HL('@string.special.symbol', s:purple,   s:none, '')
+    call s:HL('@attribute.builtin',   s:purple,     s:none, '')
+
+    call s:HL('@keyword.conditional', s:red,        s:none, '')
+    call s:HL('@keyword.conditional.ternary', s:red, s:none, '')
+    call s:HL('@keyword.repeat',      s:red,        s:none, '')
+    call s:HL('@keyword.import',      s:red,        s:none, '')
+    call s:HL('@keyword.exception',   s:red,        s:none, '')
+    call s:HL('@keyword.coroutine',   s:red,        s:none, '')
+    call s:HL('@keyword.type',        s:red,        s:none, '')
+    call s:HL('@keyword.modifier',    s:red,        s:none, '')
+    call s:HL('@keyword.directive',   s:red,        s:none, '')
+    call s:HL('@keyword.directive.define', s:red,   s:none, '')
+    call s:HL('@keyword.debug',       s:orange,     s:none, '')
+
+    call s:HL('@comment.error',       s:red,        s:none, '')
+    call s:HL('@comment.warning',     s:orange,     s:none, '')
+    call s:HL('@comment.todo',        s:orange,     s:none, '')
+    call s:HL('@comment.note',        s:cyan,       s:none, '')
+
+    " Headings carry a level here, so the per-level colors markdownH1-H6 give
+    " Vim finally reach treesitter too — under @text.title every heading was
+    " one flat color.
+    call s:HL('@markup.heading',      s:red,        s:none, '')
+    call s:HL('@markup.heading.1',    s:red,        s:none, '')
+    call s:HL('@markup.heading.2',    s:orange,     s:none, '')
+    call s:HL('@markup.heading.3',    s:yellow,     s:none, '')
+    call s:HL('@markup.heading.4',    s:green,      s:none, '')
+    call s:HL('@markup.heading.5',    s:cyan,       s:none, '')
+    call s:HL('@markup.heading.6',    s:purple,     s:none, '')
+    call s:HL('@markup.strong',       s:orange,     s:none, '')
+    call s:HL('@markup.italic',       s:purple,     s:none, 'italic')
+    call s:HL('@markup.strikethrough',s:fg_dark,    s:none, 'strikethrough')
+    call s:HL('@markup.underline',    s:fg,         s:none, 'underline')
+    call s:HL('@markup.quote',        s:fg_dark,    s:none, 'italic')
+    call s:HL('@markup.math',         s:purple,     s:none, '')
+    call s:HL('@markup.link',         s:purple,     s:none, '')
+    call s:HL('@markup.link.label',   s:purple,     s:none, '')
+    call s:HL('@markup.link.url',     s:blue,       s:none, 'underline')
+    call s:HL('@markup.raw',          s:green,      s:none, '')
+    call s:HL('@markup.raw.block',    s:green,      s:none, '')
+    call s:HL('@markup.list',         s:red,        s:none, '')
+    call s:HL('@markup.list.checked', s:green,      s:none, '')
+    call s:HL('@markup.list.unchecked', s:fg_dark,  s:none, '')
+
+    call s:HL('@diff.plus',           s:green,      s:none, '')
+    call s:HL('@diff.minus',          s:red,        s:none, '')
+    call s:HL('@diff.delta',          s:yellow,     s:none, '')
+
+    call s:HL('@tag.builtin',         s:red,        s:none, '')
   endif
   " }}}
 

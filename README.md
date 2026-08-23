@@ -60,9 +60,10 @@ HTML, CSS, Markdown, JSON, YAML, TOML, XML, and Vim script.
 **Plugins** — GitGutter, Signify, fugitive, NERDTree, netrw, ALE, CoC, fzf,
 CtrlP, Telescope, Startify, and vim-which-key.
 
-**Neovim** — Treesitter (0.8+), LSP diagnostics, references, code lens, inlay
-hints and signature help (0.5+), semantic tokens (0.9+), floating windows,
-WinBar and WinSeparator.
+**Neovim** — Treesitter (0.8+), covering both the legacy `@text.*` captures and
+the `@markup.*` names Neovim 0.10 renamed them to; LSP diagnostics, references,
+code lens, inlay hints and signature help (0.5+); semantic tokens (0.9+);
+floating windows, WinBar and WinSeparator.
 
 ### Statusline
 
