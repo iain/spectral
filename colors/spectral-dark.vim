@@ -31,6 +31,7 @@ call spectral#apply({
   \ 'yellow':    {'gui': '#F8D700', 'cterm': '220'},
   \ 'green':     {'gui': '#8DEF46', 'cterm': '119'},
   \ 'cyan':      {'gui': '#2AD7D7', 'cterm': '44'},
+  \ 'blue':      {'gui': '#60A7FF', 'cterm': '75'},
   \ 'purple':    {'gui': '#CC77DF', 'cterm': '176'},
   \ 'black':     {'gui': '#000000', 'cterm': '16'},
   \ 'tab_bg':    {'gui': '#060604', 'cterm': '232'},

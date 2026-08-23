@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="733" height="856" viewBox="0 0 733 856" font-family="'JetBrains Mono', 'JetBrainsMono Nerd Font', 'Fira Code', 'Cascadia Code', 'IBM Plex Mono', 'Source Code Pro', 'Hack', 'Iosevka', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace" font-size="14.0">
+<rect width="733" height="856" rx="8.0" fill="#1a1815"/>
+<rect width="733" height="30.0" rx="8.0" fill="#282622"/>
+<rect y="8.0" width="733" height="22.0" fill="#282622"/>
+<circle cx="16" cy="15" r="4.5" fill="#ff544c"/>
+<circle cx="31" cy="15" r="4.5" fill="#f8d700"/>
+<circle cx="46" cy="15" r="4.5" fill="#8def46"/>
+<text x="367" y="19" text-anchor="middle" fill="#7b7463" font-size="11">notes.md</text>
+<text x="18" y="59.8" xml:space="preserve"></text>
+<text x="18" y="80.8" xml:space="preserve"><tspan fill="#5e574a"> 1 </tspan><tspan fill="#ff544c"># </tspan><tspan fill="#ff544c">Spectral</tspan></text>
+<text x="18" y="101.8" xml:space="preserve"><tspan fill="#5e574a"> 2 </tspan></text>
+<text x="18" y="122.8" xml:space="preserve"><tspan fill="#5e574a"> 3 </tspan><tspan fill="#dcd0b5">A warm, high-contrast colorscheme with an amber-CRT signature.</tspan></text>
+<text x="18" y="143.8" xml:space="preserve"><tspan fill="#5e574a"> 4 </tspan></text>
+<text x="18" y="164.8" xml:space="preserve"><tspan fill="#5e574a"> 5 </tspan><tspan fill="#ff8432">## </tspan><tspan fill="#ff8432">Installation</tspan></text>
+<text x="18" y="185.8" xml:space="preserve"><tspan fill="#5e574a"> 6 </tspan></text>
+<text x="18" y="206.8" xml:space="preserve"><tspan fill="#5e574a"> 7 </tspan><tspan fill="#dcd0b5">Point your plugin manager at </tspan><tspan fill="#7b7463">[</tspan><tspan fill="#cc77df">the repository</tspan><tspan fill="#7b7463">]</tspan><tspan fill="#7b7463">(</tspan><tspan fill="#60a7ff">https://github.com/iain/spectral</tspan><tspan fill="#7b7463">)</tspan><tspan fill="#dcd0b5">,</tspan></text>
+<text x="18" y="227.8" xml:space="preserve"><tspan fill="#5e574a"> 8 </tspan><tspan fill="#dcd0b5">or clone it directly into </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">~/.vim/bundle</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5">. See </tspan><tspan fill="#7b7463">&lt;</tspan><tspan fill="#60a7ff">https://vimhelp.org/</tspan><tspan fill="#7b7463">&gt;</tspan><tspan fill="#dcd0b5"> if you</tspan></text>
+<text x="18" y="248.8" xml:space="preserve"><tspan fill="#5e574a"> 9 </tspan><tspan fill="#dcd0b5">have not used a plugin manager before.</tspan></text>
+<text x="18" y="269.8" xml:space="preserve"><tspan fill="#5e574a">10 </tspan></text>
+<text x="18" y="290.8" xml:space="preserve"><tspan fill="#5e574a">11 </tspan><tspan fill="#f8d700">### </tspan><tspan fill="#f8d700">Requirements</tspan></text>
+<text x="18" y="311.8" xml:space="preserve"><tspan fill="#5e574a">12 </tspan></text>
+<text x="18" y="332.8" xml:space="preserve"><tspan fill="#5e574a">13 </tspan><tspan fill="#ff544c">-</tspan><tspan fill="#dcd0b5"> Vim 7.4+ or Neovim 0.5+</tspan></text>
+<text x="18" y="353.8" xml:space="preserve"><tspan fill="#5e574a">14 </tspan><tspan fill="#ff544c">-</tspan><tspan fill="#dcd0b5"> A </tspan><tspan fill="#7b7463">**</tspan><tspan fill="#ff8432">true colour</tspan><tspan fill="#7b7463">**</tspan><tspan fill="#dcd0b5"> terminal (</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">set termguicolors</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5">)</tspan></text>
+<text x="18" y="374.8" xml:space="preserve"><tspan fill="#5e574a">15 </tspan><tspan fill="#ff544c">-</tspan><tspan fill="#dcd0b5"> Optionally </tspan><tspan fill="#7b7463" font-style="italic">*</tspan><tspan fill="#cc77df" font-style="italic">lightline</tspan><tspan fill="#7b7463" font-style="italic">*</tspan><tspan fill="#dcd0b5">, for a matching statusline</tspan></text>
+<text x="18" y="395.8" xml:space="preserve"><tspan fill="#5e574a">16 </tspan></text>
+<text x="18" y="416.8" xml:space="preserve"><tspan fill="#5e574a">17 </tspan><tspan fill="#8def46">#### </tspan><tspan fill="#8def46">Editing the palette</tspan></text>
+<text x="18" y="437.8" xml:space="preserve"><tspan fill="#5e574a">18 </tspan></text>
+<text x="18" y="458.8" xml:space="preserve"><tspan fill="#5e574a">19 </tspan><tspan fill="#dcd0b5">The palette lives in </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">tools/palette.py</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> and is defined in OKLCH:</tspan></text>
+<text x="18" y="479.8" xml:space="preserve"><tspan fill="#5e574a">20 </tspan></text>
+<text x="18" y="500.8" xml:space="preserve"><tspan fill="#5e574a">21 </tspan><tspan fill="#7b7463">```python</tspan></text>
+<text x="18" y="521.8" xml:space="preserve"><tspan fill="#5e574a">22 </tspan><tspan fill="#8def46">"amber": (0.80, 0.16, 75)</tspan></text>
+<text x="18" y="542.8" xml:space="preserve"><tspan fill="#5e574a">23 </tspan><tspan fill="#7b7463">```</tspan></text>
+<text x="18" y="563.8" xml:space="preserve"><tspan fill="#5e574a">24 </tspan></text>
+<text x="18" y="584.8" xml:space="preserve"><tspan fill="#5e574a">25 </tspan><tspan fill="#5e574a" font-style="italic">&gt; </tspan><tspan fill="#dcd0b5">Regenerate every port in one pass; the files under </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">colors/</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> are</tspan></text>
+<text x="18" y="605.8" xml:space="preserve"><tspan fill="#5e574a">26 </tspan><tspan fill="#5e574a" font-style="italic">&gt; </tspan><tspan fill="#dcd0b5">generated and should never be hand-edited.</tspan></text>
+<text x="18" y="626.8" xml:space="preserve"><tspan fill="#5e574a">27 </tspan></text>
+<text x="18" y="647.8" xml:space="preserve"><tspan fill="#5e574a">28 </tspan><tspan fill="#ff544c">1.</tspan><tspan fill="#dcd0b5"> Edit the </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">PALETTES</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> dict</tspan></text>
+<text x="18" y="668.8" xml:space="preserve"><tspan fill="#5e574a">29 </tspan><tspan fill="#ff544c">2.</tspan><tspan fill="#dcd0b5"> Run </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">python3 tools/palette.py</tspan><tspan fill="#7b7463">`</tspan></text>
+<text x="18" y="689.8" xml:space="preserve"><tspan fill="#5e574a">30 </tspan><tspan fill="#ff544c">3.</tspan><tspan fill="#dcd0b5"> Commit the regenerated output</tspan></text>
+<text x="18" y="710.8" xml:space="preserve"><tspan fill="#5e574a">31 </tspan></text>
+<text x="18" y="731.8" xml:space="preserve"><tspan fill="#5e574a">32 </tspan><tspan fill="#dcd0b5">| Variant | Background | Signature |</tspan></text>
+<text x="18" y="752.8" xml:space="preserve"><tspan fill="#5e574a">33 </tspan><tspan fill="#dcd0b5">|---------|-----------|-----------|</tspan></text>
+<text x="18" y="773.8" xml:space="preserve"><tspan fill="#5e574a">34 </tspan><tspan fill="#dcd0b5">| Dark    | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#1A1815</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#F9AD26</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> |</tspan></text>
+<text x="18" y="794.8" xml:space="preserve"><tspan fill="#5e574a">35 </tspan><tspan fill="#dcd0b5">| Light   | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#FFFAEE</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#A76C01</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> |</tspan></text>
+<text x="18" y="815.8" xml:space="preserve"><tspan fill="#5e574a">36 </tspan></text>
+<text x="18" y="836.8" xml:space="preserve"><tspan fill="#5e574a">37 </tspan><tspan fill="#5e574a">~~</tspan><tspan fill="#7b7463">Terminal-only</tspan><tspan fill="#5e574a">~~</tspan><tspan fill="#dcd0b5"> Blue now carries links and namespaces too.</tspan></text>
+</svg>

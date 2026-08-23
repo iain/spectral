@@ -42,6 +42,7 @@ function! spectral#apply(p) abort
   let s:yellow     = a:p.yellow
   let s:green      = a:p.green
   let s:cyan       = a:p.cyan
+  let s:blue       = a:p.blue
   let s:purple     = a:p.purple
   let s:black      = a:p.black
   let s:tab_bg     = a:p.tab_bg
@@ -207,7 +208,7 @@ function! spectral#apply(p) abort
   call s:HL('SpecialComment',  s:fg_darker,  s:none,       'italic')
   call s:HL('Debug',           s:orange,     s:none,       '')
 
-  call s:HL('Underlined',      s:cyan,       s:none,       'underline')
+  call s:HL('Underlined',      s:blue,       s:none,       'underline')
   call s:HL('Ignore',          s:fg_dark,    s:none,       '')
   call s:HL('Error',           s:red,        s:bg,         '')
   call s:HL('Todo',            s:orange,     s:bg,         '')
@@ -377,8 +378,8 @@ function! spectral#apply(p) abort
   call s:HL('markdownCode',              s:green,  s:bg_alt, '')
   call s:HL('markdownCodeBlock',         s:green,  s:bg_alt, '')
   call s:HL('markdownCodeDelimiter',     s:fg_darker,s:none,'')
-  call s:HL('markdownUrl',               s:cyan,   s:none,  'underline')
-  call s:HL('markdownAutomaticLink',     s:cyan,   s:none,  'underline')
+  call s:HL('markdownUrl',               s:blue,   s:none,  'underline')
+  call s:HL('markdownAutomaticLink',     s:blue,   s:none,  'underline')
   call s:HL('markdownUrlTitle',          s:yellow, s:none,  '')
   call s:HL('markdownUrlDelimiter',      s:fg_darker,s:none,'')
   call s:HL('markdownUrlTitleDelimiter', s:fg_darker,s:none,'')
@@ -480,7 +481,7 @@ function! spectral#apply(p) abort
   call s:HL('netrwLib',            s:yellow, s:none,       '')
   call s:HL('netrwMakefile',       s:orange, s:none,       '')
   call s:HL('netrwPix',            s:purple, s:none,       '')
-  call s:HL('netrwLink',           s:cyan,   s:none,       'underline')
+  call s:HL('netrwLink',           s:blue,   s:none,       'underline')
   call s:HL('netrwBak',            s:fg_dark,s:none,       '')
   call s:HL('netrwCompress',       s:fg_dark,s:none,       '')
   call s:HL('netrwObj',            s:fg_dark,s:none,       '')
@@ -648,7 +649,7 @@ function! spectral#apply(p) abort
     call s:HL('@constant',           s:purple,     s:none, '')
     call s:HL('@constant.builtin',   s:purple,     s:none, '')
     call s:HL('@constant.macro',     s:purple,     s:none, '')
-    call s:HL('@namespace',          s:cyan,       s:none, '')
+    call s:HL('@namespace',          s:blue,       s:none, '')
     call s:HL('@symbol',             s:purple,     s:none, '')
 
     call s:HL('@text',               s:fg,         s:none, '')
@@ -658,7 +659,7 @@ function! spectral#apply(p) abort
     call s:HL('@text.strike',        s:fg_dark,    s:none, 'strikethrough')
     call s:HL('@text.title',         s:red,        s:none, '')
     call s:HL('@text.literal',       s:green,      s:none, '')
-    call s:HL('@text.uri',           s:cyan,       s:none, 'underline')
+    call s:HL('@text.uri',           s:blue,       s:none, 'underline')
     call s:HL('@text.math',          s:purple,     s:none, '')
     call s:HL('@text.reference',     s:purple,     s:none, '')
     call s:HL('@text.environment',   s:purple,     s:none, '')
@@ -730,7 +731,7 @@ function! spectral#apply(p) abort
     call s:HL('@lsp.type.interface',    s:cyan,   s:none, '')
     call s:HL('@lsp.type.macro',        s:cyan,   s:none, '')
     call s:HL('@lsp.type.method',       s:green,  s:none, '')
-    call s:HL('@lsp.type.namespace',    s:cyan,   s:none, '')
+    call s:HL('@lsp.type.namespace',    s:blue,   s:none, '')
     call s:HL('@lsp.type.parameter',    s:orange, s:none, '')
     call s:HL('@lsp.type.property',     s:fg,     s:none, '')
     call s:HL('@lsp.type.struct',       s:cyan,   s:none, '')

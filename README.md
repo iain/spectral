@@ -20,7 +20,12 @@ Spectral Light, same file:
 
 ![Spectral Light rendering the same Ruby file](screenshots/billing-light.svg)
 
-Python renderings of both variants are in [`screenshots/`](screenshots/).
+Markdown, showing the per-level heading colors and blue links — the address in
+blue, the label in purple:
+
+![Spectral Dark rendering a Markdown file with headings and links](screenshots/notes-dark.svg)
+
+Python and light-variant renderings are in [`screenshots/`](screenshots/).
 
 ## Installation
 
@@ -141,8 +146,11 @@ Each variant is defined in OKLCH (L = lightness 0–1, C = chroma, H = hue in de
 
 ![Spectral Light palette — accents and the warm neutral ramp](screenshots/palette-light.svg)
 
-The `blue` slot appears in the cards but not the tables below: it is used only
-for terminal ANSI, never for syntax.
+Blue carries links and namespaces. The namespace split — the container against
+the type it holds, `Billing::` against `InvoiceCalculator` — needs an editor
+that can tell the two apart, so it applies in Neovim (Treesitter or LSP) and in
+VS Code (semantic tokens). Vim's regex syntax lumps both into `rubyConstant`,
+where they stay cyan.
 
 ### Spectral Dark
 
@@ -154,6 +162,7 @@ for terminal ANSI, never for syntax.
 | Yellow            | `0.88 / 0.20 / 98°`  | `#F8D700` | Strings                            |
 | Green             | `0.86 / 0.22 / 135°` | `#8DEF46` | Functions, methods                 |
 | Cyan              | `0.80 / 0.13 / 195°` | `#2AD7D7` | Types, built-in functions          |
+| Blue              | `0.72 / 0.18 / 255°` | `#60A7FF` | Links, namespaces                  |
 | Purple            | `0.70 / 0.17 / 320°` | `#CC77DF` | Constants, numbers, booleans       |
 
 Background: `0.21 / 0.006 / 85°` → `#1A1815` / Foreground: `0.86 / 0.038 / 85°` → `#DCD0B5`
@@ -168,6 +177,7 @@ Background: `0.21 / 0.006 / 85°` → `#1A1815` / Foreground: `0.86 / 0.038 / 85
 | Yellow            | `0.64 / 0.131 / 88°`  | `#AD8600` | Strings                            |
 | Green             | `0.52 / 0.166 / 142°` | `#1A7F11` | Functions, methods                 |
 | Cyan              | `0.53 / 0.091 / 205°` | `#007A85` | Types, built-in functions          |
+| Blue              | `0.45 / 0.148 / 255°` | `#0053A4` | Links, namespaces                  |
 | Purple            | `0.48 / 0.233 / 302°` | `#791DC7` | Constants, numbers, booleans       |
 
 Background: `0.985 / 0.020 / 85°` → `#FFFAEE` / Foreground: `0.26 / 0.030 / 85°` → `#2B2313`

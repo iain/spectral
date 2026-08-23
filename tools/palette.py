@@ -234,7 +234,7 @@ VIM_PALETTE_KEYS = [
     "bg", "bg_alt", "bg_alt2",
     "fg_dark", "fg_darker", "fg_alt", "fg_light", "fg",
     "white",
-    "red", "orange", "yellow", "green", "cyan", "purple",
+    "red", "orange", "yellow", "green", "cyan", "blue", "purple",
     "black", "tab_bg",
 ]
 
@@ -602,7 +602,7 @@ VSCODE_UI: dict[str, object] = {
     "sash.hoverBorder":                   "amber",
 
     # Text (rendered markdown in hovers, walkthroughs, release notes)
-    "textLink.foreground":                "cyan",
+    "textLink.foreground":                "blue",
     "textLink.activeForeground":          "amber",
     "textBlockQuote.background":          "bg_alt",
     "textBlockQuote.border":              "fg_dark",
@@ -702,7 +702,7 @@ VSCODE_UI: dict[str, object] = {
     "editor.findMatchBackground":         ("mix", "bg", "orange", 0.42),
     "editor.findMatchHighlightBackground": ("mix", "bg", "yellow", 0.22),
     "editor.findRangeHighlightBackground": "bg_alt",
-    "editorLink.activeForeground":        "cyan",
+    "editorLink.activeForeground":        "blue",
     "editorWhitespace.foreground":        "fg_dark",
     "editorIndentGuide.background1":      "bg_alt2",
     "editorIndentGuide.activeBackground1": "fg_dark",
@@ -885,7 +885,7 @@ VSCODE_UI: dict[str, object] = {
     "notifications.border":               "bg_alt2",
     "notificationCenterHeader.background": "bg_alt2",
     "notificationCenterHeader.foreground": "fg_alt",
-    "notificationLink.foreground":        "cyan",
+    "notificationLink.foreground":        "blue",
     "notificationsErrorIcon.foreground":  "red",
     "notificationsWarningIcon.foreground": "yellow",
     "notificationsInfoIcon.foreground":   "cyan",
@@ -1025,11 +1025,15 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
     ("Type", "cyan", "", [
         "entity.name.type",
         "entity.name.class",
-        "entity.name.namespace",
         "entity.other.inherited-class",
         "support.type",
         "support.class",
         "storage.type.annotation",
+    ]),
+    # The container, not the type it holds — Billing:: against
+    # InvoiceCalculator. Cyan was carrying both.
+    ("Namespace", "blue", "", [
+        "entity.name.namespace",
         "entity.name.scope-resolution",
     ]),
     ("Parameter", "orange", "", [
@@ -1108,7 +1112,8 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "markup.fenced_code",
         "markup.raw",
     ]),
-    ("Markdown link", "cyan", "underline", [
+    # Blue is the address; the label stays purple below.
+    ("Markdown link", "blue", "underline", [
         "markup.underline.link",
         "string.other.link",
     ]),
@@ -1140,7 +1145,7 @@ VSCODE_SEMANTIC: dict[str, tuple[str, str]] = {
     "enum":                         ("cyan", ""),
     "type":                         ("cyan", ""),
     "typeParameter":                ("cyan", ""),
-    "namespace":                    ("cyan", ""),
+    "namespace":                    ("blue", ""),
     "macro":                        ("cyan", ""),
     "decorator":                    ("orange", ""),
     "enumMember":                   ("purple", ""),

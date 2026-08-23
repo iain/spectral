@@ -21,7 +21,8 @@ that happen to be near each other.
 | Keywords, control flow      | Red     |
 | Strings                     | Yellow  |
 | Functions and methods       | Green   |
-| Types, classes, namespaces  | Cyan    |
+| Types and classes           | Cyan    |
+| Namespaces, links           | Blue    |
 | Parameters, escapes         | Orange  |
 | Constants, numbers, booleans| Purple  |
 | Comments                    | Dimmed, italic |
