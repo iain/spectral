@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import re
+import struct
 import unittest
 
 import palette
@@ -101,6 +102,26 @@ class VSCodeTheme(unittest.TestCase):
                     theme["colors"]["editor.background"],
                 )
                 self.assertGreaterEqual(ratio, 7.0)
+
+
+class MarketplaceIcon(unittest.TestCase):
+    def test_is_a_valid_256px_rgba_png(self):
+        data = palette.emit_icon(resolved("dark"))
+        self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
+        self.assertEqual(data[12:16], b"IHDR")
+        width, height, depth, color_type = struct.unpack(">IIBB", data[16:26])
+        self.assertEqual((width, height), (256, 256))
+        self.assertEqual(depth, 8)
+        self.assertEqual(color_type, 6)  # RGBA
+
+    def test_icon_is_drawn_from_the_palette(self):
+        # A static blob would survive a palette change; this must not.
+        spec = dict(palette.PALETTES["dark"])
+        spec["amber"] = (0.80, 0.16, 200)
+        self.assertNotEqual(
+            palette.emit_icon(resolved("dark")),
+            palette.emit_icon(palette.resolve(spec)),
+        )
 
 
 if __name__ == "__main__":

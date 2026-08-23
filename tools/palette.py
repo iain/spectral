@@ -16,6 +16,7 @@ downstream file:
   mattermost/spectral-light.json
   vscode/themes/spectral-dark.json
   vscode/themes/spectral-light.json
+  vscode/icon.png
 
 After regenerating, run iterm2/sync.py to push the iTerm2 presets to a
 target plist.
@@ -36,6 +37,8 @@ from __future__ import annotations
 import json
 import math
 import plistlib
+import struct
+import zlib
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -1198,6 +1201,113 @@ def emit_vscode(variant: str, palette: dict, palette_oklch: dict) -> str:
 
 
 # --------------------------------------------------------------------------
+# Marketplace icon emitter
+# --------------------------------------------------------------------------
+
+# The icon is a miniature of the theme itself: chunky "code lines" in the
+# accent colors with the amber block cursor closing the last line. Drawn from
+# the dark palette, so changing a color here changes the listing artwork too.
+#
+# PNG is written by hand rather than via Pillow to keep the generator runnable
+# with a bare python3 — the same reason CI can regenerate without installing
+# anything.
+
+ICON_SIZE = 256
+ICON_CURSOR = "__cursor__"
+
+# (indent, [(slot, width)]) in a 256-unit design space.
+ICON_LINES: list[tuple[int, list[tuple[str, int]]]] = [
+    (0,  [("red", 50), ("cyan", 64), ("fg_alt", 40)]),
+    (26, [("green", 44), ("yellow", 58), ("purple", 26)]),
+    (26, [("purple", 56), ("fg_alt", 34), ("green", 28)]),
+    (0,  [("red", 46), ("yellow", 58), (ICON_CURSOR, 26)]),
+]
+
+ICON_PAD_L, ICON_TOP, ICON_LINE_H, ICON_BAR_H, ICON_GAP = 38, 62, 38, 15, 13
+
+
+def _png(width: int, height: int, rows: list[bytearray]) -> bytes:
+    """Minimal 8-bit RGBA PNG. Every scanline uses filter type 0."""
+    def chunk(tag: bytes, data: bytes) -> bytes:
+        body = tag + data
+        return (struct.pack(">I", len(data)) + body
+                + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF))
+
+    raw = b"".join(b"\x00" + bytes(row) for row in rows)
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 6, 0, 0, 0))
+        + chunk(b"IDAT", zlib.compress(raw, 9))
+        + chunk(b"IEND", b"")
+    )
+
+
+def _rrect_sdf(px: float, py: float, x0: float, y0: float,
+               x1: float, y1: float, r: float) -> float:
+    """Signed distance to a rounded rectangle: negative inside, positive out."""
+    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    hw, hh = (x1 - x0) / 2, (y1 - y0) / 2
+    qx, qy = abs(px - cx) - (hw - r), abs(py - cy) - (hh - r)
+    return math.hypot(max(qx, 0.0), max(qy, 0.0)) + min(max(qx, qy), 0.0) - r
+
+
+def _coverage(distance: float) -> float:
+    """One-pixel analytic antialiasing from a signed distance."""
+    return min(1.0, max(0.0, 0.5 - distance))
+
+
+def _over(dst: list[float], src: list[float], alpha: float) -> list[float]:
+    return [dst[i] * (1 - alpha) + src[i] * alpha for i in range(3)]
+
+
+def emit_icon(palette: dict, size: int = ICON_SIZE) -> bytes:
+    unit = size / 256.0
+    chan = lambda slot: [c / 255 for c in palette[slot]["rgb"]]
+    bg, amber = chan("bg"), chan("amber")
+
+    # Flatten the line layout into drawable bars, in design units.
+    bars: list[tuple[list[float], float, float, float, float, float, bool]] = []
+    for i, (indent, segments) in enumerate(ICON_LINES):
+        x = ICON_PAD_L + indent
+        y = ICON_TOP + i * ICON_LINE_H
+        for slot, width in segments:
+            if slot == ICON_CURSOR:
+                # Taller than the text bars and squarer, so it reads as a
+                # cursor rather than one more token.
+                bars.append((amber, x, y - 6, x + width, y + ICON_BAR_H + 6, 4, True))
+            else:
+                bars.append((chan(slot), x, y, x + width, y + ICON_BAR_H, 5, False))
+            x += width + ICON_GAP
+
+    rows: list[bytearray] = []
+    for py in range(size):
+        row = bytearray()
+        for px in range(size):
+            fx, fy = px + 0.5, py + 0.5
+            tile = _coverage(_rrect_sdf(
+                fx, fy, 3 * unit, 3 * unit,
+                size - 3 * unit, size - 3 * unit, 52 * unit,
+            ))
+            color = list(bg)
+            # Scanlines — a hair of CRT texture, invisible as banding.
+            if int(py / (2 * unit)) % 2 == 0:
+                color = [c * 0.93 for c in color]
+            for bar_color, x0, y0, x1, y1, radius, glows in bars:
+                d = _rrect_sdf(fx, fy, x0 * unit, y0 * unit,
+                               x1 * unit, y1 * unit, radius * unit)
+                if glows and d > 0:
+                    color = _over(color, amber, math.exp(-d / (15 * unit)) * 0.45)
+                hit = _coverage(d)
+                if hit > 0:
+                    color = _over(color, bar_color, hit)
+            row += bytes(int(max(0.0, min(1.0, c)) * 255 + 0.5) for c in color)
+            row += bytes([int(tile * 255 + 0.5)])
+        rows.append(row)
+
+    return _png(size, size, rows)
+
+
+# --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
 
@@ -1229,6 +1339,10 @@ def main() -> None:
         (vscode / f"spectral-{variant}.json").write_text(emit_vscode(variant, palette, spec))
 
         print(f"wrote {variant} variant")
+
+    # Marketplace icon — drawn from the dark palette only.
+    (REPO / "vscode" / "icon.png").write_bytes(emit_icon(resolved["dark"]))
+    print("wrote vscode icon")
 
     # lightline — one theme that branches on &background across both variants.
     lightline = REPO / "autoload" / "lightline" / "colorscheme" / "spectral.vim"

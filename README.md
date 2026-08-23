@@ -92,7 +92,7 @@ Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendere
 
 ## Editing the palette
 
-The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, the two `vscode/themes/spectral-*.json` themes, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, `vscode/themes/`, and `autoload/lightline/` files are generated; do not hand-edit them.
+The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, the two `vscode/themes/spectral-*.json` themes, the `vscode/icon.png` marketplace icon, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, `vscode/themes/`, `vscode/icon.png`, and `autoload/lightline/` files are generated; do not hand-edit them.
 
 `tools/test_palette.py` asserts invariants on the generated output — valid hex everywhere, no TextMate scope claimed by two entries, and a contrast floor so nothing disappears into the background. Run it with `python3 -m unittest discover -s tools`; CI runs it alongside the drift check.
 
@@ -134,6 +134,9 @@ The `vscode/` directory is a self-contained extension. The themes themselves —
 `vscode/themes/spectral-dark.json` and `spectral-light.json` — are generated
 from the same palette as everything else, and cover the workbench, the
 integrated terminal's ANSI palette, TextMate scopes, and LSP semantic tokens.
+So is `vscode/icon.png`, the Marketplace artwork — a miniature of the theme,
+drawn straight from the dark palette with the stdlib alone, so it can never
+drift from the colors it advertises.
 
 To use it without publishing, symlink or copy `vscode/` into your extensions
 directory and reload:
