@@ -3,33 +3,36 @@
 A warm, high-contrast colorscheme with an amber-CRT signature, in dark and
 light variants.
 
-- **Spectral Dark** — amber phosphor on OLED black, with cool accents for balance
-- **Spectral Light** — warm cream paper with the same amber signature
+- **Spectral Dark** — amber phosphor on OLED black
+- **Spectral Light** — warm cream paper, same amber signature
 
-Every target is generated from a single palette definition, so the colors match
-exactly across your editor, your terminal, and everything else.
+Every target is generated from one palette definition, so the colors match
+across your editor, your terminal, and everything else.
 
-![Spectral Dark rendering a Ruby file with Sorbet type signatures](screenshots/billing-dark.svg)
+| Spectral Dark | Spectral Light |
+|---------------|----------------|
+| <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/palette-dark.svg"><img src="screenshots/palette-dark.svg" width="390" alt="Spectral Dark palette — accents and the warm neutral ramp"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/palette-light.svg"><img src="screenshots/palette-light.svg" width="390" alt="Spectral Light palette — accents and the warm neutral ramp"></a> |
 
-Spectral Light, the same file:
+Ruby with Sorbet type signatures, Markdown headings, and YAML keys in amber:
 
-![Spectral Light rendering the same Ruby file](screenshots/billing-light.svg)
+| Dark | Light |
+|------|-------|
+| <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/billing-dark.svg"><img src="screenshots/billing-dark.svg" width="390" alt="Spectral Dark rendering a Ruby file with Sorbet type signatures"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/billing-light.svg"><img src="screenshots/billing-light.svg" width="390" alt="Spectral Light rendering the same Ruby file"></a> |
+| <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/notes-dark.svg"><img src="screenshots/notes-dark.svg" width="390" alt="Spectral Dark rendering a Markdown file with headings and links"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/notes-light.svg"><img src="screenshots/notes-light.svg" width="390" alt="Spectral Light rendering the same Markdown file"></a> |
+| <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/deploy-dark.svg"><img src="screenshots/deploy-dark.svg" width="390" alt="Spectral Dark rendering a YAML file with keys in amber"></a> | <a href="https://raw.githubusercontent.com/iain/spectral/main/screenshots/deploy-light.svg"><img src="screenshots/deploy-light.svg" width="390" alt="Spectral Light rendering the same YAML file"></a> |
 
-Markdown, showing the per-level heading colors:
-
-![Spectral Dark rendering a Markdown file with headings and links](screenshots/notes-dark.svg)
-
-Python and light-variant renderings are in [`screenshots/`](screenshots/).
+Screenshots link to the full-size render. Python samples are in
+[`screenshots/`](screenshots/).
 
 ## Where it runs
 
-| Application  | What ships                                                |
-|--------------|-----------------------------------------------------------|
-| Vim / Neovim | colorscheme, lightline theme, Sorbet syntax plugin        |
-| VS Code      | extension — workbench, TextMate scopes, semantic tokens   |
-| Ghostty      | two themes, plus an install script                         |
-| iTerm2       | two presets, plus a profile sync script                    |
-| Mattermost   | two custom themes                                          |
+| Application  | What ships                                              |
+|--------------|---------------------------------------------------------|
+| Vim / Neovim | colorscheme, lightline theme, Sorbet syntax plugin      |
+| VS Code      | extension — workbench, TextMate scopes, semantic tokens |
+| Ghostty      | two themes, plus an install script                      |
+| iTerm2       | two presets, plus a profile sync script                 |
+| Mattermost   | two custom themes                                       |
 
 ## Vim and Neovim
 
@@ -40,19 +43,16 @@ Plug 'iain/spectral'
 ```
 
 With Pathogen, clone into `~/.vim/bundle`. Manually, copy `colors/` into
-`~/.vim/colors` (Vim) or `~/.config/nvim/colors` (Neovim).
-
-Then add to your `.vimrc` or `init.vim`:
+`~/.vim/colors` (Vim) or `~/.config/nvim/colors` (Neovim). Then add to your
+`.vimrc` or `init.vim`:
 
 ```vim
 set termguicolors
 colorscheme spectral        " picks the variant matching &background
 ```
 
-`spectral` follows `&background`, so `set background=light | colorscheme
-spectral` switches variants. `spectral-dark` and `spectral-light` force one.
-
-Requires Vim 7.4+ or Neovim 0.5+, and a true-color terminal.
+`spectral-dark` and `spectral-light` force a variant. Requires Vim 7.4+ or
+Neovim 0.5+, and a true-color terminal.
 
 **Languages** — Ruby (including Sorbet), Python, JavaScript, TypeScript, Go,
 HTML, CSS, Markdown, JSON, YAML, TOML, XML, and Vim script.
@@ -74,14 +74,13 @@ ships with the colorscheme. Once Spectral is on your runtimepath:
 let g:lightline = { 'colorscheme': 'spectral' }
 ```
 
-It branches on `&background`, so it follows the editor variant once lightline
-reloads.
+It follows `&background` once lightline reloads.
 
 ### Sorbet type signatures
 
-Sorbet annotations — `sig` blocks, `T::` types, `extend T::Sig` — are rendered
-in a muted color so type signatures recede behind the code they annotate.
-`plugin/sorbet.vim` loads automatically for Ruby files.
+`plugin/sorbet.vim` loads automatically for Ruby files and dims `sig` blocks,
+`T::` types and `extend T::Sig`, so signatures recede behind the code they
+annotate.
 
 ## VS Code
 
@@ -101,17 +100,17 @@ To build a `.vsix`:
 cd vscode && npx @vscode/vsce package
 ```
 
-Two places where the VS Code mapping departs from the Vim theme, both because
-the Vim theme is internally inconsistent there:
+The mapping departs from the Vim theme in two places, both where the Vim theme
+is internally inconsistent:
 
-- **Punctuation** is `fg_alt`, following the Treesitter captures rather than
+- **Punctuation** uses `fg_alt`, following the Treesitter captures rather than
   the brighter per-language groups (`jsonBraces`, `cssBraces`).
 - **Regular expressions** follow the richer `rubyRegexp*` treatment — cyan
   body, orange escapes, purple character classes — rather than the flat orange
   of `@string.regex`.
 
-Sorbet signatures are not dimmed here: that effect relies on the custom syntax
-regions in `plugin/sorbet.vim`, which have no TextMate scope to hook.
+Sorbet signatures are not dimmed here; that relies on the syntax regions in
+`plugin/sorbet.vim`, which have no TextMate scope to hook.
 
 ## Ghostty
 
@@ -145,26 +144,18 @@ keys.
 
 `mattermost/spectral-dark.json` and `mattermost/spectral-light.json`. Open
 Settings → Display → Theme → Custom Theme, expand "Copy/Paste Theme Colors",
-and paste the contents of either file. The amber signature anchors mentions,
-buttons, and the active-channel border; the team rail is the darkest neutral so
-the leftmost column reads as an anchor.
+and paste either file. Amber anchors mentions, buttons and the active-channel
+border; the team rail is the darkest neutral.
 
 ## The palette
 
-Each variant is defined in OKLCH — L = lightness 0–1, C = chroma, H = hue in
-degrees — so the accents sit in a roughly equiluminant band, equal-feeling in
-brightness across hues, and the neutrals all share one warm hue at low chroma
-for a coherent paper/phosphor character.
+Each variant is defined in OKLCH — lightness 0–1, chroma, and hue in degrees.
+The accents sit in a roughly equiluminant band, so they feel equally bright
+across hues, and the neutrals all share one warm hue at low chroma.
 
-![Spectral Dark palette — accents and the warm neutral ramp](screenshots/palette-dark.svg)
-
-![Spectral Light palette — accents and the warm neutral ramp](screenshots/palette-light.svg)
-
-Amber is the signature, and it lands on whatever gives a language its texture —
-the element you see constantly, that makes a file recognisable at a glance.
-Ruby symbols came first: they are frequent in Ruby, and they are part of what
-Ruby *looks like*. The rest were chosen the same way, one language at a time,
-rather than by a rule.
+Amber is the signature, and it goes on whatever gives a language its texture:
+the element you see constantly. Ruby symbols came first; the rest were picked
+one language at a time.
 
 | Language                   | Element                        |
 |----------------------------|--------------------------------|
@@ -175,10 +166,8 @@ rather than by a rule.
 | JavaScript, TypeScript, Go | object and struct literal keys |
 | Markdown                   | list markers                   |
 
-HTML, XML and Vim script have no amber yet — nothing in them is both frequent
+HTML, XML and Vim script have no amber yet: nothing in them is both frequent
 and characteristic enough without swamping the file.
-
-![Spectral Dark rendering a YAML file with keys in amber](screenshots/deploy-dark.svg)
 
 ### Spectral Dark
 
@@ -210,17 +199,16 @@ Background `0.21 / 0.006 / 85°` → `#1A1815` · Foreground `0.86 / 0.038 / 85�
 
 Background `0.985 / 0.020 / 85°` → `#FFFAEE` · Foreground `0.26 / 0.030 / 85°` → `#2B2313`
 
-Two caveats on the tables. Where a requested chroma falls outside the sRGB
-gamut the generator reduces it by bisection, preserving L and H, so each hex is
-the closest representable color rather than exactly the requested chroma. And
-some distinctions depend on what the editor can resolve — namespaces separate
-from types only where Treesitter, LSP or semantic tokens are available, and
-fall back to cyan under Vim's regex syntax.
+Where a requested chroma falls outside the sRGB gamut, the generator reduces it
+by bisection, preserving L and H, so each hex is the closest representable
+color. Some distinctions also depend on the editor: namespaces separate from
+types only under Treesitter, LSP or semantic tokens, and fall back to cyan in
+Vim's regex syntax.
 
 ## Working on the theme
 
-The palette is the single source of truth. Edit the `PALETTES` dict in
-`tools/palette.py` and run it to regenerate every target in one pass:
+Edit the `PALETTES` dict in `tools/palette.py` and run it to regenerate every
+target in one pass:
 
 ```bash
 python3 tools/palette.py
@@ -230,8 +218,8 @@ That writes `colors/spectral-*.vim`, `ghostty/spectral-*`,
 `iterm2/*.itermcolors`, `mattermost/spectral-*.json`,
 `vscode/themes/spectral-*.json`, `vscode/icon.png`,
 `screenshots/palette-*.svg`, and
-`autoload/lightline/colorscheme/spectral.vim`. All of those are generated —
-do not hand-edit them. After regenerating the iTerm2 presets, run
+`autoload/lightline/colorscheme/spectral.vim`. All of those are generated — do
+not hand-edit them. After regenerating the iTerm2 presets, run
 `iterm2/sync.py <plist>` to push them into your own plist.
 
 ### Tests
@@ -240,10 +228,9 @@ do not hand-edit them. After regenerating the iTerm2 presets, run
 python3 -m unittest discover -s tools
 ```
 
-These assert invariants on the generated output: valid hex everywhere, no
-TextMate scope claimed by two entries, and a contrast floor so no token
-disappears into the background. CI runs them alongside a check that the
-generated files match the palette.
+They check the generated output: valid hex everywhere, no TextMate scope
+claimed by two entries, and a contrast floor. CI runs them alongside a check
+that the generated files match the palette.
 
 ### Screenshots
 
@@ -252,19 +239,16 @@ python3 tools/screenshots.py            # every sample, both variants
 python3 tools/screenshots.py billing    # only samples matching a stem
 ```
 
-`tools/screenshots.py` renders each file in `tools/samples/` through a real
-headless Vim and writes SVGs to `screenshots/`. The colors are not re-derived
-from the palette — they come from Vim's own `:TOhtml`, which reports what the
-loaded colorscheme actually resolved each syntax group to. A screenshot
-therefore cannot flatter the theme: if the colorscheme breaks, the screenshot
-breaks identically.
+Each file in `tools/samples/` is rendered through a real headless Vim and
+written to `screenshots/`. The colors come from Vim's own `:TOhtml` rather than
+from the palette, so a screenshot reports what the colorscheme actually
+resolved each syntax group to.
 
-This needs `vim` on `PATH`, and unlike everything else it is *not* part of the
-CI drift check — `:TOhtml` markup shifts between Vim versions, so regenerating
-on a different Vim would produce spurious diffs. Rerun it by hand when the
-palette changes. The `palette-*.svg` cards in the same directory are the
-exception: they come from `tools/palette.py`, need no Vim, and are
-drift-checked like every other generated file.
+This needs `vim` on `PATH`, and is not part of the CI drift check: `:TOhtml`
+markup shifts between Vim versions, so regenerating on a different Vim produces
+spurious diffs. Rerun it by hand when the palette changes. The `palette-*.svg`
+cards come from `tools/palette.py` instead, need no Vim, and are drift-checked
+like every other generated file.
 
 ## License
 
