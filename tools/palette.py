@@ -17,6 +17,8 @@ downstream file:
   vscode/themes/spectral-dark.json
   vscode/themes/spectral-light.json
   vscode/icon.png
+  screenshots/palette-dark.svg
+  screenshots/palette-light.svg
 
 After regenerating, run iterm2/sync.py to push the iTerm2 presets to a
 target plist.
@@ -1308,6 +1310,74 @@ def emit_icon(palette: dict, size: int = ICON_SIZE) -> bytes:
 
 
 # --------------------------------------------------------------------------
+# Palette card emitter
+# --------------------------------------------------------------------------
+
+# A swatch card per variant, painted on that variant's own background — the
+# accents read differently on cream than on near-black, so showing both on a
+# neutral white would misrepresent each of them.
+#
+# The neutral ramp gets equal billing with the accents: the warm-tinted
+# greys are the distinctive part of this palette and a table of hex codes
+# hides that completely.
+
+CARD_ACCENTS = ["amber", "red", "orange", "yellow", "green", "cyan", "blue", "purple"]
+CARD_NEUTRALS = ["bg", "bg_alt", "bg_alt2", "fg_dark", "fg_darker", "fg_alt", "fg", "fg_light"]
+
+CARD_FONT = ("ui-monospace, SFMono-Regular, Menlo, Consolas, "
+             "'DejaVu Sans Mono', monospace")
+CARD_CHIP_W, CARD_CHIP_H, CARD_GAP, CARD_PAD = 92, 56, 12, 28
+CARD_TITLES = {"dark": "Spectral Dark", "light": "Spectral Light"}
+
+
+def _card_row(palette: dict, slots: list[str], top: float, stroke: str) -> list[str]:
+    out = []
+    for i, slot in enumerate(slots):
+        x = CARD_PAD + i * (CARD_CHIP_W + CARD_GAP)
+        out.append(
+            f'<rect x="{x}" y="{top}" width="{CARD_CHIP_W}" height="{CARD_CHIP_H}" '
+            f'rx="6" fill="#{palette[slot]["gui"].lower()}" stroke="{stroke}"/>'
+        )
+        mid = x + CARD_CHIP_W / 2
+        out.append(
+            f'<text x="{mid:.0f}" y="{top + CARD_CHIP_H + 20:.0f}" text-anchor="middle" '
+            f'font-size="11" fill="{{name}}">{slot}</text>'
+        )
+        out.append(
+            f'<text x="{mid:.0f}" y="{top + CARD_CHIP_H + 35:.0f}" text-anchor="middle" '
+            f'font-size="10" fill="{{hex}}">#{palette[slot]["gui"].upper()}</text>'
+        )
+    return out
+
+
+def emit_palette_card(variant: str, palette: dict) -> str:
+    hexes = {k: f"#{v['gui'].lower()}" for k, v in palette.items()}
+    width = CARD_PAD * 2 + 8 * CARD_CHIP_W + 7 * CARD_GAP
+    # Neutrals sit clear of the accent hex labels, which run to top + 91.
+    accents_top, neutrals_top = 86.0, 232.0
+    height = neutrals_top + CARD_CHIP_H + 46
+
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height:.0f}" '
+        f'viewBox="0 0 {width} {height:.0f}" font-family="{CARD_FONT}">',
+        f'<rect width="{width}" height="{height:.0f}" rx="10" fill="{hexes["bg"]}" '
+        f'stroke="{hexes["bg_alt2"]}"/>',
+        f'<text x="{CARD_PAD}" y="42" font-size="17" fill="{hexes["fg"]}">'
+        f'{CARD_TITLES[variant]}</text>',
+    ]
+    for label, top in (("Accents", accents_top), ("Neutrals", neutrals_top)):
+        parts.append(
+            f'<text x="{CARD_PAD}" y="{top - 14:.0f}" font-size="10" '
+            f'letter-spacing="1.5" fill="{hexes["fg_dark"]}">{label.upper()}</text>'
+        )
+    for slots, top in ((CARD_ACCENTS, accents_top), (CARD_NEUTRALS, neutrals_top)):
+        for line in _card_row(palette, slots, top, hexes["bg_alt2"]):
+            parts.append(line.format(name=hexes["fg_alt"], hex=hexes["fg_darker"]))
+    parts.append("</svg>")
+    return "\n".join(parts) + "\n"
+
+
+# --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
 
@@ -1339,6 +1409,11 @@ def main() -> None:
         (vscode / f"spectral-{variant}.json").write_text(emit_vscode(variant, palette, spec))
 
         print(f"wrote {variant} variant")
+
+        # Palette card for the README
+        cards = REPO / "screenshots"
+        cards.mkdir(exist_ok=True)
+        (cards / f"palette-{variant}.svg").write_text(emit_palette_card(variant, palette))
 
     # Marketplace icon — drawn from the dark palette only.
     (REPO / "vscode" / "icon.png").write_bytes(emit_icon(resolved["dark"]))

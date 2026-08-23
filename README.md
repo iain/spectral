@@ -105,7 +105,7 @@ Sorbet type annotations (`sig` blocks, `T::` types, `extend T::Sig`) are rendere
 
 ## Editing the palette
 
-The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, the two `vscode/themes/spectral-*.json` themes, the `vscode/icon.png` marketplace icon, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, `vscode/themes/`, `vscode/icon.png`, and `autoload/lightline/` files are generated; do not hand-edit them.
+The palette is defined in OKLCH (perceptually uniform) in `tools/palette.py` and emitted into the per-app files. To tweak a color, edit the `PALETTES` dict in that file and run `tools/palette.py` — it regenerates the two `colors/spectral-*.vim` files, the two `ghostty/spectral-*` files, the two `iterm2/*.itermcolors` presets, the two `mattermost/spectral-*.json` files, the two `vscode/themes/spectral-*.json` themes, the `vscode/icon.png` marketplace icon, the two `screenshots/palette-*.svg` cards, and the `autoload/lightline/colorscheme/spectral.vim` theme in one pass. After regenerating the iTerm2 presets, run `iterm2/sync.py <plist>` to push them to your iTerm2 plist. The `colors/`, `ghostty/`, `mattermost/`, `vscode/themes/`, `vscode/icon.png`, `screenshots/palette-*.svg`, and `autoload/lightline/` files are generated; do not hand-edit them.
 
 `tools/test_palette.py` asserts invariants on the generated output — valid hex everywhere, no TextMate scope claimed by two entries, and a contrast floor so nothing disappears into the background. Run it with `python3 -m unittest discover -s tools`; CI runs it alongside the drift check.
 
@@ -124,14 +124,25 @@ own `:TOhtml`, which reports what the loaded colorscheme actually resolved each
 syntax group to. A screenshot therefore cannot flatter the theme: if the
 colorscheme breaks, the screenshot breaks identically.
 
-Requires `vim` on `PATH`. Unlike the other generated files this is *not* part
-of the CI drift check — `:TOhtml` markup shifts between Vim versions, so
+The `palette-*.svg` cards in the same directory are *not* produced by this
+script — they come from `tools/palette.py`, need no Vim, and are drift-checked
+like every other generated file.
+
+Requires `vim` on `PATH`. Unlike those cards, the renderings here are *not*
+part of the CI drift check — `:TOhtml` markup shifts between Vim versions, so
 regenerating on a different Vim would produce spurious diffs. Rerun it by hand
 when the palette changes.
 
 ## Color Palette
 
 Each variant is defined in OKLCH (L = lightness 0–1, C = chroma, H = hue in degrees) so the accents sit in a roughly equiluminant band — equal-feeling brightness across hues — and the neutrals share a single warm hue (yellow-orange at low chroma) for a coherent paper/phosphor character. Where requested chroma falls outside the sRGB gamut, the generator reduces it by bisection while preserving L and H; the displayed hex is therefore the closest representable color rather than always exactly the requested chroma.
+
+![Spectral Dark palette — accents and the warm neutral ramp](screenshots/palette-dark.svg)
+
+![Spectral Light palette — accents and the warm neutral ramp](screenshots/palette-light.svg)
+
+The `blue` slot appears in the cards but not the tables below: it is used only
+for terminal ANSI, never for syntax.
 
 ### Spectral Dark
 

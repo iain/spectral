@@ -124,5 +124,25 @@ class MarketplaceIcon(unittest.TestCase):
         )
 
 
+class PaletteCard(unittest.TestCase):
+    def test_every_slot_it_claims_is_drawn_and_labelled(self):
+        for variant in VARIANTS:
+            pal = resolved(variant)
+            card = palette.emit_palette_card(variant, pal)
+            for slot in palette.CARD_ACCENTS + palette.CARD_NEUTRALS:
+                with self.subTest(variant=variant, slot=slot):
+                    self.assertIn(f'fill="#{pal[slot]["gui"].lower()}"', card)
+                    self.assertIn(f'#{pal[slot]["gui"].upper()}', card)
+
+    def test_draws_one_swatch_per_slot(self):
+        # Background rect plus one chip each; a dropped row would still emit
+        # valid SVG, just a card that quietly understates the palette.
+        expected = len(palette.CARD_ACCENTS) + len(palette.CARD_NEUTRALS) + 1
+        for variant in VARIANTS:
+            with self.subTest(variant=variant):
+                card = palette.emit_palette_card(variant, resolved(variant))
+                self.assertEqual(card.count("<rect"), expected)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="876" height="334" viewBox="0 0 876 334" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">
+<rect width="876" height="334" rx="10" fill="#fffaee" stroke="#e7d9bd"/>
+<text x="28" y="42" font-size="17" fill="#2b2313">Spectral Light</text>
+<text x="28" y="72" font-size="10" letter-spacing="1.5" fill="#6e6249">ACCENTS</text>
+<text x="28" y="218" font-size="10" letter-spacing="1.5" fill="#6e6249">NEUTRALS</text>
+<rect x="28" y="86.0" width="92" height="56" rx="6" fill="#9d6300" stroke="#e7d9bd"/>
+<text x="74" y="162" text-anchor="middle" font-size="11" fill="#463c28">amber</text>
+<text x="74" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#9D6300</text>
+<rect x="132" y="86.0" width="92" height="56" rx="6" fill="#ac1a1c" stroke="#e7d9bd"/>
+<text x="178" y="162" text-anchor="middle" font-size="11" fill="#463c28">red</text>
+<text x="178" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#AC1A1C</text>
+<rect x="236" y="86.0" width="92" height="56" rx="6" fill="#9c4700" stroke="#e7d9bd"/>
+<text x="282" y="162" text-anchor="middle" font-size="11" fill="#463c28">orange</text>
+<text x="282" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#9C4700</text>
+<rect x="340" y="86.0" width="92" height="56" rx="6" fill="#a98d00" stroke="#e7d9bd"/>
+<text x="386" y="162" text-anchor="middle" font-size="11" fill="#463c28">yellow</text>
+<text x="386" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#A98D00</text>
+<rect x="444" y="86.0" width="92" height="56" rx="6" fill="#357426" stroke="#e7d9bd"/>
+<text x="490" y="162" text-anchor="middle" font-size="11" fill="#463c28">green</text>
+<text x="490" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#357426</text>
+<rect x="548" y="86.0" width="92" height="56" rx="6" fill="#00707e" stroke="#e7d9bd"/>
+<text x="594" y="162" text-anchor="middle" font-size="11" fill="#463c28">cyan</text>
+<text x="594" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#00707E</text>
+<rect x="652" y="86.0" width="92" height="56" rx="6" fill="#004b96" stroke="#e7d9bd"/>
+<text x="698" y="162" text-anchor="middle" font-size="11" fill="#463c28">blue</text>
+<text x="698" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#004B96</text>
+<rect x="756" y="86.0" width="92" height="56" rx="6" fill="#65389f" stroke="#e7d9bd"/>
+<text x="802" y="162" text-anchor="middle" font-size="11" fill="#463c28">purple</text>
+<text x="802" y="177" text-anchor="middle" font-size="10" fill="#5d5139">#65389F</text>
+<rect x="28" y="232.0" width="92" height="56" rx="6" fill="#fffaee" stroke="#e7d9bd"/>
+<text x="74" y="308" text-anchor="middle" font-size="11" fill="#463c28">bg</text>
+<text x="74" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#FFFAEE</text>
+<rect x="132" y="232.0" width="92" height="56" rx="6" fill="#f6ead1" stroke="#e7d9bd"/>
+<text x="178" y="308" text-anchor="middle" font-size="11" fill="#463c28">bg_alt</text>
+<text x="178" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#F6EAD1</text>
+<rect x="236" y="232.0" width="92" height="56" rx="6" fill="#e7d9bd" stroke="#e7d9bd"/>
+<text x="282" y="308" text-anchor="middle" font-size="11" fill="#463c28">bg_alt2</text>
+<text x="282" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#E7D9BD</text>
+<rect x="340" y="232.0" width="92" height="56" rx="6" fill="#6e6249" stroke="#e7d9bd"/>
+<text x="386" y="308" text-anchor="middle" font-size="11" fill="#463c28">fg_dark</text>
+<text x="386" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#6E6249</text>
+<rect x="444" y="232.0" width="92" height="56" rx="6" fill="#5d5139" stroke="#e7d9bd"/>
+<text x="490" y="308" text-anchor="middle" font-size="11" fill="#463c28">fg_darker</text>
+<text x="490" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#5D5139</text>
+<rect x="548" y="232.0" width="92" height="56" rx="6" fill="#463c28" stroke="#e7d9bd"/>
+<text x="594" y="308" text-anchor="middle" font-size="11" fill="#463c28">fg_alt</text>
+<text x="594" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#463C28</text>
+<rect x="652" y="232.0" width="92" height="56" rx="6" fill="#2b2313" stroke="#e7d9bd"/>
+<text x="698" y="308" text-anchor="middle" font-size="11" fill="#463c28">fg</text>
+<text x="698" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#2B2313</text>
+<rect x="756" y="232.0" width="92" height="56" rx="6" fill="#171105" stroke="#e7d9bd"/>
+<text x="802" y="308" text-anchor="middle" font-size="11" fill="#463c28">fg_light</text>
+<text x="802" y="323" text-anchor="middle" font-size="10" fill="#5d5139">#171105</text>
+</svg>
