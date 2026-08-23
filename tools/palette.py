@@ -105,6 +105,21 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
 }
 
 
+# Shared by the palette cards and the Vim screenshots.
+#
+# Designer fonts first — someone who installed one chose it deliberately — then
+# the per-OS defaults, then the generic. Everything here is ~0.6em advance
+# except Iosevka (0.5) and Consolas (0.55), which leave a little slack on the
+# right rather than overflowing; layout uses the renderer's own metrics, so a
+# substitution changes the typeface without breaking alignment.
+MONO_STACK = (
+    "'JetBrains Mono', 'JetBrainsMono Nerd Font', 'Fira Code', 'Cascadia Code', "
+    "'IBM Plex Mono', 'Source Code Pro', 'Hack', 'Iosevka', ui-monospace, "
+    "'SF Mono', SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', "
+    "'Liberation Mono', monospace"
+)
+
+
 # --------------------------------------------------------------------------
 # OKLCH → sRGB (Björn Ottosson, https://bottosson.github.io/posts/oklab/)
 # --------------------------------------------------------------------------
@@ -1324,8 +1339,7 @@ def emit_icon(palette: dict, size: int = ICON_SIZE) -> bytes:
 CARD_ACCENTS = ["amber", "red", "orange", "yellow", "green", "cyan", "blue", "purple"]
 CARD_NEUTRALS = ["bg", "bg_alt", "bg_alt2", "fg_dark", "fg_darker", "fg_alt", "fg", "fg_light"]
 
-CARD_FONT = ("ui-monospace, SFMono-Regular, Menlo, Consolas, "
-             "'DejaVu Sans Mono', monospace")
+CARD_FONT = MONO_STACK
 CARD_CHIP_W, CARD_CHIP_H, CARD_GAP, CARD_PAD = 92, 56, 12, 28
 CARD_TITLES = {"dark": "Spectral Dark", "light": "Spectral Light"}
 

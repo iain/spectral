@@ -29,6 +29,9 @@ import tempfile
 from html.parser import HTMLParser
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import palette  # noqa: E402  (needs the path above)
+
 REPO = Path(__file__).resolve().parent.parent
 SAMPLES = REPO / "tools" / "samples"
 OUT = REPO / "screenshots"
@@ -38,7 +41,7 @@ VARIANTS = ("dark", "light")
 # Type metrics. Advance is only used to size the canvas — glyphs are laid out
 # by the renderer's own metrics, so a font whose advance differs slightly still
 # lines up.
-FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace"
+FONT = palette.MONO_STACK
 FONT_SIZE = 14.0
 ADVANCE = FONT_SIZE * 0.60
 LINE_H = FONT_SIZE * 1.5
@@ -206,10 +209,7 @@ def to_svg(lines, styles, fg, bg, title, accents) -> str:
 
 
 def accents_for(variant: str) -> dict[str, str]:
-    sys.path.insert(0, str(REPO / "tools"))
-    import palette as P
-
-    pal = P.resolve(P.PALETTES[variant])
+    pal = palette.resolve(palette.PALETTES[variant])
     # Lowercase to match :TOhtml's own output, so one file does not
     # mix hex casing.
     hexes = {k: f"#{v['gui'].lower()}" for k, v in pal.items()}
