@@ -34,6 +34,7 @@ Click through for the full-size render. Python samples are in
 | Ghostty      | two themes, plus an install script                      |
 | iTerm2       | two presets, plus a profile sync script                 |
 | Mattermost   | two custom themes                                       |
+| tuicr        | two themes, each with a TextMate syntax theme           |
 
 ## Vim and Neovim
 
@@ -200,6 +201,21 @@ Settings → Display → Theme → Custom Theme, expand "Copy/Paste Theme Colors
 and paste either file. Amber anchors mentions, buttons and the active-channel
 border; the team rail is the darkest neutral.
 
+## tuicr
+
+`tuicr/spectral-dark.toml` and `tuicr/spectral-light.toml`, for the
+[tuicr](https://tuicr.dev/) code review TUI. Each has a `.tmTheme` beside it
+that colors code in diffs with the VS Code token rules. Put all four files in
+`${XDG_CONFIG_HOME:-~/.config}/tuicr/themes/`, then in tuicr's `config.toml`:
+
+```toml
+theme_dark = "spectral-dark"
+theme_light = "spectral-light"
+```
+
+Amber marks the focused border, the cursor, the mode block and files still
+to review.
+
 ## The palette
 
 Each variant is defined in OKLCH — lightness 0–1, chroma, and hue in degrees.
@@ -270,7 +286,7 @@ python3 tools/palette.py
 That writes `colors/spectral-*.vim`, `ghostty/spectral-*`,
 `iterm2/*.itermcolors`, `mattermost/spectral-*.json`,
 `vscode/themes/spectral-*.json`, `vscode/icon.png`,
-`zed/themes/spectral.json`, `screenshots/palette-*.svg`, and
+`zed/themes/spectral.json`, `tuicr/spectral-*`, `screenshots/palette-*.svg`, and
 `autoload/lightline/colorscheme/spectral.vim`. All of those are generated — do
 not hand-edit them. After regenerating the iTerm2 presets, run
 `iterm2/sync.py <plist>` to push them into your own plist.
@@ -282,7 +298,7 @@ python3 -m unittest discover -s tools
 ```
 
 They check the generated output: valid hex everywhere, no TextMate scope
-claimed by two entries, and a contrast floor. CI runs them alongside a check
+claimed by two entries, a contrast floor, and every key tuicr requires. CI runs them alongside a check
 that the generated files match the palette.
 
 ### Screenshots

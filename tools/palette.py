@@ -17,6 +17,8 @@ downstream file:
   vscode/themes/spectral-dark.json
   vscode/themes/spectral-light.json
   vscode/icon.png
+  tuicr/spectral-dark.toml, tuicr/spectral-dark.tmTheme
+  tuicr/spectral-light.toml, tuicr/spectral-light.tmTheme
   screenshots/palette-dark.svg
   screenshots/palette-light.svg
 
@@ -1235,6 +1237,103 @@ def emit_vscode(variant: str, palette: dict, palette_oklch: dict) -> str:
 
 
 # --------------------------------------------------------------------------
+# tuicr emitter
+# --------------------------------------------------------------------------
+
+# tuicr's local theme keys, in the order its own example file lists them.
+# Values use the VS Code specs, minus "alpha": tuicr takes #RRGGBB only. Amber
+# sits where it does in VS Code and lightline — the focused border, cursor and
+# mode block — plus "pending", the marker on files not yet reviewed, which
+# tuicr also blends into the panel for search matches.
+TUICR_UI: dict[str, object] = {
+    "panel_bg":             "bg",
+    "bg_highlight":         "bg_alt2",
+    "fg_primary":           "fg",
+    "fg_secondary":         "fg_alt",
+    "fg_dim":               "fg_dark",
+
+    # The stronger of VS Code's two diff washes: in a terminal the line
+    # background is most of what marks a changed line.
+    "diff_add":             "green",
+    "diff_add_bg":          ("mix", "bg", "green", 0.16),
+    "diff_del":             "red",
+    "diff_del_bg":          ("mix", "bg", "red", 0.16),
+    "diff_context":         "fg",
+    "diff_hunk_header":     "cyan",
+    "expanded_context_fg":  "fg_dark",
+    "syntax_add_bg":        ("mix", "bg", "green", 0.16),
+    "syntax_del_bg":        ("mix", "bg", "red", 0.16),
+
+    # Same meanings as VS Code's gutter.
+    "file_added":           "green",
+    "file_modified":        "yellow",
+    "file_deleted":         "red",
+    "file_renamed":         "purple",
+    "reviewed":             "green",
+    "pending":              "amber",
+
+    "comment_note":         "cyan",
+    "comment_suggestion":   "blue",
+    "comment_issue":        "red",
+    "comment_praise":       "green",
+
+    "border_focused":       "amber",
+    "border_unfocused":     "bg_alt2",
+    "status_bar_bg":        "tab_bg",
+    "cursor_color":         "amber",
+    "cursor_line_bg":       "bg_alt",
+    "branch_name":          "purple",
+    "help_indicator":       "fg_darker",
+
+    "message_info_fg":      "bg",
+    "message_info_bg":      "cyan",
+    "message_warning_fg":   "bg",
+    "message_warning_bg":   "yellow",
+    "message_error_fg":     "bg",
+    "message_error_bg":     "red",
+    "update_badge_fg":      "bg",
+    "update_badge_bg":      "amber",
+    "mode_fg":              "bg",
+    "mode_bg":              "amber",
+}
+
+
+def emit_tuicr(variant: str, palette: dict) -> str:
+    title = "Spectral " + ("Dark" if variant == "dark" else "Light")
+    lines = [f"# {title} — generated from tools/palette.py", ""]
+    for key, value in TUICR_UI.items():
+        lines.append(f'{key} = "{_vsc(palette, value)}"')
+    lines.append("")
+    lines.append("# Resolved relative to this file.")
+    lines.append(f'syntax_theme = "spectral-{variant}.tmTheme"')
+    return "\n".join(lines) + "\n"
+
+
+def emit_tmtheme(variant: str, palette: dict) -> bytes:
+    """TextMate theme for tuicr's syntax highlighter (syntect).
+
+    The token rules are VS Code's, scope for scope, so code in a tuicr diff is
+    colored the way it is in the editor.
+    """
+    settings = [{
+        "settings": {
+            "background":    f"#{palette['bg']['gui']}",
+            "foreground":    f"#{palette['fg']['gui']}",
+            "caret":         f"#{palette['amber']['gui']}",
+            "lineHighlight": f"#{palette['bg_alt']['gui']}",
+            "selection":     f"#{palette['bg_alt2']['gui']}",
+        },
+    }]
+    for name, slot, style, scopes in VSCODE_TOKENS:
+        settings.append({
+            "name": name,
+            "scope": ", ".join(scopes),
+            "settings": {"foreground": f"#{palette[slot]['gui']}", "fontStyle": style},
+        })
+    return plistlib.dumps({"name": VSCODE_NAMES[variant], "settings": settings})
+
+
+# --------------------------------------------------------------------------
 # Zed emitter
 # --------------------------------------------------------------------------
 
@@ -1755,6 +1854,12 @@ def main() -> None:
         vscode = REPO / "vscode" / "themes"
         vscode.mkdir(parents=True, exist_ok=True)
         (vscode / f"spectral-{variant}.json").write_text(emit_vscode(variant, palette, spec))
+
+        # tuicr
+        tuicr = REPO / "tuicr"
+        tuicr.mkdir(exist_ok=True)
+        (tuicr / f"spectral-{variant}.toml").write_text(emit_tuicr(variant, palette))
+        (tuicr / f"spectral-{variant}.tmTheme").write_bytes(emit_tmtheme(variant, palette))
 
         print(f"wrote {variant} variant")
 

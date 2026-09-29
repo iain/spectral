@@ -11,8 +11,10 @@ Run: python3 -m unittest discover -s tools
 from __future__ import annotations
 
 import json
+import plistlib
 import re
 import struct
+import tomllib
 import unittest
 
 import palette
@@ -192,6 +194,77 @@ class ZedTheme(unittest.TestCase):
                     self.assertGreaterEqual(
                         contrast(settings["color"][:7], bg[:7]), 2.0,
                     )
+
+
+class TuicrTheme(unittest.TestCase):
+    # Every key tuicr 0.27 refuses to load a local theme without
+    # (require_local_theme_color in src/theme/mod.rs). It takes #RRGGBB only.
+    REQUIRED = (
+        "panel_bg", "pending", "bg_highlight", "fg_primary", "fg_secondary",
+        "fg_dim", "diff_add", "diff_add_bg", "diff_del", "diff_del_bg",
+        "diff_context", "diff_hunk_header", "expanded_context_fg",
+        "syntax_add_bg", "syntax_del_bg", "file_added", "file_modified",
+        "file_deleted", "file_renamed", "reviewed", "comment_note",
+        "comment_suggestion", "comment_issue", "comment_praise",
+        "border_focused", "border_unfocused", "status_bar_bg", "cursor_color",
+        "cursor_line_bg", "branch_name", "help_indicator", "message_info_fg",
+        "message_info_bg", "message_warning_fg", "message_warning_bg",
+        "message_error_fg", "message_error_bg", "update_badge_fg",
+        "update_badge_bg", "mode_fg", "mode_bg",
+    )
+    HEX6 = re.compile(r"^#[0-9A-Fa-f]{6}$")
+
+    def theme(self, variant: str) -> dict:
+        return tomllib.loads(palette.emit_tuicr(variant, resolved(variant)))
+
+    def test_defines_every_key_tuicr_requires_as_rrggbb(self):
+        for variant in VARIANTS:
+            theme = self.theme(variant)
+            for key in self.REQUIRED:
+                with self.subTest(variant=variant, key=key):
+                    self.assertRegex(theme.get(key, ""), self.HEX6)
+
+    def test_writes_no_key_tuicr_would_warn_about_on_every_start(self):
+        for variant in VARIANTS:
+            with self.subTest(variant=variant):
+                unknown = set(self.theme(variant)) - set(self.REQUIRED) - {"syntax_theme"}
+                self.assertEqual(unknown, set())
+
+    def test_text_stays_legible_on_what_it_is_drawn_over(self):
+        # Pairs tuicr paints one on the other. Badges and the mode block get
+        # the WCAG large-text floor; they're short labels, not reading text.
+        pairs = {
+            ("fg_primary", "panel_bg"): 7.0,
+            ("diff_context", "syntax_add_bg"): 4.5,
+            ("diff_context", "syntax_del_bg"): 4.5,
+            ("diff_add", "diff_add_bg"): 3.0,
+            ("diff_del", "diff_del_bg"): 3.0,
+            ("message_info_fg", "message_info_bg"): 3.0,
+            ("message_warning_fg", "message_warning_bg"): 3.0,
+            ("message_error_fg", "message_error_bg"): 3.0,
+            ("update_badge_fg", "update_badge_bg"): 3.0,
+            ("mode_fg", "mode_bg"): 3.0,
+        }
+        for variant in VARIANTS:
+            theme = self.theme(variant)
+            for (fg, bg), floor in pairs.items():
+                with self.subTest(variant=variant, fg=fg, bg=bg):
+                    self.assertGreaterEqual(contrast(theme[fg], theme[bg]), floor)
+
+    def test_highlights_syntax_with_its_own_textmate_theme(self):
+        for variant in VARIANTS:
+            with self.subTest(variant=variant):
+                theme = self.theme(variant)
+                self.assertEqual(theme["syntax_theme"], f"spectral-{variant}.tmTheme")
+                tm = plistlib.loads(palette.emit_tmtheme(variant, resolved(variant)))
+                base, *rules = tm["settings"]
+                self.assertEqual(base["settings"]["background"], theme["panel_bg"])
+                self.assertTrue(rules)
+                for rule in rules:
+                    fg = rule["settings"]["foreground"]
+                    with self.subTest(variant=variant, rule=rule["name"]):
+                        self.assertRegex(fg, self.HEX6)
+                        self.assertGreaterEqual(contrast(fg, theme["panel_bg"]), 2.0)
 
 
 class MarketplaceIcon(unittest.TestCase):
