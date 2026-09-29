@@ -35,6 +35,7 @@ Click through for the full-size render. Python samples are in
 | iTerm2       | two presets, plus a profile sync script                 |
 | Mattermost   | two custom themes                                       |
 | tuicr        | two themes, each with a TextMate syntax theme           |
+| herdr        | a `[theme]` block carrying both variants                |
 
 ## Vim and Neovim
 
@@ -216,6 +217,21 @@ theme_light = "spectral-light"
 Amber marks the focused border, the cursor, the mode block and files still
 to review.
 
+## herdr
+
+[herdr](https://herdr.dev) has no theme files, only color overrides in its
+`config.toml`, so `herdr/spectral.toml` is a `[theme]` block to paste into
+`~/.config/herdr/config.toml` (`%APPDATA%\herdr\config.toml` on Windows),
+replacing any `[theme]` section already there. It turns on `auto_switch` and
+carries both variants, so herdr follows the terminal's light or dark
+appearance.
+
+Amber is the accent: active borders, the mode badge and key hints. The sidebar
+is left transparent so it shows the terminal's own background, which is
+Spectral too if you use the Ghostty or iTerm2 presets. Agent states keep
+herdr's meanings — yellow for working, red for blocked, cyan for done, green
+for idle.
+
 ## The palette
 
 Each variant is defined in OKLCH — lightness 0–1, chroma, and hue in degrees.
@@ -284,7 +300,7 @@ python3 tools/palette.py
 ```
 
 That writes `colors/spectral-*.vim`, `ghostty/spectral-*`,
-`iterm2/*.itermcolors`, `mattermost/spectral-*.json`,
+`herdr/spectral.toml`, `iterm2/*.itermcolors`, `mattermost/spectral-*.json`,
 `vscode/themes/spectral-*.json`, `vscode/icon.png`,
 `zed/themes/spectral.json`, `tuicr/spectral-*`, `screenshots/palette-*.svg`, and
 `autoload/lightline/colorscheme/spectral.vim`. All of those are generated — do

@@ -267,6 +267,57 @@ class TuicrTheme(unittest.TestCase):
                         self.assertGreaterEqual(contrast(fg, theme["panel_bg"]), 2.0)
 
 
+class HerdrTheme(unittest.TestCase):
+    # herdr's CustomThemeColors. Anything left out falls through to the
+    # built-in catppuccin base, so the file has to set all of them.
+    TOKENS = {
+        "accent", "panel_bg", "sidebar_bg", "active_row_bg", "selection_bg",
+        "surface0", "surface1", "surface_dim", "overlay0", "overlay1",
+        "text", "subtext0", "mauve", "green", "yellow", "red", "blue",
+        "teal", "peach",
+    }
+
+    def config(self) -> dict:
+        return tomllib.loads(palette.emit_herdr({v: resolved(v) for v in VARIANTS}))
+
+    def modes(self):
+        for variant in VARIANTS:
+            yield variant, self.config()["theme"]["custom"][variant]
+
+    def test_switches_between_both_variants(self):
+        # herdr only reads [theme.custom.dark] and [theme.custom.light] when
+        # auto_switch is on.
+        self.assertIs(self.config()["theme"]["auto_switch"], True)
+        for variant, colors in self.modes():
+            with self.subTest(variant=variant):
+                self.assertEqual(set(colors), self.TOKENS)
+
+    def test_every_color_is_valid_hex(self):
+        for variant, colors in self.modes():
+            for key, value in colors.items():
+                with self.subTest(variant=variant, key=key):
+                    # The sidebar deliberately shows the terminal through.
+                    if key == "sidebar_bg":
+                        self.assertEqual(value, "reset")
+                    else:
+                        self.assertRegex(value, HEX)
+
+    def test_sidebar_rows_stay_distinct_and_legible(self):
+        # The floors herdr's own tests hold every built-in theme to.
+        for variant, colors in self.modes():
+            with self.subTest(variant=variant):
+                self.assertNotEqual(colors["active_row_bg"], colors["selection_bg"])
+                for row in ("active_row_bg", "selection_bg"):
+                    self.assertGreaterEqual(contrast(colors[row], colors["panel_bg"]), 1.05)
+                    self.assertGreaterEqual(contrast(colors["text"], colors[row]), 3.0)
+
+    def test_badges_on_the_accent_stay_legible(self):
+        # herdr writes mode badges and overlay titles in panel_bg on the accent.
+        for variant, colors in self.modes():
+            with self.subTest(variant=variant):
+                self.assertGreaterEqual(contrast(colors["panel_bg"], colors["accent"]), 3.0)
+
+
 class MarketplaceIcon(unittest.TestCase):
     def test_is_a_valid_256px_rgba_png(self):
         data = palette.emit_icon(resolved("dark"))
