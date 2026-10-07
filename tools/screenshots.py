@@ -50,9 +50,9 @@ TITLEBAR = 30.0
 RADIUS = 8.0
 
 # Ordering here is load-bearing, twice over:
-#   plugin/sorbet.vim is sourced *after* `syntax on` so its Syntax autocmd is
-#   registered after Vim's own; registered first, syntax/ruby.vim's `syn clear`
-#   runs last and wipes the sig-block matches.
+#   The plugin/ files are sourced *after* `syntax on` so their Syntax autocmds
+#   are registered after Vim's own; registered first, the syntax file's
+#   `syn clear` runs last and wipes the extra matches.
 #   The file is opened by :edit at the end rather than passed as a Vim
 #   argument, so FileType and Syntax fire against a fully configured session —
 #   the same order a real editing session produces.
@@ -61,7 +61,7 @@ set rtp^={repo}
 runtime! plugin/tohtml.vim
 filetype plugin indent on
 syntax on
-runtime! plugin/sorbet.vim
+runtime! plugin/sorbet.vim plugin/go.vim plugin/comment_urls.vim
 set termguicolors
 set background={variant}
 colorscheme spectral-{variant}
@@ -106,14 +106,17 @@ STYLE_RE = re.compile(r"^\.(\w+)\s*\{([^}]*)\}", re.M)
 
 
 def parse_styles(doc: str) -> tuple[dict[str, dict], str, str]:
-    """Class name -> {fill, italic, bold}, plus the default fg/bg."""
+    """Class name -> {fill, background, italic, bold, underline}, plus the default fg/bg."""
     styles: dict[str, dict] = {}
     for name, body in STYLE_RE.findall(doc):
         color = re.search(r"(?<!background-)color:\s*(#[0-9a-fA-F]{6})", body)
+        background = re.search(r"background-color:\s*(#[0-9a-fA-F]{6})", body)
         styles[name] = {
             "fill": color.group(1) if color else None,
+            "background": background.group(1) if background else None,
             "italic": "font-style: italic" in body,
             "bold": "font-weight: bold" in body,
+            "underline": "text-decoration: underline" in body,
         }
     body_rule = re.search(r"^body\s*\{([^}]*)\}", doc, re.M)
     rule = body_rule.group(1) if body_rule else ""
@@ -189,15 +192,27 @@ def to_svg(lines, styles, fg, bg, title, accents) -> str:
     )
 
     for row, runs in enumerate(lines):
-        y = TITLEBAR + PAD_Y + (row + 1) * LINE_H - LINE_H * 0.25
+        top = TITLEBAR + PAD_Y + row * LINE_H
+        y = top + LINE_H - LINE_H * 0.25
         spans = []
+        col = 0
         for text, cls in runs:
             style = styles.get(cls or "", {})
+            background = style.get("background")
+            if background and background != bg:
+                parts.append(
+                    f'<rect x="{PAD_X + col * ADVANCE:.1f}" y="{top:.1f}" '
+                    f'width="{len(text) * ADVANCE:.1f}" height="{LINE_H:.1f}" '
+                    f'fill="{background}"/>'
+                )
+            col += len(text)
             attrs = [f'fill="{style.get("fill") or fg}"']
             if style.get("italic"):
                 attrs.append('font-style="italic"')
             if style.get("bold"):
                 attrs.append('font-weight="bold"')
+            if style.get("underline"):
+                attrs.append('text-decoration="underline"')
             spans.append(f'<tspan {" ".join(attrs)}>{esc(text)}</tspan>')
         parts.append(
             f'<text x="{PAD_X:.0f}" y="{y:.1f}" xml:space="preserve">'
