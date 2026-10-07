@@ -847,13 +847,15 @@
       }
     },
     {
-      "name": "Markdown link text",
+      "name": "Markdown link address",
       "scope": [
-        "string.other.link.title",
-        "string.other.link.description"
+        "meta.link.inline markup.underline.link",
+        "meta.link.reference.def markup.underline.link",
+        "markup.underline.link.image",
+        "constant.other.reference.link"
       ],
       "settings": {
-        "foreground": "#CC77DF",
+        "foreground": "#7B7463",
         "fontStyle": ""
       }
     },

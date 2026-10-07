@@ -270,10 +270,10 @@
             "color": "#FF544CFF"
           },
           "link_text": {
-            "color": "#CC77DFFF"
+            "color": "#60A7FFFF"
           },
           "link_uri": {
-            "color": "#60A7FFFF"
+            "color": "#7B7463FF"
           },
           "namespace": {
             "color": "#60A7FFFF"
@@ -636,10 +636,10 @@
             "color": "#BB0916FF"
           },
           "link_text": {
-            "color": "#791DC7FF"
+            "color": "#0053A4FF"
           },
           "link_uri": {
-            "color": "#0053A4FF"
+            "color": "#5D5139FF"
           },
           "namespace": {
             "color": "#0053A4FF"

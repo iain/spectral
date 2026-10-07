@@ -87,8 +87,18 @@ annotate.
 
 ### Extra syntax
 
-`plugin/go.vim` picks out the keys in Go composite literals
-(`User{Name: "x"}`), which Go's syntax file leaves as plain text.
+Two more files in `plugin/` add the syntax matches that the stock syntax files
+lack:
+
+- `plugin/go.vim` picks out the keys in Go composite literals
+  (`User{Name: "x"}`), which Go's syntax file leaves as plain text.
+- `plugin/comment_urls.vim` picks out URLs inside comments in every language,
+  so they read as links.
+
+Under Treesitter, Neovim shows URLs in comments as links only when the
+`comment` parser is installed. `queries/` extends Neovim's Markdown queries
+with a capture for the address behind a link, so it can be dimmed while
+autolinks stay blue; other colorschemes fall back to `@markup.link.url`.
 
 Markdown is styled for both Vim's bundled syntax and vim-polyglot's. Under
 polyglot, the `#` of an H1 stays outside the inverted block, because polyglot
@@ -124,9 +134,9 @@ is internally inconsistent:
 Markdown H1 is amber, bold and underlined rather than inverted: token colors
 cannot set a background.
 
-Sorbet signatures are not dimmed and Go composite literal keys are not amber.
-Both rely on the syntax matches in `plugin/`, which have no TextMate scope to
-hook.
+Sorbet signatures are not dimmed, Go composite literal keys are not amber, and
+URLs in comments are not marked as links. All three rely on the syntax matches
+in `plugin/`, which have no TextMate scope to hook.
 
 ## Zed
 
@@ -153,7 +163,7 @@ ln -s "$PWD/zed/themes/spectral.json" ~/.config/zed/themes/spectral.json
 or install the whole directory from the extensions page with **Install Dev
 Extension**, which is what publishing to Zed's extension store expects.
 
-Three mappings depart from the Vim theme, all because Zed's captures are
+Four mappings depart from the Vim theme, all because Zed's captures are
 coarser than Neovim's:
 
 - **Keys** keep the amber signature only in JSON, which has a capture of its
@@ -164,6 +174,8 @@ coarser than Neovim's:
   same `property` as every key.
 - **Markdown headings** are all amber bold rather than stepping down: Zed
   captures every level as `title`.
+- **Markdown autolinks** are dimmed rather than blue: Zed captures them as the
+  same `link_uri` as the address behind a link.
 
 If you would rather have the keys and take the member access with them, Zed's
 `theme_overrides` flips that one capture without touching the theme file:
@@ -273,6 +285,10 @@ its headers rather than its keys because a key starts nearly every line.
 
 XML and Vim script have no amber yet: nothing in them is both frequent and
 characteristic enough without swamping the file.
+
+Links are blue and underlined wherever they appear, including URLs inside
+comments. In a Markdown link that is the text, as it renders; the address
+behind it is dimmed with the brackets.
 
 ### Spectral Dark
 

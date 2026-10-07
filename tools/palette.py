@@ -1180,14 +1180,18 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "markup.fenced_code",
         "markup.raw",
     ]),
-    # Blue is the address; the label stays purple below.
+    # A link reads as it renders: the text is the link, and the address behind
+    # it recedes with the brackets. An autolink is its own text, so the plain
+    # markup.underline.link stays blue.
     ("Markdown link", "blue", "underline", [
         "markup.underline.link",
         "string.other.link",
     ]),
-    ("Markdown link text", "purple", "", [
-        "string.other.link.title",
-        "string.other.link.description",
+    ("Markdown link address", "fg_darker", "", [
+        "meta.link.inline markup.underline.link",
+        "meta.link.reference.def markup.underline.link",
+        "markup.underline.link.image",
+        "constant.other.reference.link",
     ]),
     ("Markdown quote", "fg_dark", "italic", ["markup.quote"]),
     ("Markdown separator", "fg_darker", "", [
@@ -1592,8 +1596,10 @@ ZED_SYNTAX: dict[str, tuple[str, str]] = {
     "hint":                    ("fg_dark", ""),
     "keyword":                 ("red",     ""),
     "label":                   ("red",     ""),
-    "link_text":               ("purple",  ""),
-    "link_uri":                ("blue",    ""),
+    # The link text is the link. Zed captures an autolink with the same
+    # link_uri as the address behind a link, so autolinks recede with it.
+    "link_text":               ("blue",    ""),
+    "link_uri":                ("fg_darker", ""),
     "namespace":               ("blue",    ""),
     "number":                  ("purple",  ""),
     "operator":                ("red",     ""),

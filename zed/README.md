@@ -53,7 +53,7 @@ palette, and accent icons.
 - Syntax captures for the languages the Vim theme targets
 - Collaboration cursors, drawn from the accent wheel
 
-## Three departures from the Vim theme
+## Four departures from the Vim theme
 
 - **Keys** are amber in Vim for JSON, YAML and CSS. Zed's grammars use one
   `property` capture for the key in a key/value pair *and* for member access
@@ -64,6 +64,9 @@ palette, and accent icons.
   the same `property` as every key, so they follow body text.
 - **Markdown headings** are all amber bold rather than stepping down from an
   inverted H1: Zed captures every heading level as `title`.
+- **Markdown autolinks** are dimmed rather than blue: Zed captures them as the
+  same `link_uri` as the address behind a link, which is dimmed so the link
+  text reads as the link.
 
 Zed's `theme_overrides` setting flips `property` back to amber if you would
 rather have the keys and take the member access with them.

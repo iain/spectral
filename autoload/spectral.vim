@@ -210,6 +210,8 @@ function! spectral#apply(p) abort
   call s:HL('Debug',           s:orange,     s:none,       '')
 
   call s:HL('Underlined',      s:blue,       s:none,       'underline')
+  " Syntax pattern is defined in plugin/comment_urls.vim
+  hi link spectralCommentUrl Underlined
   call s:HL('Ignore',          s:fg_dark,    s:none,       '')
   call s:HL('Error',           s:red,        s:bg,         '')
   call s:HL('Todo',            s:orange,     s:bg,         '')
@@ -235,7 +237,7 @@ function! spectral#apply(p) abort
   call s:HL('htmlItalic',      s:purple,     s:none,       'italic')
   call s:HL('htmlBoldItalic',  s:orange,     s:none,       'italic')
   call s:HL('htmlStrike',      s:fg_darker,  s:none,       'strikethrough')
-  call s:HL('htmlLink',        s:purple,     s:none,       '')
+  call s:HL('htmlLink',        s:blue,       s:none,       'underline')
 
   " XML
   call s:HL('xmlTag',          s:red,        s:none,       '')
@@ -396,16 +398,18 @@ function! spectral#apply(p) abort
   call s:HL('markdownCode',              s:green,  s:bg_alt, '')
   call s:HL('markdownCodeBlock',         s:green,  s:bg_alt, '')
   call s:HL('markdownCodeDelimiter',     s:fg_darker,s:none,'')
-  call s:HL('markdownUrl',               s:blue,   s:none,  'underline')
+  " A link reads as it renders: the text is the link, and the address behind
+  " it recedes with the brackets. An autolink is its own text, so it stays blue.
+  call s:HL('markdownUrl',               s:fg_darker,s:none,'')
   call s:HL('markdownAutomaticLink',     s:blue,   s:none,  'underline')
   call s:HL('markdownUrlTitle',          s:yellow, s:none,  '')
   call s:HL('markdownUrlDelimiter',      s:fg_darker,s:none,'')
   call s:HL('markdownUrlTitleDelimiter', s:fg_darker,s:none,'')
-  call s:HL('markdownLinkText',          s:purple, s:none,  '')
+  call s:HL('markdownLinkText',          s:blue,   s:none,  'underline')
   call s:HL('markdownLinkDelimiter',     s:fg_darker,s:none,'')
   call s:HL('markdownLinkTextDelimiter', s:fg_darker,s:none,'')
-  call s:HL('markdownId',                s:cyan,   s:none,  '')
-  call s:HL('markdownIdDeclaration',     s:purple, s:none,  '')
+  call s:HL('markdownId',                s:fg_darker,s:none,'')
+  call s:HL('markdownIdDeclaration',     s:fg_darker,s:none,'')
   call s:HL('markdownIdDelimiter',       s:fg_darker,s:none,'')
   call s:HL('markdownListMarker',        s:fg_alt, s:none,  '')
   call s:HL('markdownOrderedListMarker', s:fg_alt, s:none,  '')
@@ -420,6 +424,11 @@ function! spectral#apply(p) abort
   " every level, so it cannot join the inverted H1 and stays dim instead.
   call s:HL('mkdHeading',                s:fg_darker,s:none,'')
   call s:HL('mkdListItem',               s:fg_alt, s:none,  '')
+  call s:HL('mkdDelimiter',              s:fg_darker,s:none,'')
+  call s:HL('mkdLink',                   s:blue,   s:none,  'underline')
+  call s:HL('mkdURL',                    s:fg_darker,s:none,'')
+  call s:HL('mkdID',                     s:fg_darker,s:none,'')
+  call s:HL('mkdInlineURL',              s:blue,   s:none,  'underline')
 
   " JSON
   call s:HL('jsonKeyword',         s:amber,  s:none,       '')
@@ -686,7 +695,7 @@ function! spectral#apply(p) abort
     call s:HL('@text.literal',       s:green,      s:none, '')
     call s:HL('@text.uri',           s:blue,       s:none, 'underline')
     call s:HL('@text.math',          s:purple,     s:none, '')
-    call s:HL('@text.reference',     s:purple,     s:none, '')
+    call s:HL('@text.reference',     s:blue,       s:none, 'underline')
     call s:HL('@text.environment',   s:purple,     s:none, '')
     call s:HL('@text.environment.name', s:cyan,    s:none, '')
     call s:HL('@text.note',          s:fg_dark,    s:none, 'italic')
@@ -721,6 +730,8 @@ function! spectral#apply(p) abort
     call s:HL('@module.builtin',      s:blue,       s:none, '')
     call s:HL('@string.regexp',       s:orange,     s:none, '')
     call s:HL('@string.special.symbol', s:purple,   s:none, '')
+    " URLs, including those the comment parser finds inside comments.
+    call s:HL('@string.special.url',  s:blue,       s:none, 'underline')
     call s:HL('@attribute.builtin',   s:amber,      s:none, '')
 
     call s:HL('@keyword.conditional', s:red,        s:none, '')
@@ -755,9 +766,13 @@ function! spectral#apply(p) abort
     call s:HL('@markup.underline',    s:fg,         s:none, 'underline')
     call s:HL('@markup.quote',        s:fg_dark,    s:none, 'italic')
     call s:HL('@markup.math',         s:purple,     s:none, '')
-    call s:HL('@markup.link',         s:purple,     s:none, '')
-    call s:HL('@markup.link.label',   s:purple,     s:none, '')
+    " The .destination and .reference captures come from queries/markdown*:
+    " the address and reference label recede, autolinks stay blue.
+    call s:HL('@markup.link',         s:fg_darker,  s:none, '')
+    call s:HL('@markup.link.label',   s:blue,       s:none, 'underline')
+    call s:HL('@markup.link.label.reference', s:fg_darker, s:none, 'nocombine')
     call s:HL('@markup.link.url',     s:blue,       s:none, 'underline')
+    call s:HL('@markup.link.url.destination', s:fg_darker, s:none, 'nocombine')
     call s:HL('@markup.raw',          s:green,      s:none, '')
     call s:HL('@markup.raw.block',    s:green,      s:none, '')
     call s:HL('@markup.list',         s:fg_alt,     s:none, '')

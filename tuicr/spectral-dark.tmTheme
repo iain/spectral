@@ -478,15 +478,15 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Markdown link text</string>
+			<string>Markdown link address</string>
 			<key>scope</key>
-			<string>string.other.link.title, string.other.link.description</string>
+			<string>meta.link.inline markup.underline.link, meta.link.reference.def markup.underline.link, markup.underline.link.image, constant.other.reference.link</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
 				<string></string>
 				<key>foreground</key>
-				<string>#CC77DF</string>
+				<string>#7B7463</string>
 			</dict>
 		</dict>
 		<dict>

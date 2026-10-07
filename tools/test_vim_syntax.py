@@ -18,6 +18,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 VIM = shutil.which("vim")
+NVIM = shutil.which("nvim")
 
 
 def syntax_at(extension: str, text: str, positions: list[tuple[int, int]]) -> list[list[str]]:
@@ -47,6 +48,66 @@ def syntax_at(extension: str, text: str, positions: list[tuple[int, int]]) -> li
             timeout=30,
         )
         return json.loads(result.read_text())
+
+
+def captures_at(extension: str, text: str, positions: list[tuple[int, int]]) -> list[list[str]]:
+    """Return the treesitter captures at each (line, col), 1-based, in Neovim."""
+    with tempfile.TemporaryDirectory() as tmp:
+        sample = Path(tmp) / f"sample.{extension}"
+        sample.write_text(text)
+        result = Path(tmp) / "result.json"
+        probe = (
+            "lua vim.treesitter.start(); vim.treesitter.get_parser():parse(true); "
+            "local out = {}; "
+            f"for _, p in ipairs(vim.json.decode('{json.dumps(positions)}')) do "
+            "  local caps = vim.inspect_pos(0, p[1] - 1, p[2] - 1).treesitter; "
+            "  table.insert(out, vim.tbl_map(function(c) return c.capture end, caps)) "
+            "end; "
+            f"vim.fn.writefile({{vim.json.encode(out)}}, '{result}')"
+        )
+        subprocess.run(
+            [
+                NVIM, "--headless", "--clean",
+                "--cmd", f"set rtp^={REPO}",
+                "-c", f"edit {sample}",
+                "-c", probe,
+                "-c", "qa!",
+            ],
+            stdin=subprocess.DEVNULL,
+            check=True,
+            timeout=30,
+        )
+        return json.loads(result.read_text())
+
+
+@unittest.skipUnless(NVIM, "nvim is not installed")
+class NeovimMarkdownLinks(unittest.TestCase):
+    SAMPLE = "\n".join([
+        "See [the docs](https://example.com/docs) or <https://example.org>.",
+        "",
+        "A [reference][docs] link.",
+        "",
+        "[docs]: https://example.com/docs",
+    ]) + "\n"
+
+    def stacks(self, *positions):
+        return captures_at("md", self.SAMPLE, list(positions))
+
+    def test_link_destinations_have_their_own_capture(self):
+        inline, definition = self.stacks((1, 16), (5, 9))
+        self.assertIn("markup.link.url.destination", inline)
+        self.assertIn("markup.link.url.destination", definition)
+
+    def test_autolinks_keep_the_plain_url_capture(self):
+        (autolink,) = self.stacks((1, 46))
+        self.assertIn("markup.link.url", autolink)
+        self.assertNotIn("markup.link.url.destination", autolink)
+
+    def test_reference_labels_have_their_own_capture(self):
+        text, label, definition = self.stacks((3, 4), (3, 16), (5, 2))
+        self.assertNotIn("markup.link.label.reference", text)
+        self.assertIn("markup.link.label.reference", label)
+        self.assertIn("markup.link.label.reference", definition)
 
 
 @unittest.skipUnless(VIM, "vim is not installed")
@@ -82,6 +143,23 @@ class GoLiteralKeys(unittest.TestCase):
     def test_labels_case_clauses_and_slices_are_not_keys(self):
         for stack in self.stacks((8, 1), (10, 7), (12, 8)):
             self.assertNotIn("goLiteralKey", stack)
+
+
+@unittest.skipUnless(VIM, "vim is not installed")
+class CommentUrls(unittest.TestCase):
+    def test_url_in_a_comment_is_marked(self):
+        (stack,) = syntax_at("rb", "# see https://example.com/docs\n", [(1, 7)])
+        self.assertIn("spectralCommentUrl", stack)
+
+    def test_url_ends_before_closing_punctuation(self):
+        text = "// (see https://example.com/a).\n"
+        last, paren = syntax_at("go", text, [(1, 29), (1, 30)])
+        self.assertIn("spectralCommentUrl", last)
+        self.assertNotIn("spectralCommentUrl", paren)
+
+    def test_url_outside_a_comment_is_left_alone(self):
+        (stack,) = syntax_at("rb", 'url = "https://example.com"\n', [(1, 8)])
+        self.assertNotIn("spectralCommentUrl", stack)
 
 
 if __name__ == "__main__":
