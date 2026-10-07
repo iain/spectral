@@ -85,6 +85,15 @@ It follows `&background` once lightline reloads.
 `T::` types and `extend T::Sig`, so signatures recede behind the code they
 annotate.
 
+### Extra syntax
+
+`plugin/go.vim` picks out the keys in Go composite literals
+(`User{Name: "x"}`), which Go's syntax file leaves as plain text.
+
+Markdown is styled for both Vim's bundled syntax and vim-polyglot's. Under
+polyglot, the `#` of an H1 stays outside the inverted block, because polyglot
+uses one group for the `#` at every level.
+
 ## VS Code
 
 `vscode/` is a self-contained extension covering the workbench, the integrated
@@ -112,8 +121,12 @@ is internally inconsistent:
   body, orange escapes, purple character classes — rather than the flat orange
   of `@string.regex`.
 
-Sorbet signatures are not dimmed here; that relies on the syntax regions in
-`plugin/sorbet.vim`, which have no TextMate scope to hook.
+Markdown H1 is amber, bold and underlined rather than inverted: token colors
+cannot set a background.
+
+Sorbet signatures are not dimmed and Go composite literal keys are not amber.
+Both rely on the syntax matches in `plugin/`, which have no TextMate scope to
+hook.
 
 ## Zed
 
@@ -140,14 +153,16 @@ ln -s "$PWD/zed/themes/spectral.json" ~/.config/zed/themes/spectral.json
 or install the whole directory from the extensions page with **Install Dev
 Extension**, which is what publishing to Zed's extension store expects.
 
-Two mappings depart from the Vim theme, both because Zed's captures are
+Three mappings depart from the Vim theme, all because Zed's captures are
 coarser than Neovim's:
 
 - **Keys** keep the amber signature only in JSON, which has a capture of its
-  own (`property.json_key`). YAML, TOML and CSS share the generic `property`
+  own (`property.json_key`). YAML and CSS share the generic `property`
   capture with member access on an object, so amber there would paint every
   `obj.field` amber too; they follow body text instead.
-- **Markdown headings** are one color rather than a ladder of six — Zed
+- **TOML table headers** are not amber: Zed captures the table name as the
+  same `property` as every key.
+- **Markdown headings** are all amber bold rather than stepping down: Zed
   captures every level as `title`.
 
 If you would rather have the keys and take the member access with them, Zed's
@@ -162,8 +177,8 @@ If you would rather have the keys and take the member access with them, Zed's
 }
 ```
 
-Ruby symbols, Python decorators and Markdown list markers carry the signature
-as they do everywhere else. Regular expressions follow the VS Code reading:
+Ruby symbols and Python decorators carry the signature as they do everywhere
+else. Regular expressions follow the VS Code reading:
 Zed injects a regex grammar, so escapes stay orange inside the cyan body.
 Sorbet signatures are not dimmed, for the same reason they are not in VS Code.
 
@@ -246,19 +261,24 @@ one language at a time.
 |----------------------------|--------------------------------|
 | Ruby                       | symbols                        |
 | Python                     | decorators                     |
-| YAML, JSON, TOML           | keys                           |
+| YAML, JSON                 | keys                           |
+| TOML                       | table headers                  |
 | CSS                        | property names                 |
 | JavaScript, TypeScript, Go | object and struct literal keys |
-| Markdown                   | list markers                   |
+| Markdown, HTML             | headings                       |
 
-HTML, XML and Vim script have no amber yet: nothing in them is both frequent
-and characteristic enough without swamping the file.
+Headings step down from the signature: H1 inverted on an amber background, H2
+amber bold, H3 amber, H4 orange, and deeper levels bold body text. TOML takes
+its headers rather than its keys because a key starts nearly every line.
+
+XML and Vim script have no amber yet: nothing in them is both frequent and
+characteristic enough without swamping the file.
 
 ### Spectral Dark
 
 | Color             | OKLCH                | Hex       | Usage                          |
 |-------------------|----------------------|-----------|--------------------------------|
-| Amber (signature) | `0.80 / 0.16 / 75°`  | `#F9AD26` | Symbols, decorators, keys      |
+| Amber (signature) | `0.80 / 0.16 / 75°`  | `#F9AD26` | Symbols, keys, headings        |
 | Red               | `0.68 / 0.22 / 27°`  | `#FF544C` | Keywords, control flow         |
 | Orange            | `0.74 / 0.20 / 50°`  | `#FF8432` | Parameters, special characters |
 | Yellow            | `0.88 / 0.20 / 98°`  | `#F8D700` | Strings                        |
@@ -273,7 +293,7 @@ Background `0.21 / 0.006 / 85°` → `#1A1815` · Foreground `0.86 / 0.038 / 85�
 
 | Color             | OKLCH                 | Hex       | Usage                          |
 |-------------------|-----------------------|-----------|--------------------------------|
-| Amber (signature) | `0.58 / 0.124 / 72°`  | `#A76C01` | Symbols, decorators, keys      |
+| Amber (signature) | `0.58 / 0.124 / 72°`  | `#A76C01` | Symbols, keys, headings        |
 | Red               | `0.50 / 0.200 / 27°`  | `#BB0916` | Keywords, control flow         |
 | Orange            | `0.56 / 0.183 / 38°`  | `#C83E01` | Parameters, special characters |
 | Yellow            | `0.64 / 0.131 / 88°`  | `#AD8600` | Strings                        |

@@ -664,10 +664,32 @@
       "name": "Key",
       "scope": [
         "support.type.property-name.json",
-        "support.type.property-name.toml",
         "support.type.property-name.css",
         "entity.name.tag.yaml",
         "meta.object-literal.key"
+      ],
+      "settings": {
+        "foreground": "#A76C01",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "TOML key",
+      "scope": [
+        "support.type.property-name.toml"
+      ],
+      "settings": {
+        "foreground": "#2B2313",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "TOML table",
+      "scope": [
+        "support.type.property-name.table.toml",
+        "support.type.property-name.array.toml",
+        "punctuation.definition.table.toml",
+        "punctuation.definition.array.table.toml"
       ],
       "settings": {
         "foreground": "#A76C01",
@@ -716,8 +738,8 @@
         "markup.heading.setext.1"
       ],
       "settings": {
-        "foreground": "#BB0916",
-        "fontStyle": "bold"
+        "foreground": "#A76C01",
+        "fontStyle": "bold underline"
       }
     },
     {
@@ -727,7 +749,7 @@
         "markup.heading.setext.2"
       ],
       "settings": {
-        "foreground": "#C83E01",
+        "foreground": "#A76C01",
         "fontStyle": "bold"
       }
     },
@@ -737,8 +759,8 @@
         "markup.heading.3"
       ],
       "settings": {
-        "foreground": "#AD8600",
-        "fontStyle": "bold"
+        "foreground": "#A76C01",
+        "fontStyle": ""
       }
     },
     {
@@ -747,8 +769,8 @@
         "markup.heading.4"
       ],
       "settings": {
-        "foreground": "#1A7F11",
-        "fontStyle": "bold"
+        "foreground": "#C83E01",
+        "fontStyle": ""
       }
     },
     {
@@ -757,7 +779,7 @@
         "markup.heading.5"
       ],
       "settings": {
-        "foreground": "#007A85",
+        "foreground": "#2B2313",
         "fontStyle": "bold"
       }
     },
@@ -767,7 +789,7 @@
         "markup.heading.6"
       ],
       "settings": {
-        "foreground": "#791DC7",
+        "foreground": "#2B2313",
         "fontStyle": "bold"
       }
     },
@@ -832,17 +854,6 @@
       ],
       "settings": {
         "foreground": "#791DC7",
-        "fontStyle": ""
-      }
-    },
-    {
-      "name": "Markdown list marker",
-      "scope": [
-        "punctuation.definition.list.begin",
-        "markup.list"
-      ],
-      "settings": {
-        "foreground": "#A76C01",
         "fontStyle": ""
       }
     },

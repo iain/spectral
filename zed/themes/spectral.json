@@ -309,7 +309,7 @@
             "color": "#A19784FF"
           },
           "punctuation.list_marker": {
-            "color": "#F9AD26FF"
+            "color": "#A19784FF"
           },
           "punctuation.markup": {
             "color": "#5E574AFF"
@@ -348,7 +348,7 @@
             "color": "#8DEF46FF"
           },
           "title": {
-            "color": "#FF544CFF",
+            "color": "#F9AD26FF",
             "font_weight": 700
           },
           "type": {
@@ -675,7 +675,7 @@
             "color": "#463C28FF"
           },
           "punctuation.list_marker": {
-            "color": "#A76C01FF"
+            "color": "#463C28FF"
           },
           "punctuation.markup": {
             "color": "#6E6249FF"
@@ -714,7 +714,7 @@
             "color": "#1A7F11FF"
           },
           "title": {
-            "color": "#BB0916FF",
+            "color": "#A76C01FF",
             "font_weight": 700
           },
           "type": {

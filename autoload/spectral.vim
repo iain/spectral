@@ -223,12 +223,14 @@ function! spectral#apply(p) abort
   call s:HL('htmlArg',         s:green,      s:none,       '')
   call s:HL('htmlSpecialChar', s:purple,     s:none,       '')
   call s:HL('htmlTitle',       s:fg,         s:none,       '')
-  call s:HL('htmlH1',          s:red,        s:none,       '')
-  call s:HL('htmlH2',          s:orange,     s:none,       '')
-  call s:HL('htmlH3',          s:yellow,     s:none,       '')
-  call s:HL('htmlH4',          s:green,      s:none,       '')
-  call s:HL('htmlH5',          s:cyan,       s:none,       '')
-  call s:HL('htmlH6',          s:purple,     s:none,       '')
+  " Headings step down from the amber signature: H1 inverted, H2 bold, H3
+  " plain, then orange, then body text. vim-polyglot's Markdown uses these too.
+  call s:HL('htmlH1',          s:bg,         s:amber,      '')
+  call s:HL('htmlH2',          s:amber,      s:none,       'bold')
+  call s:HL('htmlH3',          s:amber,      s:none,       '')
+  call s:HL('htmlH4',          s:orange,     s:none,       '')
+  call s:HL('htmlH5',          s:fg,         s:none,       'bold')
+  call s:HL('htmlH6',          s:fg,         s:none,       'bold')
   call s:HL('htmlBold',        s:orange,     s:none,       '')
   call s:HL('htmlItalic',      s:purple,     s:none,       'italic')
   call s:HL('htmlBoldItalic',  s:orange,     s:none,       'italic')
@@ -261,6 +263,10 @@ function! spectral#apply(p) abort
   call s:HL('javaScriptRequire',    s:cyan,  s:none,       '')
   call s:HL('javaScriptReserved',   s:red,   s:none,       '')
 
+  " JavaScript (vim-javascript, bundled with vim-polyglot). Object literal
+  " keys carry the signature; obj.field is jsObjectProp and stays body text.
+  call s:HL('jsObjectKey',          s:amber, s:none,       '')
+
   " TypeScript
   call s:HL('typescriptBraces',           s:fg,    s:none,  '')
   call s:HL('typescriptImport',           s:red,   s:none,  '')
@@ -269,6 +275,9 @@ function! spectral#apply(p) abort
   call s:HL('typescriptVariable',         s:red,   s:none,  '')
   call s:HL('typescriptType',             s:cyan,  s:none,  '')
   call s:HL('typescriptArrowFunc',        s:red,   s:none,  '')
+  " Object literal keys carry the signature. typescriptMember would be the
+  " interface fields, but yats uses it for methods as well.
+  call s:HL('typescriptObjectLabel',      s:amber, s:none,  '')
 
   " Python
   " Builtins are cyan, as in every other language and in @function.builtin.
@@ -357,21 +366,24 @@ function! spectral#apply(p) abort
   call s:HL('goVarArgs',           s:orange, s:none,       '')
   call s:HL('goVarDefs',           s:orange, s:none,       '')
   call s:HL('goConstants',         s:purple, s:none,       '')
+  " Syntax pattern is defined in plugin/go.vim
+  call s:HL('goLiteralKey',        s:amber,  s:none,       '')
 
   " Markdown
-  call s:HL('markdownH1',                s:red,    s:none,  '')
-  call s:HL('markdownH2',                s:orange, s:none,  '')
-  call s:HL('markdownH3',                s:yellow, s:none,  '')
-  call s:HL('markdownH4',                s:green,  s:none,  '')
-  call s:HL('markdownH5',                s:cyan,   s:none,  '')
-  call s:HL('markdownH6',                s:purple, s:none,  '')
+  " Headings carry the amber signature, stepping down as htmlH1-H6 do.
+  call s:HL('markdownH1',                s:bg,     s:amber, '')
+  call s:HL('markdownH2',                s:amber,  s:none,  'bold')
+  call s:HL('markdownH3',                s:amber,  s:none,  '')
+  call s:HL('markdownH4',                s:orange, s:none,  '')
+  call s:HL('markdownH5',                s:fg,     s:none,  'bold')
+  call s:HL('markdownH6',                s:fg,     s:none,  'bold')
   call s:HL('markdownHeadingDelimiter',  s:fg_darker,s:none,'')
-  call s:HL('markdownH1Delimiter',       s:red,    s:none,  '')
-  call s:HL('markdownH2Delimiter',       s:orange, s:none,  '')
-  call s:HL('markdownH3Delimiter',       s:yellow, s:none,  '')
-  call s:HL('markdownH4Delimiter',       s:green,  s:none,  '')
-  call s:HL('markdownH5Delimiter',       s:cyan,   s:none,  '')
-  call s:HL('markdownH6Delimiter',       s:purple, s:none,  '')
+  call s:HL('markdownH1Delimiter',       s:bg,     s:amber, '')
+  call s:HL('markdownH2Delimiter',       s:amber,  s:none,  'bold')
+  call s:HL('markdownH3Delimiter',       s:amber,  s:none,  '')
+  call s:HL('markdownH4Delimiter',       s:orange, s:none,  '')
+  call s:HL('markdownH5Delimiter',       s:fg,     s:none,  'bold')
+  call s:HL('markdownH6Delimiter',       s:fg,     s:none,  'bold')
   call s:HL('markdownHeadingRule',       s:fg_dark,s:none,  '')
   call s:HL('markdownBold',              s:orange, s:none,  '')
   call s:HL('markdownBoldDelimiter',     s:fg_darker,s:none,'')
@@ -395,14 +407,19 @@ function! spectral#apply(p) abort
   call s:HL('markdownId',                s:cyan,   s:none,  '')
   call s:HL('markdownIdDeclaration',     s:purple, s:none,  '')
   call s:HL('markdownIdDelimiter',       s:fg_darker,s:none,'')
-  call s:HL('markdownListMarker',        s:amber,  s:none,  '')
-  call s:HL('markdownOrderedListMarker', s:amber,  s:none,  '')
+  call s:HL('markdownListMarker',        s:fg_alt, s:none,  '')
+  call s:HL('markdownOrderedListMarker', s:fg_alt, s:none,  '')
   call s:HL('markdownBlockquote',        s:fg_dark,s:none,  'italic')
   call s:HL('markdownRule',              s:fg_darker,s:none,'')
   call s:HL('markdownFootnote',          s:cyan,   s:none,  '')
   call s:HL('markdownFootnoteDefinition',s:cyan,   s:none,  '')
   call s:HL('markdownEscape',            s:orange, s:none,  '')
   call s:HL('markdownError',             s:red,    s:bg,    '')
+
+  " Markdown (vim-polyglot). Headings are htmlH1-H6; the # is one group for
+  " every level, so it cannot join the inverted H1 and stays dim instead.
+  call s:HL('mkdHeading',                s:fg_darker,s:none,'')
+  call s:HL('mkdListItem',               s:fg_alt, s:none,  '')
 
   " JSON
   call s:HL('jsonKeyword',         s:amber,  s:none,       '')
@@ -415,9 +432,11 @@ function! spectral#apply(p) abort
   call s:HL('yamlConstant',        s:purple, s:none,       '')
   call s:HL('yamlBlockMappingKey', s:amber,  s:none,       '')
 
-  " TOML
-  call s:HL('tomlTable',           s:purple, s:none,       '')
-  call s:HL('tomlKey',             s:amber,  s:none,       '')
+  " TOML: the table headers carry the signature. Keys are on nearly every
+  " line, so amber there would flood the file.
+  call s:HL('tomlTable',           s:amber,  s:none,       '')
+  call s:HL('tomlTableArray',      s:amber,  s:none,       '')
+  call s:HL('tomlKey',             s:fg,     s:none,       '')
 
   " Vim
   call s:HL('vimCommand',          s:red,    s:none,       '')
@@ -663,7 +682,7 @@ function! spectral#apply(p) abort
     call s:HL('@text.emphasis',      s:purple,     s:none, 'italic')
     call s:HL('@text.underline',     s:fg,         s:none, 'underline')
     call s:HL('@text.strike',        s:fg_dark,    s:none, 'strikethrough')
-    call s:HL('@text.title',         s:red,        s:none, '')
+    call s:HL('@text.title',         s:amber,      s:none, 'bold')
     call s:HL('@text.literal',       s:green,      s:none, '')
     call s:HL('@text.uri',           s:blue,       s:none, 'underline')
     call s:HL('@text.math',          s:purple,     s:none, '')
@@ -695,6 +714,9 @@ function! spectral#apply(p) abort
     call s:HL('@variable.parameter.builtin', s:orange, s:none, '')
     call s:HL('@variable.member',     s:fg,         s:none, '')
     call s:HL('@property',          s:amber,      s:none, '')
+    " TOML's query captures table names and keys alike as @property, and keys
+    " are on nearly every line; Vim gives the amber to the table headers.
+    call s:HL('@property.toml',     s:fg,         s:none, '')
     call s:HL('@module',              s:blue,       s:none, '')
     call s:HL('@module.builtin',      s:blue,       s:none, '')
     call s:HL('@string.regexp',       s:orange,     s:none, '')
@@ -718,16 +740,15 @@ function! spectral#apply(p) abort
     call s:HL('@comment.todo',        s:orange,     s:none, '')
     call s:HL('@comment.note',        s:cyan,       s:none, '')
 
-    " Headings carry a level here, so the per-level colors markdownH1-H6 give
-    " Vim finally reach treesitter too — under @text.title every heading was
-    " one flat color.
-    call s:HL('@markup.heading',      s:red,        s:none, '')
-    call s:HL('@markup.heading.1',    s:red,        s:none, '')
-    call s:HL('@markup.heading.2',    s:orange,     s:none, '')
-    call s:HL('@markup.heading.3',    s:yellow,     s:none, '')
-    call s:HL('@markup.heading.4',    s:green,      s:none, '')
-    call s:HL('@markup.heading.5',    s:cyan,       s:none, '')
-    call s:HL('@markup.heading.6',    s:purple,     s:none, '')
+    " Headings carry a level here, so the amber steps markdownH1-H6 give Vim
+    " reach treesitter too. The capture spans the whole heading, # included.
+    call s:HL('@markup.heading',      s:amber,      s:none, 'bold')
+    call s:HL('@markup.heading.1',    s:bg,         s:amber, '')
+    call s:HL('@markup.heading.2',    s:amber,      s:none, 'bold')
+    call s:HL('@markup.heading.3',    s:amber,      s:none, '')
+    call s:HL('@markup.heading.4',    s:orange,     s:none, '')
+    call s:HL('@markup.heading.5',    s:fg,         s:none, 'bold')
+    call s:HL('@markup.heading.6',    s:fg,         s:none, 'bold')
     call s:HL('@markup.strong',       s:orange,     s:none, '')
     call s:HL('@markup.italic',       s:purple,     s:none, 'italic')
     call s:HL('@markup.strikethrough',s:fg_dark,    s:none, 'strikethrough')
@@ -739,7 +760,7 @@ function! spectral#apply(p) abort
     call s:HL('@markup.link.url',     s:blue,       s:none, 'underline')
     call s:HL('@markup.raw',          s:green,      s:none, '')
     call s:HL('@markup.raw.block',    s:green,      s:none, '')
-    call s:HL('@markup.list',         s:amber,      s:none, '')
+    call s:HL('@markup.list',         s:fg_alt,     s:none, '')
     call s:HL('@markup.list.checked', s:green,      s:none, '')
     call s:HL('@markup.list.unchecked', s:fg_dark,  s:none, '')
 

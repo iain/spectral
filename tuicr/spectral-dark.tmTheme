@@ -259,7 +259,33 @@
 			<key>name</key>
 			<string>Key</string>
 			<key>scope</key>
-			<string>support.type.property-name.json, support.type.property-name.toml, support.type.property-name.css, entity.name.tag.yaml, meta.object-literal.key</string>
+			<string>support.type.property-name.json, support.type.property-name.css, entity.name.tag.yaml, meta.object-literal.key</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string></string>
+				<key>foreground</key>
+				<string>#F9AD26</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>TOML key</string>
+			<key>scope</key>
+			<string>support.type.property-name.toml</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string></string>
+				<key>foreground</key>
+				<string>#DCD0B5</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>TOML table</string>
+			<key>scope</key>
+			<string>support.type.property-name.table.toml, support.type.property-name.array.toml, punctuation.definition.table.toml, punctuation.definition.array.table.toml</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
@@ -315,9 +341,9 @@
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
-				<string>bold</string>
+				<string>bold underline</string>
 				<key>foreground</key>
-				<string>#FF544C</string>
+				<string>#F9AD26</string>
 			</dict>
 		</dict>
 		<dict>
@@ -330,7 +356,7 @@
 				<key>fontStyle</key>
 				<string>bold</string>
 				<key>foreground</key>
-				<string>#FF8432</string>
+				<string>#F9AD26</string>
 			</dict>
 		</dict>
 		<dict>
@@ -341,9 +367,9 @@
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
-				<string>bold</string>
+				<string></string>
 				<key>foreground</key>
-				<string>#F8D700</string>
+				<string>#F9AD26</string>
 			</dict>
 		</dict>
 		<dict>
@@ -354,9 +380,9 @@
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
-				<string>bold</string>
+				<string></string>
 				<key>foreground</key>
-				<string>#8DEF46</string>
+				<string>#FF8432</string>
 			</dict>
 		</dict>
 		<dict>
@@ -369,7 +395,7 @@
 				<key>fontStyle</key>
 				<string>bold</string>
 				<key>foreground</key>
-				<string>#2AD7D7</string>
+				<string>#DCD0B5</string>
 			</dict>
 		</dict>
 		<dict>
@@ -382,7 +408,7 @@
 				<key>fontStyle</key>
 				<string>bold</string>
 				<key>foreground</key>
-				<string>#CC77DF</string>
+				<string>#DCD0B5</string>
 			</dict>
 		</dict>
 		<dict>
@@ -461,19 +487,6 @@
 				<string></string>
 				<key>foreground</key>
 				<string>#CC77DF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Markdown list marker</string>
-			<key>scope</key>
-			<string>punctuation.definition.list.begin, markup.list</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string></string>
-				<key>foreground</key>
-				<string>#F9AD26</string>
 			</dict>
 		</dict>
 		<dict>

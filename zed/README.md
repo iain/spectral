@@ -33,13 +33,13 @@ that happen to be near each other.
 | Functions and methods       | Green   |
 | Types and classes           | Cyan    |
 | Namespaces, links           | Blue    |
-| Symbols, decorators, keys   | Amber   |
+| Symbols, keys, headings     | Amber   |
 | Parameters, escapes         | Orange  |
 | Constants, numbers, booleans| Purple  |
 | Comments                    | Dimmed, italic |
 
 Amber is the signature. In syntax it lands on whatever gives a language its
-texture — Ruby symbols, Python decorators, JSON keys, Markdown list markers. In
+texture — Ruby symbols, Python decorators, JSON keys, Markdown headings. In
 the workbench it is reserved for what the eye returns to constantly rather than
 for body text: the cursor, matched characters in the file finder and command
 palette, and accent icons.
@@ -53,15 +53,17 @@ palette, and accent icons.
 - Syntax captures for the languages the Vim theme targets
 - Collaboration cursors, drawn from the accent wheel
 
-## Two departures from the Vim theme
+## Three departures from the Vim theme
 
-- **Keys** are amber in Vim for JSON, YAML, TOML and CSS. Zed's grammars use
-  one `property` capture for the key in a key/value pair *and* for member
-  access on an object, so amber there would paint every `obj.field` amber too.
-  JSON keys have a capture of their own and keep the signature; the rest follow
+- **Keys** are amber in Vim for JSON, YAML and CSS. Zed's grammars use one
+  `property` capture for the key in a key/value pair *and* for member access
+  on an object, so amber there would paint every `obj.field` amber too. JSON
+  keys have a capture of their own and keep the signature; the rest follow
   body text.
-- **Markdown headings** are one color rather than a ladder of six: Zed captures
-  every heading level as `title`.
+- **TOML table headers** are amber in Vim, but Zed captures the table name as
+  the same `property` as every key, so they follow body text.
+- **Markdown headings** are all amber bold rather than stepping down from an
+  inverted H1: Zed captures every heading level as `title`.
 
 Zed's `theme_overrides` setting flips `property` back to amber if you would
 rather have the keys and take the member access with them.

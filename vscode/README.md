@@ -23,17 +23,17 @@ that happen to be near each other.
 | Functions and methods       | Green   |
 | Types and classes           | Cyan    |
 | Namespaces, links           | Blue    |
-| Symbols, decorators, keys   | Amber   |
+| Symbols, keys, headings     | Amber   |
 | Parameters, escapes         | Orange  |
 | Constants, numbers, booleans| Purple  |
 | Comments                    | Dimmed, italic |
 
 Amber is the signature. In syntax it lands on whatever gives a language its
-texture — Ruby symbols, Python decorators, JSON/YAML/TOML keys, CSS property
-names, object-literal keys, Markdown list markers. In the workbench it is
-reserved for what the eye returns to constantly rather than for body text: the
-cursor, badges, the active tab's top edge, the current breadcrumb segment, and
-buttons.
+texture — Ruby symbols, Python decorators, JSON/YAML keys, TOML table headers,
+CSS property names, object-literal keys, Markdown headings. In the workbench it
+is reserved for what the eye returns to constantly rather than for body text:
+the cursor, badges, the active tab's top edge, the current breadcrumb segment,
+and buttons.
 
 ## What's covered
 

@@ -1127,10 +1127,20 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
     # what Ruby symbols already did — they are hash keys most of the time.
     ("Key", "amber", "", [
         "support.type.property-name.json",
-        "support.type.property-name.toml",
         "support.type.property-name.css",
         "entity.name.tag.yaml",
         "meta.object-literal.key",
+    ]),
+    # TOML keys are on nearly every line, so the table headers take the
+    # signature instead.
+    ("TOML key", "fg", "", [
+        "support.type.property-name.toml",
+    ]),
+    ("TOML table", "amber", "", [
+        "support.type.property-name.table.toml",
+        "support.type.property-name.array.toml",
+        "punctuation.definition.table.toml",
+        "punctuation.definition.array.table.toml",
     ]),
     ("Attribute name", "green", "", [
         "entity.other.attribute-name",
@@ -1146,18 +1156,20 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "punctuation.definition.tag",
         "meta.brace",
     ]),
-    ("Markdown heading 1", "red", "bold", [
+    # Headings step down from the amber signature as they do in Vim. Token
+    # colors cannot set a background, so H1 is underlined instead of inverted.
+    ("Markdown heading 1", "amber", "bold underline", [
         "markup.heading.1",
         "markup.heading.setext.1",
     ]),
-    ("Markdown heading 2", "orange", "bold", [
+    ("Markdown heading 2", "amber", "bold", [
         "markup.heading.2",
         "markup.heading.setext.2",
     ]),
-    ("Markdown heading 3", "yellow", "bold", ["markup.heading.3"]),
-    ("Markdown heading 4", "green",  "bold", ["markup.heading.4"]),
-    ("Markdown heading 5", "cyan",   "bold", ["markup.heading.5"]),
-    ("Markdown heading 6", "purple", "bold", ["markup.heading.6"]),
+    ("Markdown heading 3", "amber",  "", ["markup.heading.3"]),
+    ("Markdown heading 4", "orange", "", ["markup.heading.4"]),
+    ("Markdown heading 5", "fg",     "bold", ["markup.heading.5"]),
+    ("Markdown heading 6", "fg",     "bold", ["markup.heading.6"]),
     ("Markdown bold", "orange", "bold", ["markup.bold"]),
     ("Markdown italic", "purple", "italic", ["markup.italic"]),
     ("Markdown strikethrough", "fg_darker", "strikethrough", [
@@ -1176,10 +1188,6 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
     ("Markdown link text", "purple", "", [
         "string.other.link.title",
         "string.other.link.description",
-    ]),
-    ("Markdown list marker", "amber", "", [
-        "punctuation.definition.list.begin",
-        "markup.list",
     ]),
     ("Markdown quote", "fg_dark", "italic", ["markup.quote"]),
     ("Markdown separator", "fg_darker", "", [
@@ -1597,7 +1605,7 @@ ZED_SYNTAX: dict[str, tuple[str, str]] = {
     "punctuation":             ("fg_alt",  ""),
     "punctuation.bracket":     ("fg_alt",  ""),
     "punctuation.delimiter":   ("fg_alt",  ""),
-    "punctuation.list_marker": ("amber",   ""),
+    "punctuation.list_marker": ("fg_alt",  ""),
     "punctuation.markup":      ("fg_dark", ""),
     "punctuation.special":     ("orange",  ""),
     "selector":                ("cyan",    ""),
@@ -1611,9 +1619,9 @@ ZED_SYNTAX: dict[str, tuple[str, str]] = {
     "string.special.symbol":   ("amber",   ""),
     "tag":                     ("red",     ""),
     "text.literal":            ("green",   ""),
-    # Zed has one capture for every heading level, so the vim theme's ladder
-    # of six colors collapses onto the color it starts from.
-    "title":                   ("red",     "bold"),
+    # Zed has one capture for every heading level, so the vim theme's amber
+    # steps collapse onto amber bold.
+    "title":                   ("amber",   "bold"),
     "type":                    ("cyan",    ""),
     "variable":                ("fg",      ""),
     "variable.parameter":      ("orange",  ""),
