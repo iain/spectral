@@ -21,10 +21,15 @@ from palette import PALETTES, resolve
 REPO = Path(__file__).resolve().parent.parent
 VIM = shutil.which("vim")
 NVIM = shutil.which("nvim")
+# vim-polyglot is not vendored; its tests run against a vim-plug checkout.
+POLYGLOT = Path.home() / ".local/share/vim/plugged/vim-polyglot"
 
 
-def syntax_at(extension: str, text: str, positions: list[tuple[int, int]]) -> list[list[str]]:
+def syntax_at(
+    extension: str, text: str, positions: list[tuple[int, int]], plugins: list[Path] = [],
+) -> list[list[str]]:
     """Return the syntax group names stacked at each (line, col), 1-based."""
+    rtp = ",".join(str(path) for path in [REPO, *plugins])
     with tempfile.TemporaryDirectory() as tmp:
         sample = Path(tmp) / f"sample.{extension}"
         sample.write_text(text)
@@ -37,7 +42,7 @@ def syntax_at(extension: str, text: str, positions: list[tuple[int, int]]) -> li
         subprocess.run(
             [
                 VIM, "-N", "-u", "NONE", "-i", "NONE", "-es",
-                "-c", f"set rtp^={REPO}",
+                "-c", f"set rtp^={rtp}",
                 "-c", "filetype on",
                 "-c", "syntax on",
                 "-c", "runtime! plugin/*.vim",
@@ -118,7 +123,7 @@ class MarkdownHeadingOne(unittest.TestCase):
             amber = "#" + colors["amber"]["gui"].lower()
             amber_bg = "#" + colors["amber_bg"]["gui"].lower()
             # htmlH1 is what vim-polyglot draws a Markdown H1 with.
-            groups = ["markdownH1", "markdownH1Delimiter", "htmlH1"]
+            groups = ["markdownH1", "markdownH1Delimiter", "htmlH1", "spectralMkdH1Delimiter"]
             for group, hl in zip(groups, highlight_of(f"spectral-{variant}", groups)):
                 with self.subTest(variant=variant, group=group):
                     self.assertEqual(hl["fg"].lower(), amber)
@@ -153,6 +158,20 @@ class NeovimMarkdownLinks(unittest.TestCase):
         self.assertNotIn("markup.link.label.reference", text)
         self.assertIn("markup.link.label.reference", label)
         self.assertIn("markup.link.label.reference", definition)
+
+
+@unittest.skipUnless(VIM and POLYGLOT.is_dir(), "vim or vim-polyglot is not installed")
+class PolyglotMarkdownHeadings(unittest.TestCase):
+    SAMPLE = "# Title\n\n## Section\n"
+
+    def test_the_hash_of_an_h1_has_its_own_group(self):
+        [stack] = syntax_at("md", self.SAMPLE, [(1, 1)], [POLYGLOT])
+        self.assertEqual(stack[-1], "spectralMkdH1Delimiter")
+
+    def test_deeper_headings_keep_their_own_level(self):
+        hashes, text = syntax_at("md", self.SAMPLE, [(3, 1), (3, 4)], [POLYGLOT])
+        self.assertEqual(hashes[-1], "mkdHeading")
+        self.assertEqual(text[-1], "htmlH2")
 
 
 @unittest.skipUnless(VIM, "vim is not installed")

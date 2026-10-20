@@ -422,8 +422,9 @@ function! spectral#apply(p) abort
   call s:HL('markdownError',             s:red,    s:bg,    '')
 
   " Markdown (vim-polyglot). Headings are htmlH1-H6; the # is one group for
-  " every level, so it cannot join the inverted H1 and stays dim instead.
+  " every level, except an H1's, which plugin/markdown.vim splits off.
   call s:HL('mkdHeading',                s:fg_darker,s:none,'')
+  call s:HL('spectralMkdH1Delimiter',    s:amber,  s:amber_bg, 'bold')
   call s:HL('mkdListItem',               s:fg_alt, s:none,  '')
   call s:HL('mkdDelimiter',              s:fg_darker,s:none,'')
   call s:HL('mkdLink',                   s:blue,   s:none,  'underline')

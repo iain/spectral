@@ -87,22 +87,23 @@ annotate.
 
 ### Extra syntax
 
-Two more files in `plugin/` add the syntax matches that the stock syntax files
-lack:
+Three more files in `plugin/` add the syntax matches that the stock syntax
+files lack:
 
 - `plugin/go.vim` picks out the keys in Go composite literals
   (`User{Name: "x"}`), which Go's syntax file leaves as plain text.
 - `plugin/comment_urls.vim` picks out URLs inside comments in every language,
   so they read as links.
+- `plugin/markdown.vim` gives the `#` of a vim-polyglot H1 a group of its own,
+  so it joins the amber field behind the heading; polyglot uses one group for
+  the `#` at every level.
 
 Under Treesitter, Neovim shows URLs in comments as links only when the
 `comment` parser is installed. `queries/` extends Neovim's Markdown queries
 with a capture for the address behind a link, so it can be dimmed while
 autolinks stay blue; other colorschemes fall back to `@markup.link.url`.
 
-Markdown is styled for both Vim's bundled syntax and vim-polyglot's. Under
-polyglot, the `#` of an H1 stays outside its background, because polyglot
-uses one group for the `#` at every level.
+Markdown is styled for both Vim's bundled syntax and vim-polyglot's.
 
 ## VS Code
 
