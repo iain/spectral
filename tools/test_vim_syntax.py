@@ -16,6 +16,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from palette import PALETTES, resolve
+
 REPO = Path(__file__).resolve().parent.parent
 VIM = shutil.which("vim")
 NVIM = shutil.which("nvim")
@@ -78,6 +80,48 @@ def captures_at(extension: str, text: str, positions: list[tuple[int, int]]) -> 
             timeout=30,
         )
         return json.loads(result.read_text())
+
+
+def highlight_of(colorscheme: str, groups: list[str]) -> list[dict[str, str]]:
+    """Return the GUI foreground and background each group resolves to."""
+    with tempfile.TemporaryDirectory() as tmp:
+        result = Path(tmp) / "result.json"
+        probe = (
+            "call writefile([json_encode(map(" + json.dumps(groups) + ","
+            " '{\"fg\": synIDattr(synIDtrans(hlID(v:val)), \"fg#\", \"gui\"),"
+            " \"bg\": synIDattr(synIDtrans(hlID(v:val)), \"bg#\", \"gui\")}'))], "
+            + json.dumps(str(result)) + ")"
+        )
+        subprocess.run(
+            [
+                VIM, "-N", "-u", "NONE", "-i", "NONE", "-es",
+                "-c", f"set rtp^={REPO}",
+                "-c", "set termguicolors",
+                "-c", f"colorscheme {colorscheme}",
+                "-c", probe,
+                "-c", "qa!",
+            ],
+            stdin=subprocess.DEVNULL,
+            check=True,
+            timeout=30,
+        )
+        return json.loads(result.read_text())
+
+
+@unittest.skipUnless(VIM, "vim is not installed")
+class MarkdownHeadingOne(unittest.TestCase):
+    # Amber on dim amber, as on an amber CRT, rather than inverted: a block of
+    # full amber clashes with the dim # that polyglot leaves outside it.
+    def test_is_amber_on_a_dim_amber_background(self):
+        for variant in ("dark", "light"):
+            colors = resolve(PALETTES[variant])
+            amber = "#" + colors["amber"]["gui"].lower()
+            amber_bg = "#" + colors["amber_bg"]["gui"].lower()
+            groups = ["markdownH1", "markdownH1Delimiter"]
+            for group, hl in zip(groups, highlight_of(f"spectral-{variant}", groups)):
+                with self.subTest(variant=variant, group=group):
+                    self.assertEqual(hl["fg"].lower(), amber)
+                    self.assertEqual(hl["bg"].lower(), amber_bg)
 
 
 @unittest.skipUnless(NVIM, "nvim is not installed")

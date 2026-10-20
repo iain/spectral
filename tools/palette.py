@@ -217,15 +217,22 @@ def cterm_for(rgb: tuple[int, int, int]) -> int:
 # Resolve OKLCH spec → {slot: {gui: hex, cterm: int, rgb: (r,g,b)}}
 # --------------------------------------------------------------------------
 
+def _slot(rgb: tuple[int, int, int]) -> dict:
+    return {
+        "gui": f"{rgb[0]:02X}{rgb[1]:02X}{rgb[2]:02X}",
+        "cterm": cterm_for(rgb),
+        "rgb": rgb,
+    }
+
+
 def resolve(spec: dict) -> dict:
     out = {}
     for name, (L, C, H) in spec.items():
-        rgb = oklch_to_rgb(L, C, H)
-        out[name] = {
-            "gui": f"{rgb[0]:02X}{rgb[1]:02X}{rgb[2]:02X}",
-            "cterm": cterm_for(rgb),
-            "rgb": rgb,
-        }
+        out[name] = _slot(oklch_to_rgb(L, C, H))
+    # The field behind the H1 block: an amber wash over the background, the
+    # same recipe Mattermost uses for its tinted buttons, at a strength that
+    # stays clear of the cursor line.
+    out["amber_bg"] = _slot(_mix(out["bg"]["rgb"], out["amber"]["rgb"], 0.15))
     return out
 
 
@@ -238,7 +245,7 @@ VIM_PALETTE_KEYS = [
     "fg_dark", "fg_darker", "fg_alt", "fg_light", "fg",
     "white",
     "red", "orange", "yellow", "green", "cyan", "blue", "purple",
-    "black", "tab_bg", "amber",
+    "black", "tab_bg", "amber", "amber_bg",
 ]
 
 VIM_DESC = {

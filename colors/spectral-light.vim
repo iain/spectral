@@ -36,6 +36,7 @@ call spectral#apply({
   \ 'black':     {'gui': '#000000', 'cterm': '16'},
   \ 'tab_bg':    {'gui': '#EFE3CB', 'cterm': '224'},
   \ 'amber':     {'gui': '#A76C01', 'cterm': '130'},
+  \ 'amber_bg':  {'gui': '#F2E5CA', 'cterm': '224'},
   \ })
 
 " Amber accents: anchor the palette on a few high-frequency elements so

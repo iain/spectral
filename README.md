@@ -101,7 +101,7 @@ with a capture for the address behind a link, so it can be dimmed while
 autolinks stay blue; other colorschemes fall back to `@markup.link.url`.
 
 Markdown is styled for both Vim's bundled syntax and vim-polyglot's. Under
-polyglot, the `#` of an H1 stays outside the inverted block, because polyglot
+polyglot, the `#` of an H1 stays outside its background, because polyglot
 uses one group for the `#` at every level.
 
 ## VS Code
@@ -279,7 +279,7 @@ one language at a time.
 | JavaScript, TypeScript, Go | object and struct literal keys |
 | Markdown, HTML             | headings                       |
 
-Headings step down from the signature: H1 inverted on an amber background, H2
+Headings step down from the signature: H1 amber bold on a dim amber field, H2
 amber bold, H3 amber, H4 orange, and deeper levels bold body text. TOML takes
 its headers rather than its keys because a key starts nearly every line.
 

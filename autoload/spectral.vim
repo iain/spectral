@@ -47,6 +47,7 @@ function! spectral#apply(p) abort
   let s:black      = a:p.black
   let s:tab_bg     = a:p.tab_bg
   let s:amber      = a:p.amber
+  let s:amber_bg   = a:p.amber_bg
   let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
 
   " Editor UI {{{
@@ -373,14 +374,14 @@ function! spectral#apply(p) abort
 
   " Markdown
   " Headings carry the amber signature, stepping down as htmlH1-H6 do.
-  call s:HL('markdownH1',                s:bg,     s:amber, '')
+  call s:HL('markdownH1',                s:amber,  s:amber_bg, 'bold')
   call s:HL('markdownH2',                s:amber,  s:none,  'bold')
   call s:HL('markdownH3',                s:amber,  s:none,  '')
   call s:HL('markdownH4',                s:orange, s:none,  '')
   call s:HL('markdownH5',                s:fg,     s:none,  'bold')
   call s:HL('markdownH6',                s:fg,     s:none,  'bold')
   call s:HL('markdownHeadingDelimiter',  s:fg_darker,s:none,'')
-  call s:HL('markdownH1Delimiter',       s:bg,     s:amber, '')
+  call s:HL('markdownH1Delimiter',       s:amber,  s:amber_bg, 'bold')
   call s:HL('markdownH2Delimiter',       s:amber,  s:none,  'bold')
   call s:HL('markdownH3Delimiter',       s:amber,  s:none,  '')
   call s:HL('markdownH4Delimiter',       s:orange, s:none,  '')
@@ -754,7 +755,7 @@ function! spectral#apply(p) abort
     " Headings carry a level here, so the amber steps markdownH1-H6 give Vim
     " reach treesitter too. The capture spans the whole heading, # included.
     call s:HL('@markup.heading',      s:amber,      s:none, 'bold')
-    call s:HL('@markup.heading.1',    s:bg,         s:amber, '')
+    call s:HL('@markup.heading.1',    s:amber,      s:amber_bg, 'bold')
     call s:HL('@markup.heading.2',    s:amber,      s:none, 'bold')
     call s:HL('@markup.heading.3',    s:amber,      s:none, '')
     call s:HL('@markup.heading.4',    s:orange,     s:none, '')
