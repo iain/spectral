@@ -117,7 +117,8 @@ class MarkdownHeadingOne(unittest.TestCase):
             colors = resolve(PALETTES[variant])
             amber = "#" + colors["amber"]["gui"].lower()
             amber_bg = "#" + colors["amber_bg"]["gui"].lower()
-            groups = ["markdownH1", "markdownH1Delimiter"]
+            # htmlH1 is what vim-polyglot draws a Markdown H1 with.
+            groups = ["markdownH1", "markdownH1Delimiter", "htmlH1"]
             for group, hl in zip(groups, highlight_of(f"spectral-{variant}", groups)):
                 with self.subTest(variant=variant, group=group):
                     self.assertEqual(hl["fg"].lower(), amber)

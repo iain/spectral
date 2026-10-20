@@ -228,7 +228,7 @@ function! spectral#apply(p) abort
   call s:HL('htmlTitle',       s:fg,         s:none,       '')
   " Headings step down from the amber signature: H1 inverted, H2 bold, H3
   " plain, then orange, then body text. vim-polyglot's Markdown uses these too.
-  call s:HL('htmlH1',          s:bg,         s:amber,      '')
+  call s:HL('htmlH1',          s:amber,      s:amber_bg,   'bold')
   call s:HL('htmlH2',          s:amber,      s:none,       'bold')
   call s:HL('htmlH3',          s:amber,      s:none,       '')
   call s:HL('htmlH4',          s:orange,     s:none,       '')
