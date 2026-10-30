@@ -574,19 +574,23 @@ def emit_mattermost(variant: str, palette: dict) -> str:
 # emits a [theme] block to paste in. The token names are Catppuccin's, which
 # is where herdr's default theme comes from; the comments say what herdr
 # paints with each. The neutral ramp reads the same way in both variants —
-# fg_dark is the dimmest text on either — so one map serves both.
-HERDR_KEYS: dict[str, str] = {
+# fg_dark is the dimmest text on either — so one map serves both. Values take
+# the same forms as the VS Code maps below.
+HERDR_KEYS: dict[str, object] = {
     "accent":        "amber",      # active borders, mode badge, key hints
     "panel_bg":      "tab_bg",     # tab bar, mode bar, overlays
     "sidebar_bg":    "reset",      # the terminal's own background
-    "active_row_bg": "bg_alt",     # active space, focused agent
+    "active_row_bg": "amber_bg",   # active space, focused agent
     "selection_bg":  "bg_alt2",    # navigate-mode cursor row
     "surface0":      "bg_alt",     # tabs, code in release notes
     "surface1":      "bg_alt2",    # hover
     "surface_dim":   "bg_alt2",    # separators, scrollbar track
-    "overlay0":      "fg_dark",    # muted text
-    "overlay1":      "fg_darker",
-    "subtext0":      "fg_alt",
+    # herdr writes agent titles and "· machine" in overlay0 on every row, so it
+    # has to hold 3:1 on the focused row and the navigate cursor too, which
+    # fg_darker misses in the dark variant.
+    "overlay0":      ("mix", "fg_darker", "fg_alt", 0.55),  # muted text
+    "overlay1":      "fg_alt",     # settings labels
+    "subtext0":      "fg_alt",     # unfocused agent names
     "text":          "fg",
     "mauve":         "purple",     # branch names, resize mode
     "green":         "green",      # idle
@@ -596,6 +600,10 @@ HERDR_KEYS: dict[str, str] = {
     "teal":          "cyan",       # done
     "peach":         "orange",     # interrupted
 }
+
+# herdr's light panel is nearly the cream of the 15% wash, so the light active
+# row takes more amber to stand off it.
+HERDR_LIGHT_ACTIVE_ROW_MIX = 0.30
 
 
 def emit_herdr(resolved: dict[str, dict]) -> str:
@@ -609,10 +617,13 @@ def emit_herdr(resolved: dict[str, dict]) -> str:
     for variant in ("dark", "light"):
         lines += ["", f"[theme.custom.{variant}]"]
         for key, slot in HERDR_KEYS.items():
+            pal = resolved[variant]
             if slot == "reset":
                 value = "reset"
+            elif key == "active_row_bg" and variant == "light":
+                value = f"#{_slot(_mix(pal['bg']['rgb'], pal['amber']['rgb'], HERDR_LIGHT_ACTIVE_ROW_MIX))['gui']}"
             else:
-                value = f"#{resolved[variant][slot]['gui']}"
+                value = _vsc(pal, slot)
             lines.append(f'{key} = "{value}"')
     return "\n".join(lines) + "\n"
 

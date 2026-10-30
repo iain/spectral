@@ -311,6 +311,33 @@ class HerdrTheme(unittest.TestCase):
                     self.assertGreaterEqual(contrast(colors[row], colors["panel_bg"]), 1.05)
                     self.assertGreaterEqual(contrast(colors["text"], colors[row]), 3.0)
 
+    def test_the_focused_space_sits_on_an_amber_wash(self):
+        # Some mix of the background toward amber, as behind a Vim H1.
+        for variant, colors in self.modes():
+            pal = resolved(variant)
+            washes = {
+                "#%02X%02X%02X" % palette._mix(pal["bg"]["rgb"], pal["amber"]["rgb"], t / 100)
+                for t in range(5, 50)
+            }
+            with self.subTest(variant=variant):
+                self.assertIn(colors["active_row_bg"], washes)
+
+    def test_text_on_selected_rows_stays_legible(self):
+        # Names, titles, branches and "· machine" on the focused row and the
+        # navigate cursor. Status colors get a lower floor: the state is also
+        # carried by the icon's shape, and light yellow cannot reach 3:1.
+        floors = {"text": 3.0, "subtext0": 3.0, "overlay0": 3.0, "mauve": 3.0}
+        floors |= dict.fromkeys(["green", "yellow", "red", "teal", "peach"], 2.0)
+        for variant, colors in self.modes():
+            for row in ("active_row_bg", "selection_bg"):
+                for key, floor in floors.items():
+                    with self.subTest(variant=variant, row=row, key=key):
+                        self.assertGreaterEqual(contrast(colors[key], colors[row]), floor)
+
+    def test_the_dark_focused_space_matches_the_vim_h1_field(self):
+        colors = dict(self.modes())["dark"]
+        self.assertEqual(colors["active_row_bg"], f"#{resolved('dark')['amber_bg']['gui']}")
+
     def test_badges_on_the_accent_stay_legible(self):
         # herdr writes mode badges and overlay titles in panel_bg on the accent.
         for variant, colors in self.modes():

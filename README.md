@@ -254,9 +254,11 @@ replacing any `[theme]` section already there. It turns on `auto_switch` and
 carries both variants, so herdr follows the terminal's light or dark
 appearance.
 
-Amber is the accent: active borders, the mode badge and key hints. The sidebar
-is left transparent so it shows the terminal's own background, which is
-Spectral too if you use the Ghostty or iTerm2 presets. Agent states keep
+Amber is the accent: active borders, the mode badge and key hints. The active
+space and focused agent sit on an amber wash, the field behind a Vim H1; the
+light wash is stronger, because herdr's light panel is close to cream. The
+sidebar is left transparent so it shows the terminal's own background, which
+is Spectral too if you use the Ghostty or iTerm2 presets. Agent states keep
 herdr's meanings — yellow for working, red for blocked, cyan for done, green
 for idle.
 
