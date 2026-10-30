@@ -580,7 +580,7 @@ HERDR_KEYS: dict[str, object] = {
     "accent":        "amber",      # active borders, mode badge, key hints
     "panel_bg":      "tab_bg",     # tab bar, mode bar, overlays
     "sidebar_bg":    "reset",      # the terminal's own background
-    "active_row_bg": "amber_bg",   # active space, focused agent
+    "active_row_bg": "black",      # active space, focused agent
     "selection_bg":  "bg_alt2",    # navigate-mode cursor row
     "surface0":      "bg_alt",     # tabs, code in release notes
     "surface1":      "bg_alt2",    # hover
@@ -601,8 +601,10 @@ HERDR_KEYS: dict[str, object] = {
     "peach":         "orange",     # interrupted
 }
 
-# herdr's light panel is nearly the cream of the 15% wash, so the light active
-# row takes more amber to stand off it.
+# herdr draws session titles in muted overlay0 on every row, focused or not, so
+# the dark active row is black, where they have the most contrast. Light has
+# contrast to spare and takes an amber wash; herdr's light panel is nearly the
+# cream of the 15% wash, so it takes more amber to stand off it.
 HERDR_LIGHT_ACTIVE_ROW_MIX = 0.30
 
 

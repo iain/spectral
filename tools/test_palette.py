@@ -303,24 +303,25 @@ class HerdrTheme(unittest.TestCase):
                         self.assertRegex(value, HEX)
 
     def test_sidebar_rows_stay_distinct_and_legible(self):
-        # The floors herdr's own tests hold every built-in theme to.
+        # The floors herdr's own tests hold every built-in theme to. The
+        # sidebar is transparent, so the rows sit on the terminal's background.
         for variant, colors in self.modes():
+            sidebar = f"#{resolved(variant)['bg']['gui']}"
             with self.subTest(variant=variant):
                 self.assertNotEqual(colors["active_row_bg"], colors["selection_bg"])
                 for row in ("active_row_bg", "selection_bg"):
-                    self.assertGreaterEqual(contrast(colors[row], colors["panel_bg"]), 1.05)
+                    self.assertGreaterEqual(contrast(colors[row], sidebar), 1.05)
                     self.assertGreaterEqual(contrast(colors["text"], colors[row]), 3.0)
 
-    def test_the_focused_space_sits_on_an_amber_wash(self):
+    def test_the_light_focused_space_sits_on_an_amber_wash(self):
         # Some mix of the background toward amber, as behind a Vim H1.
-        for variant, colors in self.modes():
-            pal = resolved(variant)
-            washes = {
-                "#%02X%02X%02X" % palette._mix(pal["bg"]["rgb"], pal["amber"]["rgb"], t / 100)
-                for t in range(5, 50)
-            }
-            with self.subTest(variant=variant):
-                self.assertIn(colors["active_row_bg"], washes)
+        colors = dict(self.modes())["light"]
+        pal = resolved("light")
+        washes = {
+            "#%02X%02X%02X" % palette._mix(pal["bg"]["rgb"], pal["amber"]["rgb"], t / 100)
+            for t in range(5, 50)
+        }
+        self.assertIn(colors["active_row_bg"], washes)
 
     def test_text_on_selected_rows_stays_legible(self):
         # Names, titles, branches and "· machine" on the focused row and the
@@ -334,9 +335,11 @@ class HerdrTheme(unittest.TestCase):
                     with self.subTest(variant=variant, row=row, key=key):
                         self.assertGreaterEqual(contrast(colors[key], colors[row]), floor)
 
-    def test_the_dark_focused_space_matches_the_vim_h1_field(self):
+    def test_the_dark_focused_space_is_black(self):
+        # herdr draws session titles in muted overlay0 on every row; black
+        # gives them the most contrast on the focused one.
         colors = dict(self.modes())["dark"]
-        self.assertEqual(colors["active_row_bg"], f"#{resolved('dark')['amber_bg']['gui']}")
+        self.assertEqual(colors["active_row_bg"], "#000000")
 
     def test_badges_on_the_accent_stay_legible(self):
         # herdr writes mode badges and overlay titles in panel_bg on the accent.
