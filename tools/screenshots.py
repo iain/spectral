@@ -229,8 +229,8 @@ def accents_for(variant: str) -> dict[str, str]:
     # mix hex casing.
     hexes = {k: f"#{v['gui'].lower()}" for k, v in pal.items()}
     return {
-        "bar": hexes["bg_alt"],
-        "title": hexes["fg_darker"],
+        "bar": hexes["bg_highlight"],
+        "title": hexes["fg_subtle"],
         "red": hexes["red"],
         "yellow": hexes["yellow"],
         "green": hexes["green"],

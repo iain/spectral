@@ -1,6 +1,6 @@
 " ===============================================================
 " Spectral Dark
-" Amber CRT phosphor on OLED black, with cool accents for balance.
+" Amber CRT phosphor on near-black, with cool accents for balance.
 " Maintainer:   iain
 " License:      MIT
 " GENERATED FILE — edit tools/palette.py and regenerate.
@@ -17,26 +17,26 @@ let g:colors_name = 'spectral-dark'
 let s:amber = {'gui': '#F9AD26', 'cterm': '214'}
 
 call spectral#apply({
-  \ 'bg':        {'gui': '#1A1815', 'cterm': '234'},
-  \ 'bg_alt':    {'gui': '#282622', 'cterm': '235'},
-  \ 'bg_alt2':   {'gui': '#403D36', 'cterm': '237'},
-  \ 'fg_dark':   {'gui': '#5E574A', 'cterm': '240'},
-  \ 'fg_darker': {'gui': '#7B7463', 'cterm': '242'},
-  \ 'fg_alt':    {'gui': '#A19784', 'cterm': '138'},
-  \ 'fg_light':  {'gui': '#F4E6CA', 'cterm': '224'},
-  \ 'fg':        {'gui': '#DCD0B5', 'cterm': '187'},
-  \ 'white':     {'gui': '#FFFFFF', 'cterm': '231'},
-  \ 'red':       {'gui': '#FF544C', 'cterm': '203'},
-  \ 'orange':    {'gui': '#FF8432', 'cterm': '209'},
-  \ 'yellow':    {'gui': '#F8D700', 'cterm': '220'},
-  \ 'green':     {'gui': '#8DEF46', 'cterm': '119'},
-  \ 'cyan':      {'gui': '#2AD7D7', 'cterm': '44'},
-  \ 'blue':      {'gui': '#60A7FF', 'cterm': '75'},
-  \ 'purple':    {'gui': '#CC77DF', 'cterm': '176'},
-  \ 'black':     {'gui': '#000000', 'cterm': '16'},
-  \ 'tab_bg':    {'gui': '#060604', 'cterm': '232'},
-  \ 'amber':     {'gui': '#F9AD26', 'cterm': '214'},
-  \ 'amber_bg':  {'gui': '#3B2E18', 'cterm': '52'},
+  \ 'bg_chrome':    {'gui': '#040302', 'cterm': '16'},
+  \ 'bg':           {'gui': '#110F0C', 'cterm': '233'},
+  \ 'bg_highlight': {'gui': '#282622', 'cterm': '235'},
+  \ 'bg_selected':  {'gui': '#403D36', 'cterm': '237'},
+  \ 'fg_faint':     {'gui': '#5E574A', 'cterm': '240'},
+  \ 'fg_subtle':    {'gui': '#7B7463', 'cterm': '242'},
+  \ 'fg_muted':     {'gui': '#A19784', 'cterm': '138'},
+  \ 'fg_strong':    {'gui': '#F4E6CA', 'cterm': '224'},
+  \ 'fg':           {'gui': '#DCD0B5', 'cterm': '187'},
+  \ 'white':        {'gui': '#FFFFFF', 'cterm': '231'},
+  \ 'red':          {'gui': '#FF544C', 'cterm': '203'},
+  \ 'orange':       {'gui': '#FF8432', 'cterm': '209'},
+  \ 'yellow':       {'gui': '#F8D700', 'cterm': '220'},
+  \ 'green':        {'gui': '#8DEF46', 'cterm': '119'},
+  \ 'cyan':         {'gui': '#2AD7D7', 'cterm': '44'},
+  \ 'blue':         {'gui': '#60A7FF', 'cterm': '75'},
+  \ 'purple':       {'gui': '#CC77DF', 'cterm': '176'},
+  \ 'black':        {'gui': '#000000', 'cterm': '16'},
+  \ 'amber':        {'gui': '#F9AD26', 'cterm': '214'},
+  \ 'amber_bg':     {'gui': '#342710', 'cterm': '52'},
   \ })
 
 " Amber accents: anchor the palette on a few high-frequency elements so

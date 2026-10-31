@@ -3,7 +3,7 @@
 A warm, high-contrast colorscheme with an amber-CRT signature, in dark and
 light variants.
 
-- **Spectral Dark** — amber phosphor on OLED black, with cool accents for balance
+- **Spectral Dark** — amber phosphor on near-black, with cool accents for balance
 - **Spectral Light** — warm cream paper with the same amber signature
 
 Both ship in one theme family, so `"mode": "system"` switches between them:
@@ -21,7 +21,7 @@ Both ship in one theme family, so `"mode": "system"` switches between them:
 ## Design
 
 The palette is defined in [OKLCH](https://bottosson.github.io/posts/oklab/), so
-the accents sit in a roughly equiluminant band — no single hue jumps out as
+the accents sit in a similar lightness band — no single hue jumps out as
 brighter than the rest — and every neutral shares one warm yellow-orange hue at
 low chroma. The result reads as amber phosphor rather than as a set of colors
 that happen to be near each other.

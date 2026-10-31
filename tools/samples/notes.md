@@ -31,7 +31,7 @@ The palette lives in `tools/palette.py` and is defined in OKLCH:
 
 | Variant | Background | Signature |
 |---------|-----------|-----------|
-| Dark    | `#1A1815` | `#F9AD26` |
+| Dark    | `#110F0C` | `#F9AD26` |
 | Light   | `#FFFAEE` | `#A76C01` |
 
 ~~Terminal-only~~ Blue now carries links and namespaces too.

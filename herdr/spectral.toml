@@ -6,9 +6,9 @@ auto_switch = true
 
 [theme.custom.dark]
 accent = "#F9AD26"
-panel_bg = "#060604"
+panel_bg = "#040302"
 sidebar_bg = "reset"
-active_row_bg = "#000000"
+active_row_bg = "#040302"
 selection_bg = "#403D36"
 surface0 = "#282622"
 surface1 = "#403D36"
@@ -27,7 +27,7 @@ peach = "#FF8432"
 
 [theme.custom.light]
 accent = "#A76C01"
-panel_bg = "#EFE3CB"
+panel_bg = "#FFFDFA"
 sidebar_bg = "reset"
 active_row_bg = "#E5CFA7"
 selection_bg = "#E7D9BD"

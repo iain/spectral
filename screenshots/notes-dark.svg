@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="733" height="856" viewBox="0 0 733 856" font-family="'JetBrains Mono', 'JetBrainsMono Nerd Font', 'Fira Code', 'Cascadia Code', 'IBM Plex Mono', 'Source Code Pro', 'Hack', 'Iosevka', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace" font-size="14.0">
-<rect width="733" height="856" rx="8.0" fill="#1a1815"/>
+<rect width="733" height="856" rx="8.0" fill="#110f0c"/>
 <rect width="733" height="30.0" rx="8.0" fill="#282622"/>
 <rect y="8.0" width="733" height="22.0" fill="#282622"/>
 <circle cx="16" cy="15" r="4.5" fill="#ff544c"/>
@@ -7,8 +7,8 @@
 <circle cx="46" cy="15" r="4.5" fill="#8def46"/>
 <text x="367" y="19" text-anchor="middle" fill="#7b7463" font-size="11">notes.md</text>
 <text x="18" y="59.8" xml:space="preserve"></text>
-<rect x="43.2" y="65.0" width="16.8" height="21.0" fill="#3b2e18"/>
-<rect x="60.0" y="65.0" width="67.2" height="21.0" fill="#3b2e18"/>
+<rect x="43.2" y="65.0" width="16.8" height="21.0" fill="#342710"/>
+<rect x="60.0" y="65.0" width="67.2" height="21.0" fill="#342710"/>
 <text x="18" y="80.8" xml:space="preserve"><tspan fill="#5e574a"> 1 </tspan><tspan fill="#f9ad26" font-weight="bold"># </tspan><tspan fill="#f9ad26" font-weight="bold">Spectral</tspan></text>
 <text x="18" y="101.8" xml:space="preserve"><tspan fill="#5e574a"> 2 </tspan></text>
 <text x="18" y="122.8" xml:space="preserve"><tspan fill="#5e574a"> 3 </tspan><tspan fill="#dcd0b5">A warm, high-contrast colorscheme with an amber-CRT signature.</tspan></text>
@@ -51,7 +51,7 @@
 <text x="18" y="752.8" xml:space="preserve"><tspan fill="#5e574a">33 </tspan><tspan fill="#dcd0b5">|---------|-----------|-----------|</tspan></text>
 <rect x="152.4" y="758.0" width="58.8" height="21.0" fill="#282622"/>
 <rect x="253.2" y="758.0" width="58.8" height="21.0" fill="#282622"/>
-<text x="18" y="773.8" xml:space="preserve"><tspan fill="#5e574a">34 </tspan><tspan fill="#dcd0b5">| Dark    | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#1A1815</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#F9AD26</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> |</tspan></text>
+<text x="18" y="773.8" xml:space="preserve"><tspan fill="#5e574a">34 </tspan><tspan fill="#dcd0b5">| Dark    | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#110F0C</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#F9AD26</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> |</tspan></text>
 <rect x="152.4" y="779.0" width="58.8" height="21.0" fill="#282622"/>
 <rect x="253.2" y="779.0" width="58.8" height="21.0" fill="#282622"/>
 <text x="18" y="794.8" xml:space="preserve"><tspan fill="#5e574a">35 </tspan><tspan fill="#dcd0b5">| Light   | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#FFFAEE</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> | </tspan><tspan fill="#7b7463">`</tspan><tspan fill="#8def46">#A76C01</tspan><tspan fill="#7b7463">`</tspan><tspan fill="#dcd0b5"> |</tspan></text>

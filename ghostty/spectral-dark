@@ -1,10 +1,10 @@
 # Spectral Dark — generated from tools/palette.py
 
-background = 1A1815
+background = 110F0C
 foreground = DCD0B5
 
 cursor-color = F9AD26
-cursor-text = 1A1815
+cursor-text = 110F0C
 
 selection-background = 403D36
 selection-foreground = DCD0B5

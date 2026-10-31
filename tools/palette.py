@@ -22,6 +22,8 @@ downstream file:
   tuicr/spectral-light.toml, tuicr/spectral-light.tmTheme
   screenshots/palette-dark.svg
   screenshots/palette-light.svg
+  zed/themes/spectral.json
+  autoload/lightline/colorscheme/spectral.vim
 
 After regenerating, run iterm2/sync.py to push the iTerm2 presets to a
 target plist.
@@ -57,42 +59,43 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
         # Backgrounds — warm dark. Chroma stays low: real amber CRTs have
         # near-black off-pixels, the warmth comes from the lit phosphor, not
         # the field. Just enough tint to keep the neutrals from reading cool.
-        "bg":        (0.21, 0.006, NEUTRAL_HUE),
-        "bg_alt":    (0.27, 0.008, NEUTRAL_HUE),
-        "bg_alt2":   (0.36, 0.012, NEUTRAL_HUE),
+        "bg_chrome":    (0.10, 0.005, NEUTRAL_HUE),
+        "bg":           (0.17, 0.006, NEUTRAL_HUE),
+        "bg_highlight": (0.27, 0.008, NEUTRAL_HUE),
+        "bg_selected":  (0.36, 0.012, NEUTRAL_HUE),
         # Foregrounds
-        "fg_dark":   (0.46, 0.022, NEUTRAL_HUE),
-        "fg_darker": (0.56, 0.026, NEUTRAL_HUE),
-        "fg_alt":    (0.68, 0.030, NEUTRAL_HUE),
-        "fg":        (0.86, 0.038, NEUTRAL_HUE),
-        "fg_light":  (0.93, 0.040, NEUTRAL_HUE),
-        # Accents — equi-L band centered ~0.78 so the wheel looks balanced.
+        "fg_faint":     (0.46, 0.022, NEUTRAL_HUE),
+        "fg_subtle":    (0.56, 0.026, NEUTRAL_HUE),
+        "fg_muted":     (0.68, 0.030, NEUTRAL_HUE),
+        "fg":           (0.86, 0.038, NEUTRAL_HUE),
+        "fg_strong":    (0.93, 0.040, NEUTRAL_HUE),
+        # Accents — a similar-lightness band centered ~0.78 so the wheel looks balanced.
         # Yellow/green sit slightly higher because the eye reads them dimmer
         # at equal L; pulling them down would make them feel muddy.
-        "red":       (0.68, 0.22, 27),
-        "orange":    (0.74, 0.20, 50),
-        "yellow":    (0.88, 0.20, 98),
-        "green":     (0.86, 0.22, 135),
-        "cyan":      (0.80, 0.13, 195),
-        "blue":      (0.72, 0.18, 255),
-        "purple":    (0.70, 0.17, 320),
+        "red":          (0.68, 0.22, 27),
+        "orange":       (0.74, 0.20, 50),
+        "yellow":       (0.88, 0.20, 98),
+        "green":        (0.86, 0.22, 135),
+        "cyan":         (0.80, 0.13, 195),
+        "blue":         (0.72, 0.18, 255),
+        "purple":       (0.70, 0.17, 320),
         # Constants
-        "white":     (1.00, 0.00, 0),
-        "black":     (0.00, 0.00, 0),
-        "tab_bg":    (0.12, 0.005, NEUTRAL_HUE),
+        "white":        (1.00, 0.00, 0),
+        "black":        (0.00, 0.00, 0),
         # Signature — overrides Directory/netrwDir/rubySymbol
-        "amber":     (0.80, 0.16, 75),
+        "amber":        (0.80, 0.16, 75),
     },
     "light": {
-        "bg":        (0.985, 0.020, NEUTRAL_HUE),
-        "bg_alt":    (0.94, 0.035, NEUTRAL_HUE),
-        "bg_alt2":   (0.89, 0.040, NEUTRAL_HUE),
-        "fg_dark":   (0.50, 0.040, NEUTRAL_HUE),
-        "fg_darker": (0.44, 0.040, NEUTRAL_HUE),
-        "fg_alt":    (0.36, 0.035, NEUTRAL_HUE),
-        "fg":        (0.26, 0.030, NEUTRAL_HUE),
-        "fg_light":  (0.18, 0.025, NEUTRAL_HUE),
-        # Accents — equi-L band ~0.53, each hue sitting at (or just under) its
+        "bg_chrome":    (0.995, 0.010, NEUTRAL_HUE),
+        "bg":           (0.985, 0.020, NEUTRAL_HUE),
+        "bg_highlight": (0.94, 0.035, NEUTRAL_HUE),
+        "bg_selected":  (0.89, 0.040, NEUTRAL_HUE),
+        "fg_faint":     (0.50, 0.040, NEUTRAL_HUE),
+        "fg_subtle":    (0.44, 0.040, NEUTRAL_HUE),
+        "fg_muted":     (0.36, 0.035, NEUTRAL_HUE),
+        "fg":           (0.26, 0.030, NEUTRAL_HUE),
+        "fg_strong":    (0.18, 0.025, NEUTRAL_HUE),
+        # Accents — a similar-lightness band ~0.53, each hue sitting at (or just under) its
         # sRGB chroma ceiling. Warm hues peak in chroma at high lightness, so
         # a dark orange has nowhere to go but brown; the band is lifted as far
         # as the contrast budget on cream paper allows, and no further.
@@ -100,20 +103,19 @@ PALETTES: dict[str, dict[str, tuple[float, float, float]]] = {
         # Orange sits at 38° rather than 50°: only 20° from amber, the two
         # collapsed into the same brown down here, where there is not enough
         # chroma to separate them by saturation alone.
-        "red":       (0.50, 0.200, 27),
-        "orange":    (0.56, 0.183, 38),
+        "red":          (0.50, 0.200, 27),
+        "orange":       (0.56, 0.183, 38),
         # Yellow is the one hue a light theme cannot win. Its chroma peak sits
         # near L=0.85, where contrast on cream falls to ~1.5:1, so it stays a
         # dark gold. 88° rather than 95° reads gold instead of olive.
-        "yellow":    (0.64, 0.131, 88),
-        "green":     (0.52, 0.166, 142),
-        "cyan":      (0.53, 0.091, 205),
-        "blue":      (0.45, 0.148, 255),
-        "purple":    (0.48, 0.233, 302),
-        "white":     (1.00, 0.00, 0),
-        "black":     (0.00, 0.00, 0),
-        "tab_bg":    (0.92, 0.035, NEUTRAL_HUE),
-        "amber":     (0.58, 0.124, 72),
+        "yellow":       (0.64, 0.131, 88),
+        "green":        (0.52, 0.166, 142),
+        "cyan":         (0.53, 0.091, 205),
+        "blue":         (0.45, 0.148, 255),
+        "purple":       (0.48, 0.233, 302),
+        "white":        (1.00, 0.00, 0),
+        "black":        (0.00, 0.00, 0),
+        "amber":        (0.58, 0.124, 72),
     },
 }
 
@@ -241,15 +243,15 @@ def resolve(spec: dict) -> dict:
 # --------------------------------------------------------------------------
 
 VIM_PALETTE_KEYS = [
-    "bg", "bg_alt", "bg_alt2",
-    "fg_dark", "fg_darker", "fg_alt", "fg_light", "fg",
+    "bg_chrome", "bg", "bg_highlight", "bg_selected",
+    "fg_faint", "fg_subtle", "fg_muted", "fg_strong", "fg",
     "white",
     "red", "orange", "yellow", "green", "cyan", "blue", "purple",
-    "black", "tab_bg", "amber", "amber_bg",
+    "black", "amber", "amber_bg",
 ]
 
 VIM_DESC = {
-    "dark":  "Amber CRT phosphor on OLED black, with cool accents for balance.",
+    "dark":  "Amber CRT phosphor on near-black, with cool accents for balance.",
     "light": "Warm paper with burnt-amber signature and balanced accents.",
 }
 
@@ -280,7 +282,7 @@ def emit_vim(variant: str, palette: dict) -> str:
     for k in VIM_PALETTE_KEYS:
         s = palette[k]
         key = f"'{k}':"
-        lines.append(f"  \\ {key:<13}{{'gui': '#{s['gui']}', 'cterm': '{s['cterm']}'}},")
+        lines.append(f"  \\ {key:<16}{{'gui': '#{s['gui']}', 'cterm': '{s['cterm']}'}},")
     lines.append('  \\ })')
     lines.append('')
     lines.append('" Amber accents: anchor the palette on a few high-frequency elements so')
@@ -304,21 +306,21 @@ def emit_vim(variant: str, palette: dict) -> str:
 # the conventional green/red/purple for insert/replace/visual. Subkeys mirror
 # the set lightline's bundled themes define; missing modes fall back to normal.
 LIGHTLINE_SECTIONS: list[tuple[str, str, list[list[str]]]] = [
-    ("normal",   "left",    [["bg", "amber"], ["fg_light", "bg_alt2"]]),
-    ("normal",   "right",   [["fg_light", "bg_alt2"], ["fg_alt", "bg_alt"]]),
-    ("normal",   "middle",  [["fg_darker", "bg_alt"]]),
+    ("normal",   "left",    [["bg", "amber"], ["fg_strong", "bg_selected"]]),
+    ("normal",   "right",   [["fg_strong", "bg_selected"], ["fg_muted", "bg_highlight"]]),
+    ("normal",   "middle",  [["fg_subtle", "bg_highlight"]]),
     ("normal",   "error",   [["bg", "red"]]),
     ("normal",   "warning", [["bg", "yellow"]]),
-    ("inactive", "left",    [["fg_dark", "bg_alt"], ["fg_dark", "bg"]]),
-    ("inactive", "right",   [["fg_dark", "bg_alt"], ["fg_dark", "bg"]]),
-    ("inactive", "middle",  [["fg_dark", "bg"]]),
-    ("insert",   "left",    [["bg", "green"], ["fg_light", "bg_alt2"]]),
-    ("replace",  "left",    [["bg", "red"], ["fg_light", "bg_alt2"]]),
-    ("visual",   "left",    [["bg", "purple"], ["fg_light", "bg_alt2"]]),
-    ("tabline",  "left",    [["fg_alt", "tab_bg"]]),
-    ("tabline",  "tabsel",  [["fg_light", "bg"]]),
-    ("tabline",  "middle",  [["fg_dark", "tab_bg"]]),
-    ("tabline",  "right",   [["fg_alt", "tab_bg"]]),
+    ("inactive", "left",    [["fg_faint", "bg_highlight"], ["fg_faint", "bg"]]),
+    ("inactive", "right",   [["fg_faint", "bg_highlight"], ["fg_faint", "bg"]]),
+    ("inactive", "middle",  [["fg_faint", "bg"]]),
+    ("insert",   "left",    [["bg", "green"], ["fg_strong", "bg_selected"]]),
+    ("replace",  "left",    [["bg", "red"], ["fg_strong", "bg_selected"]]),
+    ("visual",   "left",    [["bg", "purple"], ["fg_strong", "bg_selected"]]),
+    ("tabline",  "left",    [["fg_muted", "bg_chrome"]]),
+    ("tabline",  "tabsel",  [["fg_strong", "bg"]]),
+    ("tabline",  "middle",  [["fg_faint", "bg_chrome"]]),
+    ("tabline",  "right",   [["fg_muted", "bg_chrome"]]),
 ]
 
 
@@ -383,16 +385,16 @@ def emit_lightline(palettes: dict[str, dict]) -> str:
 # needs a blue (which the editor palette doesn't carry). Map deliberately:
 GHOSTTY_ANSI = {
     "dark": {
-        0: "bg_alt",  1: "red",     2: "green",   3: "yellow",
+        0: "bg_highlight", 1: "red",     2: "green",   3: "yellow",
         4: "blue",    5: "purple",  6: "cyan",    7: "fg",
         # Brights are the same hues, slightly lifted (we use the palette's
         # naturally lighter slots where possible; otherwise reuse the base).
-        8: "fg_dark",
+        8: "fg_faint",
     },
     "light": {
-        0: "fg_alt",  1: "red",     2: "green",   3: "yellow",
-        4: "blue",    5: "purple",  6: "cyan",    7: "bg_alt2",
-        8: "fg_dark",
+        0: "fg_muted", 1: "red",     2: "green",   3: "yellow",
+        4: "blue",    5: "purple",  6: "cyan",    7: "bg_selected",
+        8: "fg_faint",
     },
 }
 
@@ -421,7 +423,7 @@ def emit_ghostty(variant: str, palette: dict, palette_oklch: dict) -> str:
         f"cursor-color = {palette['amber']['gui']}",
         f"cursor-text = {cursor_text}",
         "",
-        f"selection-background = {palette['bg_alt2']['gui']}",
+        f"selection-background = {palette['bg_selected']['gui']}",
         f"selection-foreground = {palette['fg']['gui']}",
         "",
         "# ANSI palette",
@@ -475,13 +477,13 @@ def emit_itermcolors(variant: str, palette: dict, palette_oklch: dict) -> dict:
 
     out["Background Color"]    = _color_dict(palette["bg"]["rgb"])
     out["Foreground Color"]    = _color_dict(palette["fg"]["rgb"])
-    out["Bold Color"]          = _color_dict(palette["fg_light"]["rgb"])
+    out["Bold Color"]          = _color_dict(palette["fg_strong"]["rgb"])
     out["Link Color"]          = _color_dict(palette["cyan"]["rgb"])
-    out["Selection Color"]     = _color_dict(palette["bg_alt2"]["rgb"])
+    out["Selection Color"]     = _color_dict(palette["bg_selected"]["rgb"])
     out["Selected Text Color"] = _color_dict(palette["fg"]["rgb"])
     out["Cursor Color"]        = _color_dict(palette["amber"]["rgb"])
     out["Cursor Text Color"]   = _color_dict(palette["bg"]["rgb"])
-    out["Cursor Guide Color"]  = _color_dict(palette["bg_alt"]["rgb"])
+    out["Cursor Guide Color"]  = _color_dict(palette["bg_highlight"]["rgb"])
     out["Badge Color"]         = _color_dict(palette["red"]["rgb"])
     return out
 
@@ -494,15 +496,15 @@ def emit_itermcolors(variant: str, palette: dict, palette_oklch: dict) -> dict:
 # documented theme element order so the generated JSON is legible top-to-bottom.
 MATTERMOST_KEYS: dict[str, dict[str, str]] = {
     "dark": {
-        "sidebarBg":               "tab_bg",
-        "sidebarText":             "fg_alt",
-        "sidebarUnreadText":       "fg_light",
-        "sidebarTextHoverBg":      "bg_alt",
+        "sidebarBg":               "bg_chrome",
+        "sidebarText":             "fg_muted",
+        "sidebarUnreadText":       "fg_strong",
+        "sidebarTextHoverBg":      "bg_highlight",
         "sidebarTextActiveBorder": "amber",
-        "sidebarTextActiveColor":  "fg_light",
-        "sidebarHeaderBg":         "tab_bg",
+        "sidebarTextActiveColor":  "fg_strong",
+        "sidebarHeaderBg":         "bg_chrome",
         "sidebarHeaderTextColor":  "amber",
-        "sidebarTeamBarBg":        "tab_bg",
+        "sidebarTeamBarBg":        "bg_chrome",
         "onlineIndicator":         "green",
         "awayIndicator":           "yellow",
         "dndIndicator":            "red",
@@ -518,15 +520,15 @@ MATTERMOST_KEYS: dict[str, dict[str, str]] = {
         "buttonColor":             "bg",
     },
     "light": {
-        "sidebarBg":               "bg_alt2",
-        "sidebarText":             "fg_alt",
-        "sidebarUnreadText":       "fg_light",
-        "sidebarTextHoverBg":      "bg_alt",
+        "sidebarBg":               "bg_selected",
+        "sidebarText":             "fg_muted",
+        "sidebarUnreadText":       "fg_strong",
+        "sidebarTextHoverBg":      "bg_highlight",
         "sidebarTextActiveBorder": "amber",
-        "sidebarTextActiveColor":  "fg_light",
-        "sidebarHeaderBg":         "bg_alt2",
+        "sidebarTextActiveColor":  "fg_strong",
+        "sidebarHeaderBg":         "bg_selected",
         "sidebarHeaderTextColor":  "amber",
-        "sidebarTeamBarBg":        "bg_alt2",
+        "sidebarTeamBarBg":        "bg_selected",
         "onlineIndicator":         "green",
         "awayIndicator":           "yellow",
         "dndIndicator":            "red",
@@ -574,23 +576,23 @@ def emit_mattermost(variant: str, palette: dict) -> str:
 # emits a [theme] block to paste in. The token names are Catppuccin's, which
 # is where herdr's default theme comes from; the comments say what herdr
 # paints with each. The neutral ramp reads the same way in both variants —
-# fg_dark is the dimmest text on either — so one map serves both. Values take
+# fg_faint is the dimmest text on either — so one map serves both. Values take
 # the same forms as the VS Code maps below.
 HERDR_KEYS: dict[str, object] = {
     "accent":        "amber",      # active borders, mode badge, key hints
-    "panel_bg":      "tab_bg",     # tab bar, mode bar, overlays
+    "panel_bg":      "bg_chrome",  # tab bar, mode bar, overlays
     "sidebar_bg":    "reset",      # the terminal's own background
-    "active_row_bg": "black",      # active space, focused agent
-    "selection_bg":  "bg_alt2",    # navigate-mode cursor row
-    "surface0":      "bg_alt",     # tabs, code in release notes
-    "surface1":      "bg_alt2",    # hover
-    "surface_dim":   "bg_alt2",    # separators, scrollbar track
+    "active_row_bg": "bg_chrome",  # active space, focused agent
+    "selection_bg":  "bg_selected", # navigate-mode cursor row
+    "surface0":      "bg_highlight", # tabs, code in release notes
+    "surface1":      "bg_selected", # hover
+    "surface_dim":   "bg_selected", # separators, scrollbar track
     # herdr writes agent titles and "· machine" in overlay0 on every row, so it
     # has to hold 3:1 on the focused row and the navigate cursor too, which
-    # fg_darker misses in the dark variant.
-    "overlay0":      ("mix", "fg_darker", "fg_alt", 0.55),  # muted text
-    "overlay1":      "fg_alt",     # settings labels
-    "subtext0":      "fg_alt",     # unfocused agent names
+    # fg_subtle misses in the dark variant.
+    "overlay0":      ("mix", "fg_subtle", "fg_muted", 0.55),  # muted text
+    "overlay1":      "fg_muted",   # settings labels
+    "subtext0":      "fg_muted",   # unfocused agent names
     "text":          "fg",
     "mauve":         "purple",     # branch names, resize mode
     "green":         "green",      # idle
@@ -602,7 +604,7 @@ HERDR_KEYS: dict[str, object] = {
 }
 
 # herdr draws session titles in muted overlay0 on every row, focused or not, so
-# the dark active row is black, where they have the most contrast. Light has
+# the dark active row is bg_chrome, where they have the most contrast. Light has
 # contrast to spare and takes an amber wash; herdr's light panel is nearly the
 # cream of the 15% wash, so it takes more amber to stand off it.
 HERDR_LIGHT_ACTIVE_ROW_MIX = 0.30
@@ -666,44 +668,44 @@ VSCODE_UI: dict[str, object] = {
     # Base
     "focusBorder":                        "cyan",
     "foreground":                         "fg",
-    "disabledForeground":                 "fg_dark",
-    "descriptionForeground":              "fg_darker",
+    "disabledForeground":                 "fg_faint",
+    "descriptionForeground":              "fg_subtle",
     "errorForeground":                    "red",
-    "widget.border":                      "bg_alt2",
-    "widget.shadow":                      ("alpha", "tab_bg", 0.50),
-    "selection.background":               "bg_alt2",
-    "icon.foreground":                    "fg_alt",
+    "widget.border":                      "bg_selected",
+    "widget.shadow":                      ("alpha", "bg_chrome", 0.50),
+    "selection.background":               "bg_selected",
+    "icon.foreground":                    "fg_muted",
     "sash.hoverBorder":                   "amber",
 
     # Text (rendered markdown in hovers, walkthroughs, release notes)
     "textLink.foreground":                "blue",
     "textLink.activeForeground":          "amber",
-    "textBlockQuote.background":          "bg_alt",
-    "textBlockQuote.border":              "fg_dark",
-    "textCodeBlock.background":           "bg_alt",
+    "textBlockQuote.background":          "bg_highlight",
+    "textBlockQuote.border":              "fg_faint",
+    "textCodeBlock.background":           "bg_highlight",
     "textPreformat.foreground":           "green",
-    "textSeparator.foreground":           "fg_dark",
+    "textSeparator.foreground":           "fg_faint",
 
     # Buttons
     "button.background":                  "amber",
     "button.foreground":                  "bg",
-    "button.hoverBackground":             ("mix", "amber", "fg_light", 0.20),
-    "button.secondaryBackground":         "bg_alt2",
+    "button.hoverBackground":             ("mix", "amber", "fg_strong", 0.20),
+    "button.secondaryBackground":         "bg_selected",
     "button.secondaryForeground":         "fg",
-    "button.secondaryHoverBackground":    "fg_dark",
+    "button.secondaryHoverBackground":    "fg_faint",
     "badge.background":                   "amber",
     "badge.foreground":                   "bg",
     "progressBar.background":             "amber",
 
     # Lists and trees
-    "list.activeSelectionBackground":     "bg_alt2",
-    "list.activeSelectionForeground":     "fg_light",
-    "list.inactiveSelectionBackground":   "bg_alt",
+    "list.activeSelectionBackground":     "bg_selected",
+    "list.activeSelectionForeground":     "fg_strong",
+    "list.inactiveSelectionBackground":   "bg_highlight",
     "list.inactiveSelectionForeground":   "fg",
-    "list.hoverBackground":               "bg_alt",
-    "list.hoverForeground":               "fg_light",
-    "list.focusBackground":               "bg_alt2",
-    "list.focusForeground":               "fg_light",
+    "list.hoverBackground":               "bg_highlight",
+    "list.hoverForeground":               "fg_strong",
+    "list.focusBackground":               "bg_selected",
+    "list.focusForeground":               "fg_strong",
     # Fuzzy-match highlight — the vim theme's amber lands on Directory, which
     # has no VS Code equivalent; the quick-open match is where a file list
     # picks up the signature instead.
@@ -711,82 +713,82 @@ VSCODE_UI: dict[str, object] = {
     "list.focusHighlightForeground":      "amber",
     "list.errorForeground":               "red",
     "list.warningForeground":             "yellow",
-    "list.dropBackground":                "bg_alt2",
-    "listFilterWidget.background":        "bg_alt",
+    "list.dropBackground":                "bg_selected",
+    "listFilterWidget.background":        "bg_highlight",
     "listFilterWidget.outline":           "amber",
     "listFilterWidget.noMatchesOutline":  "red",
-    "tree.indentGuidesStroke":            "fg_dark",
-    "tree.inactiveIndentGuidesStroke":    "bg_alt2",
+    "tree.indentGuidesStroke":            "fg_faint",
+    "tree.inactiveIndentGuidesStroke":    "bg_selected",
 
     # Activity bar — the darkest neutral, so the leftmost rail anchors the
     # window (same reasoning as the Mattermost team rail).
-    "activityBar.background":             "tab_bg",
-    "activityBar.foreground":             "fg_light",
-    # A step up from fg_dark: these icons are click targets, not chrome.
-    "activityBar.inactiveForeground":     "fg_darker",
-    "activityBar.border":                 "bg_alt",
+    "activityBar.background":             "bg_chrome",
+    "activityBar.foreground":             "fg_strong",
+    # A step up from fg_faint: these icons are click targets, not chrome.
+    "activityBar.inactiveForeground":     "fg_subtle",
+    "activityBar.border":                 "bg_highlight",
     "activityBar.activeBorder":           "amber",
     "activityBarBadge.background":        "amber",
     "activityBarBadge.foreground":        "bg",
 
     # Side bar
-    "sideBar.background":                 "bg_alt",
-    "sideBar.foreground":                 "fg_alt",
-    "sideBar.border":                     "bg_alt2",
-    "sideBarTitle.foreground":            "fg_darker",
-    "sideBarSectionHeader.background":    "bg_alt2",
+    "sideBar.background":                 "bg_highlight",
+    "sideBar.foreground":                 "fg_muted",
+    "sideBar.border":                     "bg_selected",
+    "sideBarTitle.foreground":            "fg_subtle",
+    "sideBarSectionHeader.background":    "bg_selected",
     "sideBarSectionHeader.foreground":    "fg",
-    "sideBarSectionHeader.border":        "bg_alt2",
+    "sideBarSectionHeader.border":        "bg_selected",
 
     # Editor groups and tabs
-    "editorGroup.border":                 "bg_alt2",
-    "editorGroup.dropBackground":         ("alpha", "bg_alt2", 0.60),
-    "editorGroupHeader.tabsBackground":   "tab_bg",
-    "editorGroupHeader.tabsBorder":       "bg_alt",
-    "editorGroupHeader.noTabsBackground": "tab_bg",
+    "editorGroup.border":                 "bg_selected",
+    "editorGroup.dropBackground":         ("alpha", "bg_selected", 0.60),
+    "editorGroupHeader.tabsBackground":   "bg_chrome",
+    "editorGroupHeader.tabsBorder":       "bg_highlight",
+    "editorGroupHeader.noTabsBackground": "bg_chrome",
     "tab.activeBackground":               "bg",
-    "tab.activeForeground":               "fg_light",
+    "tab.activeForeground":               "fg_strong",
     "tab.activeBorderTop":                "amber",
-    "tab.inactiveBackground":             "tab_bg",
-    "tab.inactiveForeground":             "fg_alt",
-    "tab.hoverBackground":                "bg_alt",
+    "tab.inactiveBackground":             "bg_chrome",
+    "tab.inactiveForeground":             "fg_muted",
+    "tab.hoverBackground":                "bg_highlight",
     "tab.hoverForeground":                "fg",
-    "tab.border":                         "tab_bg",
-    "tab.unfocusedActiveForeground":      "fg_alt",
-    "tab.unfocusedInactiveForeground":    "fg_dark",
-    "tab.lastPinnedBorder":               "bg_alt2",
+    "tab.border":                         "bg_chrome",
+    "tab.unfocusedActiveForeground":      "fg_muted",
+    "tab.unfocusedInactiveForeground":    "fg_faint",
+    "tab.lastPinnedBorder":               "bg_selected",
 
     # Editor
     "editor.background":                  "bg",
     "editor.foreground":                  "fg",
-    "editorLineNumber.foreground":        "fg_dark",
-    "editorLineNumber.activeForeground":  "fg_light",
+    "editorLineNumber.foreground":        "fg_faint",
+    "editorLineNumber.activeForeground":  "fg_strong",
     "editorCursor.foreground":            "amber",
     "editorCursor.background":            "bg",
-    "editor.selectionBackground":         "bg_alt2",
-    "editor.selectionHighlightBackground": ("alpha", "bg_alt2", 0.60),
-    "editor.inactiveSelectionBackground": "bg_alt",
-    "editor.wordHighlightBackground":     ("alpha", "bg_alt2", 0.70),
-    "editor.wordHighlightStrongBackground": "bg_alt2",
-    "editor.lineHighlightBackground":     "bg_alt",
-    "editor.rangeHighlightBackground":    "bg_alt",
-    "editor.hoverHighlightBackground":    "bg_alt2",
+    "editor.selectionBackground":         "bg_selected",
+    "editor.selectionHighlightBackground": ("alpha", "bg_selected", 0.60),
+    "editor.inactiveSelectionBackground": "bg_highlight",
+    "editor.wordHighlightBackground":     ("alpha", "bg_selected", 0.70),
+    "editor.wordHighlightStrongBackground": "bg_selected",
+    "editor.lineHighlightBackground":     "bg_highlight",
+    "editor.rangeHighlightBackground":    "bg_highlight",
+    "editor.hoverHighlightBackground":    "bg_selected",
     # Search: yellow for the field of matches, orange for the one you are on —
     # mirrors Search/IncSearch in the vim theme, washed so text stays legible.
     "editor.findMatchBackground":         ("mix", "bg", "orange", 0.42),
     "editor.findMatchHighlightBackground": ("mix", "bg", "yellow", 0.22),
-    "editor.findRangeHighlightBackground": "bg_alt",
+    "editor.findRangeHighlightBackground": "bg_highlight",
     "editorLink.activeForeground":        "blue",
-    "editorWhitespace.foreground":        "fg_dark",
-    "editorIndentGuide.background1":      "bg_alt2",
-    "editorIndentGuide.activeBackground1": "fg_dark",
-    "editorRuler.foreground":             "bg_alt2",
-    "editorCodeLens.foreground":          "fg_dark",
-    "editorInlayHint.foreground":         "fg_dark",
-    "editorInlayHint.background":         "bg_alt",
-    "editorBracketMatch.background":      "bg_alt2",
+    "editorWhitespace.foreground":        "fg_faint",
+    "editorIndentGuide.background1":      "bg_selected",
+    "editorIndentGuide.activeBackground1": "fg_faint",
+    "editorRuler.foreground":             "bg_selected",
+    "editorCodeLens.foreground":          "fg_faint",
+    "editorInlayHint.foreground":         "fg_faint",
+    "editorInlayHint.background":         "bg_highlight",
+    "editorBracketMatch.background":      "bg_selected",
     "editorBracketMatch.border":          "yellow",
-    "editorBracketHighlight.foreground1": "fg_alt",
+    "editorBracketHighlight.foreground1": "fg_muted",
     "editorBracketHighlight.foreground2": "purple",
     "editorBracketHighlight.foreground3": "cyan",
     "editorBracketHighlight.foreground4": "green",
@@ -810,7 +812,7 @@ VSCODE_UI: dict[str, object] = {
     "editorGutter.deletedBackground":     "red",
 
     # Overview ruler
-    "editorOverviewRuler.border":         "bg_alt",
+    "editorOverviewRuler.border":         "bg_highlight",
     "editorOverviewRuler.findMatchForeground":  "yellow",
     "editorOverviewRuler.errorForeground":      "red",
     "editorOverviewRuler.warningForeground":    "yellow",
@@ -818,126 +820,126 @@ VSCODE_UI: dict[str, object] = {
     "editorOverviewRuler.addedForeground":      "green",
     "editorOverviewRuler.modifiedForeground":   "yellow",
     "editorOverviewRuler.deletedForeground":    "red",
-    "editorOverviewRuler.selectionHighlightForeground": "fg_dark",
-    "editorOverviewRuler.wordHighlightForeground":      "fg_darker",
+    "editorOverviewRuler.selectionHighlightForeground": "fg_faint",
+    "editorOverviewRuler.wordHighlightForeground":      "fg_subtle",
 
     # Diff
     "diffEditor.insertedTextBackground":  ("mix", "bg", "green", 0.16),
     "diffEditor.removedTextBackground":   ("mix", "bg", "red", 0.16),
     "diffEditor.insertedLineBackground":  ("mix", "bg", "green", 0.10),
     "diffEditor.removedLineBackground":   ("mix", "bg", "red", 0.10),
-    "diffEditor.border":                  "bg_alt2",
+    "diffEditor.border":                  "bg_selected",
 
     # Widgets
-    "editorWidget.background":            "bg_alt",
+    "editorWidget.background":            "bg_highlight",
     "editorWidget.foreground":            "fg",
-    "editorWidget.border":                "bg_alt2",
+    "editorWidget.border":                "bg_selected",
     "editorWidget.resizeBorder":          "amber",
-    "editorSuggestWidget.background":     "bg_alt",
-    "editorSuggestWidget.border":         "bg_alt2",
+    "editorSuggestWidget.background":     "bg_highlight",
+    "editorSuggestWidget.border":         "bg_selected",
     "editorSuggestWidget.foreground":     "fg",
     "editorSuggestWidget.highlightForeground":      "cyan",
     "editorSuggestWidget.focusHighlightForeground": "cyan",
-    "editorSuggestWidget.selectedBackground":       "bg_alt2",
-    "editorSuggestWidget.selectedForeground":       "fg_light",
-    "editorHoverWidget.background":       "bg_alt",
+    "editorSuggestWidget.selectedBackground":       "bg_selected",
+    "editorSuggestWidget.selectedForeground":       "fg_strong",
+    "editorHoverWidget.background":       "bg_highlight",
     "editorHoverWidget.foreground":       "fg",
-    "editorHoverWidget.border":           "bg_alt2",
-    "editorGhostText.foreground":         "fg_dark",
+    "editorHoverWidget.border":           "bg_selected",
+    "editorGhostText.foreground":         "fg_faint",
 
     # Peek view
     "peekView.border":                    "cyan",
-    "peekViewEditor.background":          "bg_alt",
-    "peekViewEditor.matchHighlightBackground": ("mix", "bg_alt", "yellow", 0.28),
-    "peekViewResult.background":          "bg_alt",
-    "peekViewResult.selectionBackground": "bg_alt2",
-    "peekViewResult.selectionForeground": "fg_light",
+    "peekViewEditor.background":          "bg_highlight",
+    "peekViewEditor.matchHighlightBackground": ("mix", "bg_highlight", "yellow", 0.28),
+    "peekViewResult.background":          "bg_highlight",
+    "peekViewResult.selectionBackground": "bg_selected",
+    "peekViewResult.selectionForeground": "fg_strong",
     "peekViewResult.lineForeground":      "fg",
-    "peekViewResult.fileForeground":      "fg_light",
-    "peekViewResult.matchHighlightBackground": ("mix", "bg_alt", "yellow", 0.28),
-    "peekViewTitle.background":           "bg_alt2",
-    "peekViewTitleLabel.foreground":      "fg_light",
-    "peekViewTitleDescription.foreground": "fg_darker",
+    "peekViewResult.fileForeground":      "fg_strong",
+    "peekViewResult.matchHighlightBackground": ("mix", "bg_highlight", "yellow", 0.28),
+    "peekViewTitle.background":           "bg_selected",
+    "peekViewTitleLabel.foreground":      "fg_strong",
+    "peekViewTitleDescription.foreground": "fg_subtle",
 
     # Panel and terminal
     "panel.background":                   "bg",
-    "panel.border":                       "bg_alt2",
-    "panelTitle.activeForeground":        "fg_light",
+    "panel.border":                       "bg_selected",
+    "panelTitle.activeForeground":        "fg_strong",
     "panelTitle.activeBorder":            "amber",
-    "panelTitle.inactiveForeground":      "fg_dark",
-    "panelSection.border":                "bg_alt2",
+    "panelTitle.inactiveForeground":      "fg_faint",
+    "panelSection.border":                "bg_selected",
     "terminal.background":                "bg",
     "terminal.foreground":                "fg",
-    "terminal.selectionBackground":       "bg_alt2",
+    "terminal.selectionBackground":       "bg_selected",
     "terminalCursor.foreground":          "amber",
     "terminalCursor.background":          "bg",
 
     # Status bar
-    "statusBar.background":               "tab_bg",
-    "statusBar.foreground":               "fg_darker",
-    "statusBar.border":                   "bg_alt",
-    "statusBar.noFolderBackground":       "tab_bg",
-    "statusBar.noFolderForeground":       "fg_dark",
+    "statusBar.background":               "bg_chrome",
+    "statusBar.foreground":               "fg_subtle",
+    "statusBar.border":                   "bg_highlight",
+    "statusBar.noFolderBackground":       "bg_chrome",
+    "statusBar.noFolderForeground":       "fg_faint",
     "statusBar.debuggingBackground":      "orange",
     "statusBar.debuggingForeground":      "bg",
-    "statusBarItem.hoverBackground":      "bg_alt2",
-    "statusBarItem.activeBackground":     "bg_alt2",
+    "statusBarItem.hoverBackground":      "bg_selected",
+    "statusBarItem.activeBackground":     "bg_selected",
     "statusBarItem.remoteBackground":     "amber",
     "statusBarItem.remoteForeground":     "bg",
     "statusBarItem.errorBackground":      "red",
     "statusBarItem.errorForeground":      "bg",
     "statusBarItem.warningBackground":    "yellow",
     "statusBarItem.warningForeground":    "bg",
-    "statusBarItem.prominentBackground":  "bg_alt2",
-    "statusBarItem.prominentForeground":  "fg_light",
+    "statusBarItem.prominentBackground":  "bg_selected",
+    "statusBarItem.prominentForeground":  "fg_strong",
 
     # Title bar
-    "titleBar.activeBackground":          "tab_bg",
-    "titleBar.activeForeground":          "fg_alt",
-    "titleBar.inactiveBackground":        "tab_bg",
-    "titleBar.inactiveForeground":        "fg_dark",
-    "titleBar.border":                    "bg_alt",
+    "titleBar.activeBackground":          "bg_chrome",
+    "titleBar.activeForeground":          "fg_muted",
+    "titleBar.inactiveBackground":        "bg_chrome",
+    "titleBar.inactiveForeground":        "fg_faint",
+    "titleBar.border":                    "bg_highlight",
 
     # Menus
-    "menu.background":                    "bg_alt",
+    "menu.background":                    "bg_highlight",
     "menu.foreground":                    "fg",
-    "menu.selectionBackground":           "bg_alt2",
-    "menu.selectionForeground":           "fg_light",
-    "menu.separatorBackground":           "bg_alt2",
-    "menu.border":                        "bg_alt2",
-    "menubar.selectionBackground":        "bg_alt2",
-    "menubar.selectionForeground":        "fg_light",
+    "menu.selectionBackground":           "bg_selected",
+    "menu.selectionForeground":           "fg_strong",
+    "menu.separatorBackground":           "bg_selected",
+    "menu.border":                        "bg_selected",
+    "menubar.selectionBackground":        "bg_selected",
+    "menubar.selectionForeground":        "fg_strong",
 
     # Inputs
-    "input.background":                   "bg_alt",
+    "input.background":                   "bg_highlight",
     "input.foreground":                   "fg",
-    "input.border":                       "bg_alt2",
-    "input.placeholderForeground":        "fg_darker",
+    "input.border":                       "bg_selected",
+    "input.placeholderForeground":        "fg_subtle",
     "inputOption.activeBorder":           "amber",
-    "inputOption.activeForeground":       "fg_light",
+    "inputOption.activeForeground":       "fg_strong",
     "inputOption.activeBackground":       ("alpha", "amber", 0.20),
-    "inputValidation.errorBackground":    "bg_alt",
+    "inputValidation.errorBackground":    "bg_highlight",
     "inputValidation.errorForeground":    "red",
     "inputValidation.errorBorder":        "red",
-    "inputValidation.warningBackground":  "bg_alt",
+    "inputValidation.warningBackground":  "bg_highlight",
     "inputValidation.warningForeground":  "yellow",
     "inputValidation.warningBorder":      "yellow",
-    "inputValidation.infoBackground":     "bg_alt",
+    "inputValidation.infoBackground":     "bg_highlight",
     "inputValidation.infoForeground":     "cyan",
     "inputValidation.infoBorder":         "cyan",
-    "dropdown.background":                "bg_alt",
-    "dropdown.listBackground":            "bg_alt",
+    "dropdown.background":                "bg_highlight",
+    "dropdown.listBackground":            "bg_highlight",
     "dropdown.foreground":                "fg",
-    "dropdown.border":                    "bg_alt2",
+    "dropdown.border":                    "bg_selected",
 
     # Scrollbars — translucent, they sit over live text.
-    "scrollbar.shadow":                   ("alpha", "tab_bg", 0.60),
-    "scrollbarSlider.background":         ("alpha", "bg_alt2", 0.60),
-    "scrollbarSlider.hoverBackground":    ("alpha", "fg_dark", 0.60),
-    "scrollbarSlider.activeBackground":   ("alpha", "fg_darker", 0.70),
-    "minimapSlider.background":           ("alpha", "bg_alt2", 0.40),
-    "minimapSlider.hoverBackground":      ("alpha", "bg_alt2", 0.60),
-    "minimapSlider.activeBackground":     ("alpha", "fg_dark", 0.60),
+    "scrollbar.shadow":                   ("alpha", "bg_chrome", 0.60),
+    "scrollbarSlider.background":         ("alpha", "bg_selected", 0.60),
+    "scrollbarSlider.hoverBackground":    ("alpha", "fg_faint", 0.60),
+    "scrollbarSlider.activeBackground":   ("alpha", "fg_subtle", 0.70),
+    "minimapSlider.background":           ("alpha", "bg_selected", 0.40),
+    "minimapSlider.hoverBackground":      ("alpha", "bg_selected", 0.60),
+    "minimapSlider.activeBackground":     ("alpha", "fg_faint", 0.60),
     "minimap.findMatchHighlight":         "yellow",
     "minimap.errorHighlight":             "red",
     "minimap.warningHighlight":           "yellow",
@@ -947,18 +949,18 @@ VSCODE_UI: dict[str, object] = {
     "gitDecoration.modifiedResourceForeground":    "yellow",
     "gitDecoration.deletedResourceForeground":     "red",
     "gitDecoration.untrackedResourceForeground":   "cyan",
-    "gitDecoration.ignoredResourceForeground":     "fg_dark",
+    "gitDecoration.ignoredResourceForeground":     "fg_faint",
     "gitDecoration.conflictingResourceForeground": "orange",
     "gitDecoration.stageModifiedResourceForeground": "yellow",
     "gitDecoration.stageDeletedResourceForeground":  "red",
     "gitDecoration.submoduleResourceForeground":   "purple",
 
     # Notifications
-    "notifications.background":           "bg_alt",
+    "notifications.background":           "bg_highlight",
     "notifications.foreground":           "fg",
-    "notifications.border":               "bg_alt2",
-    "notificationCenterHeader.background": "bg_alt2",
-    "notificationCenterHeader.foreground": "fg_alt",
+    "notifications.border":               "bg_selected",
+    "notificationCenterHeader.background": "bg_selected",
+    "notificationCenterHeader.foreground": "fg_muted",
     "notificationLink.foreground":        "blue",
     "notificationsErrorIcon.foreground":  "red",
     "notificationsWarningIcon.foreground": "yellow",
@@ -967,27 +969,27 @@ VSCODE_UI: dict[str, object] = {
     # Breadcrumbs — the leaf segment is the closest analogue to the vim
     # theme's amber Directory.
     "breadcrumb.background":              "bg",
-    "breadcrumb.foreground":              "fg_dark",
+    "breadcrumb.foreground":              "fg_faint",
     "breadcrumb.focusForeground":         "fg",
     "breadcrumb.activeSelectionForeground": "amber",
-    "breadcrumbPicker.background":        "bg_alt",
+    "breadcrumbPicker.background":        "bg_highlight",
 
     # Quick input / command palette
-    "quickInput.background":              "bg_alt",
+    "quickInput.background":              "bg_highlight",
     "quickInput.foreground":              "fg",
-    "quickInputTitle.background":         "bg_alt2",
-    "pickerGroup.border":                 "bg_alt2",
+    "quickInputTitle.background":         "bg_selected",
+    "pickerGroup.border":                 "bg_selected",
     "pickerGroup.foreground":             "amber",
-    "keybindingLabel.background":         "bg_alt2",
+    "keybindingLabel.background":         "bg_selected",
     "keybindingLabel.foreground":         "fg",
-    "keybindingLabel.border":             "bg_alt2",
-    "keybindingLabel.bottomBorder":       "bg_alt2",
+    "keybindingLabel.border":             "bg_selected",
+    "keybindingLabel.bottomBorder":       "bg_selected",
 
     # Debug
-    "debugToolBar.background":            "bg_alt",
-    "debugToolBar.border":                "bg_alt2",
+    "debugToolBar.background":            "bg_highlight",
+    "debugToolBar.border":                "bg_selected",
     "debugIcon.breakpointForeground":     "red",
-    "debugIcon.breakpointDisabledForeground": "fg_dark",
+    "debugIcon.breakpointDisabledForeground": "fg_faint",
     "debugConsoleInputIcon.foreground":   "amber",
     "editor.stackFrameHighlightBackground":        ("mix", "bg", "yellow", 0.18),
     "editor.focusedStackFrameHighlightBackground": ("mix", "bg", "green", 0.18),
@@ -997,10 +999,10 @@ VSCODE_UI: dict[str, object] = {
     "testing.iconErrored":                "orange",
     "testing.iconPassed":                 "green",
     "testing.iconQueued":                 "yellow",
-    "testing.iconSkipped":                "fg_dark",
+    "testing.iconSkipped":                "fg_faint",
 
     # Settings
-    "settings.headerForeground":          "fg_light",
+    "settings.headerForeground":          "fg_strong",
     "settings.modifiedItemIndicator":     "amber",
 
     # Symbol icons (outline, suggest widget) — follow the syntax mapping so
@@ -1025,23 +1027,20 @@ VSCODE_UI: dict[str, object] = {
     "symbolIcon.keywordForeground":          "red",
     "symbolIcon.operatorForeground":         "red",
     "symbolIcon.stringForeground":           "yellow",
-    "symbolIcon.snippetForeground":          "fg_alt",
+    "symbolIcon.snippetForeground":          "fg_muted",
 }
 
 # TextMate scopes, as (name, slot, font_style, [scopes]). Mirrors the group
 # assignments in autoload/spectral.vim — the two must agree or a file looks
 # different in vim and VS Code.
 #
-# Two places where the vim theme is internally inconsistent and this map had
-# to pick a side:
-#   punctuation — per-language groups (jsonBraces, cssBraces) use fg, while
-#     the treesitter captures use fg_alt. fg_alt wins: dimmer punctuation is
-#     the more deliberate of the two and reads better in dense code.
+# One place where the vim theme is internally inconsistent and this map had to
+# pick a side:
 #   regexp — @string.regex is orange but the richer rubyRegexp* family paints
 #     the body cyan with orange escapes and purple char classes. The Ruby
 #     treatment wins because TextMate scopes are granular enough to express it.
 VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
-    ("Comment", "fg_dark", "italic", [
+    ("Comment", "fg_faint", "italic", [
         "comment",
         "punctuation.definition.comment",
         "string.comment",
@@ -1169,7 +1168,7 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "entity.other.attribute-name.class.css",
         "entity.other.attribute-name.id.css",
     ]),
-    ("Punctuation", "fg_alt", "", [
+    ("Punctuation", "fg_muted", "", [
         "punctuation",
         "punctuation.separator",
         "punctuation.terminator",
@@ -1192,7 +1191,7 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
     ("Markdown heading 6", "fg",     "bold", ["markup.heading.6"]),
     ("Markdown bold", "orange", "bold", ["markup.bold"]),
     ("Markdown italic", "purple", "italic", ["markup.italic"]),
-    ("Markdown strikethrough", "fg_darker", "strikethrough", [
+    ("Markdown strikethrough", "fg_subtle", "strikethrough", [
         "markup.strikethrough",
     ]),
     ("Markdown code", "green", "", [
@@ -1207,14 +1206,14 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
         "markup.underline.link",
         "string.other.link",
     ]),
-    ("Markdown link address", "fg_darker", "", [
+    ("Markdown link address", "fg_subtle", "", [
         "meta.link.inline markup.underline.link",
         "meta.link.reference.def markup.underline.link",
         "markup.underline.link.image",
         "constant.other.reference.link",
     ]),
-    ("Markdown quote", "fg_dark", "italic", ["markup.quote"]),
-    ("Markdown separator", "fg_darker", "", [
+    ("Markdown quote", "fg_faint", "italic", ["markup.quote"]),
+    ("Markdown separator", "fg_subtle", "", [
         "meta.separator",
         "punctuation.definition.heading",
     ]),
@@ -1222,7 +1221,7 @@ VSCODE_TOKENS: list[tuple[str, str, str, list[str]]] = [
     ("Diff deleted", "red", "", ["markup.deleted"]),
     ("Diff changed", "yellow", "", ["markup.changed"]),
     ("Invalid", "red", "", ["invalid", "invalid.illegal"]),
-    ("Deprecated", "fg_dark", "strikethrough", ["invalid.deprecated"]),
+    ("Deprecated", "fg_faint", "strikethrough", ["invalid.deprecated"]),
 ]
 
 # LSP semantic tokens, mirroring the @lsp.type.* / @lsp.mod.* groups.
@@ -1242,13 +1241,13 @@ VSCODE_SEMANTIC: dict[str, tuple[str, str]] = {
     "parameter":                    ("orange", ""),
     "property":                     ("fg", ""),
     "variable":                     ("fg", ""),
-    "comment":                      ("fg_dark", "italic"),
+    "comment":                      ("fg_faint", "italic"),
     "keyword":                      ("red", ""),
     "operator":                     ("red", ""),
     "string":                       ("yellow", ""),
     "number":                       ("purple", ""),
     "*.readonly":                   ("purple", ""),
-    "*.deprecated":                 ("fg_dark", "strikethrough"),
+    "*.deprecated":                 ("fg_faint", "strikethrough"),
     "*.abstract":                   ("cyan", "italic"),
     "*.async":                      ("red", "italic"),
     "variable.defaultLibrary":      ("purple", ""),
@@ -1331,10 +1330,10 @@ def emit_vscode(variant: str, palette: dict, palette_oklch: dict) -> str:
 # tuicr also blends into the panel for search matches.
 TUICR_UI: dict[str, object] = {
     "panel_bg":             "bg",
-    "bg_highlight":         "bg_alt2",
+    "bg_highlight":         "bg_selected",
     "fg_primary":           "fg",
-    "fg_secondary":         "fg_alt",
-    "fg_dim":               "fg_dark",
+    "fg_secondary":         "fg_muted",
+    "fg_dim":               "fg_faint",
 
     # The stronger of VS Code's two diff washes: in a terminal the line
     # background is most of what marks a changed line.
@@ -1344,7 +1343,7 @@ TUICR_UI: dict[str, object] = {
     "diff_del_bg":          ("mix", "bg", "red", 0.16),
     "diff_context":         "fg",
     "diff_hunk_header":     "cyan",
-    "expanded_context_fg":  "fg_dark",
+    "expanded_context_fg":  "fg_faint",
     "syntax_add_bg":        ("mix", "bg", "green", 0.16),
     "syntax_del_bg":        ("mix", "bg", "red", 0.16),
 
@@ -1362,12 +1361,12 @@ TUICR_UI: dict[str, object] = {
     "comment_praise":       "green",
 
     "border_focused":       "amber",
-    "border_unfocused":     "bg_alt2",
-    "status_bar_bg":        "tab_bg",
+    "border_unfocused":     "bg_selected",
+    "status_bar_bg":        "bg_chrome",
     "cursor_color":         "amber",
-    "cursor_line_bg":       "bg_alt",
+    "cursor_line_bg":       "bg_highlight",
     "branch_name":          "purple",
-    "help_indicator":       "fg_darker",
+    "help_indicator":       "fg_subtle",
 
     "message_info_fg":      "bg",
     "message_info_bg":      "cyan",
@@ -1404,8 +1403,8 @@ def emit_tmtheme(variant: str, palette: dict) -> bytes:
             "background":    f"#{palette['bg']['gui']}",
             "foreground":    f"#{palette['fg']['gui']}",
             "caret":         f"#{palette['amber']['gui']}",
-            "lineHighlight": f"#{palette['bg_alt']['gui']}",
-            "selection":     f"#{palette['bg_alt2']['gui']}",
+            "lineHighlight": f"#{palette['bg_highlight']['gui']}",
+            "selection":     f"#{palette['bg_selected']['gui']}",
         },
     }]
     for name, slot, style, scopes in VSCODE_TOKENS:
@@ -1439,54 +1438,54 @@ def _zed(palette: dict, value) -> str:
 # version_control.* family that Zed's bundled themes have since added.
 ZED_UI: dict[str, object] = {
     # Borders
-    "border":                             "bg_alt2",
-    "border.variant":                     "bg_alt",
+    "border":                             "bg_selected",
+    "border.variant":                     "bg_highlight",
     "border.focused":                     "cyan",
     "border.selected":                    ("mix", "bg", "cyan", 0.45),
     "border.transparent":                 ("alpha", "black", 0.0),
-    "border.disabled":                    "bg_alt",
+    "border.disabled":                    "bg_highlight",
 
     # Surfaces — the window frame is the darkest neutral, the way the activity
     # bar is in VS Code and the team rail is in Mattermost, so the editor sits
     # on it as the lightest field.
-    "background":                         "tab_bg",
-    "elevated_surface.background":        "bg_alt",
-    "surface.background":                 "bg_alt",
+    "background":                         "bg_chrome",
+    "elevated_surface.background":        "bg_highlight",
+    "surface.background":                 "bg_highlight",
 
     # Elements — buttons, inputs, list rows
-    "element.background":                 "bg_alt",
-    "element.hover":                      "bg_alt2",
-    "element.active":                     "bg_alt2",
-    "element.selected":                   "bg_alt2",
-    "element.disabled":                   "bg_alt",
-    "drop_target.background":             ("alpha", "bg_alt2", 0.60),
+    "element.background":                 "bg_highlight",
+    "element.hover":                      "bg_selected",
+    "element.active":                     "bg_selected",
+    "element.selected":                   "bg_selected",
+    "element.disabled":                   "bg_highlight",
+    "drop_target.background":             ("alpha", "bg_selected", 0.60),
     "ghost_element.background":           ("alpha", "black", 0.0),
-    "ghost_element.hover":                "bg_alt",
-    "ghost_element.active":               "bg_alt2",
-    "ghost_element.selected":             "bg_alt2",
+    "ghost_element.hover":                "bg_highlight",
+    "ghost_element.active":               "bg_selected",
+    "ghost_element.selected":             "bg_selected",
     "ghost_element.disabled":             ("alpha", "black", 0.0),
 
     # Text and icons — the accent pair is the matched-character highlight in
     # the file finder and command palette, which is where VS Code's amber
     # lands too.
     "text":                               "fg",
-    "text.muted":                         "fg_darker",
-    "text.placeholder":                   "fg_dark",
-    "text.disabled":                      "fg_dark",
+    "text.muted":                         "fg_subtle",
+    "text.placeholder":                   "fg_faint",
+    "text.disabled":                      "fg_faint",
     "text.accent":                        "amber",
-    "icon":                               "fg_alt",
-    "icon.muted":                         "fg_darker",
-    "icon.disabled":                      "fg_dark",
-    "icon.placeholder":                   "fg_dark",
+    "icon":                               "fg_muted",
+    "icon.muted":                         "fg_subtle",
+    "icon.disabled":                      "fg_faint",
+    "icon.placeholder":                   "fg_faint",
     "icon.accent":                        "amber",
 
     # Chrome
-    "status_bar.background":              "tab_bg",
-    "title_bar.background":               "tab_bg",
-    "title_bar.inactive_background":      "tab_bg",
+    "status_bar.background":              "bg_chrome",
+    "title_bar.background":               "bg_chrome",
+    "title_bar.inactive_background":      "bg_chrome",
     "toolbar.background":                 "bg",
-    "tab_bar.background":                 "tab_bg",
-    "tab.inactive_background":            "tab_bg",
+    "tab_bar.background":                 "bg_chrome",
+    "tab.inactive_background":            "bg_chrome",
     "tab.active_background":              "bg",
 
     # Search — yellow for the field of matches, orange for the one you are on,
@@ -1495,45 +1494,45 @@ ZED_UI: dict[str, object] = {
     "search.active_match_background":     ("mix", "bg", "orange", 0.42),
 
     # Panels and panes
-    "panel.background":                   "bg_alt",
+    "panel.background":                   "bg_highlight",
     "panel.focused_border":               "cyan",
-    "panel.indent_guide":                 "bg_alt2",
-    "panel.indent_guide_hover":           "fg_dark",
-    "panel.indent_guide_active":          "fg_dark",
+    "panel.indent_guide":                 "bg_selected",
+    "panel.indent_guide_hover":           "fg_faint",
+    "panel.indent_guide_active":          "fg_faint",
     "pane.focused_border":                "cyan",
-    "pane_group.border":                  "bg_alt2",
+    "pane_group.border":                  "bg_selected",
 
     # Scrollbar — translucent, it sits over live text.
-    "scrollbar.thumb.background":         ("alpha", "bg_alt2", 0.60),
-    "scrollbar.thumb.hover_background":   ("alpha", "fg_dark", 0.60),
+    "scrollbar.thumb.background":         ("alpha", "bg_selected", 0.60),
+    "scrollbar.thumb.hover_background":   ("alpha", "fg_faint", 0.60),
     "scrollbar.thumb.border":             ("alpha", "black", 0.0),
     "scrollbar.track.background":         ("alpha", "black", 0.0),
-    "scrollbar.track.border":             "bg_alt",
+    "scrollbar.track.border":             "bg_highlight",
 
     # Editor
     "editor.foreground":                  "fg",
     "editor.background":                  "bg",
     "editor.gutter.background":           "bg",
-    "editor.subheader.background":        "bg_alt",
-    "editor.active_line.background":      "bg_alt",
-    "editor.highlighted_line.background": "bg_alt2",
-    "editor.line_number":                 "fg_dark",
-    "editor.active_line_number":          "fg_light",
-    "editor.hover_line_number":           "fg_darker",
-    "editor.invisible":                   "fg_dark",
-    "editor.wrap_guide":                  "bg_alt2",
-    "editor.active_wrap_guide":           "fg_dark",
-    "editor.indent_guide":                "bg_alt2",
-    "editor.indent_guide_active":         "fg_dark",
-    "editor.document_highlight.read_background":    ("alpha", "bg_alt2", 0.70),
-    "editor.document_highlight.write_background":   "bg_alt2",
-    "editor.document_highlight.bracket_background": "bg_alt2",
+    "editor.subheader.background":        "bg_highlight",
+    "editor.active_line.background":      "bg_highlight",
+    "editor.highlighted_line.background": "bg_selected",
+    "editor.line_number":                 "fg_faint",
+    "editor.active_line_number":          "fg_strong",
+    "editor.hover_line_number":           "fg_subtle",
+    "editor.invisible":                   "fg_faint",
+    "editor.wrap_guide":                  "bg_selected",
+    "editor.active_wrap_guide":           "fg_faint",
+    "editor.indent_guide":                "bg_selected",
+    "editor.indent_guide_active":         "fg_faint",
+    "editor.document_highlight.read_background":    ("alpha", "bg_selected", 0.70),
+    "editor.document_highlight.write_background":   "bg_selected",
+    "editor.document_highlight.bracket_background": "bg_selected",
 
     # Terminal — the ANSI palette itself is derived below.
     "terminal.background":                "bg",
     "terminal.foreground":                "fg",
-    "terminal.bright_foreground":         "fg_light",
-    "terminal.dim_foreground":            "fg_dark",
+    "terminal.bright_foreground":         "fg_strong",
+    "terminal.dim_foreground":            "fg_faint",
     "terminal.ansi.background":           "bg",
 
     # A hovered link is the active link, which is amber in VS Code too.
@@ -1545,7 +1544,7 @@ ZED_UI: dict[str, object] = {
     "version_control.modified":           "yellow",
     "version_control.renamed":            "blue",
     "version_control.conflict":           "orange",
-    "version_control.ignored":            "fg_dark",
+    "version_control.ignored":            "fg_faint",
     "version_control.word_added":         ("mix", "bg", "green", 0.30),
     "version_control.word_deleted":       ("mix", "bg", "red", 0.30),
     "version_control.conflict_marker.ours":   ("mix", "bg", "green", 0.12),
@@ -1560,15 +1559,15 @@ ZED_STATUS: dict[str, str] = {
     "created":     "green",
     "deleted":     "red",
     "error":       "red",
-    "hidden":      "fg_dark",
+    "hidden":      "fg_faint",
     "hint":        "purple",
-    "ignored":     "fg_dark",
+    "ignored":     "fg_faint",
     "info":        "cyan",
     "modified":    "yellow",
-    "predictive":  "fg_dark",
+    "predictive":  "fg_faint",
     "renamed":     "blue",
     "success":     "green",
-    "unreachable": "fg_dark",
+    "unreachable": "fg_faint",
     "warning":     "yellow",
 }
 
@@ -1598,8 +1597,8 @@ ZED_ACCENTS = [
 ZED_SYNTAX: dict[str, tuple[str, str]] = {
     "attribute":               ("amber",   ""),
     "boolean":                 ("purple",  ""),
-    "comment":                 ("fg_dark", "italic"),
-    "comment.doc":             ("fg_dark", "italic"),
+    "comment":                 ("fg_faint", "italic"),
+    "comment.doc":             ("fg_faint", "italic"),
     "constant":                ("purple",  ""),
     "constructor":             ("cyan",    ""),
     "diff.minus":              ("red",     ""),
@@ -1613,30 +1612,30 @@ ZED_SYNTAX: dict[str, tuple[str, str]] = {
     # Python's decorators, and the annotations and attributes that Rust, C#
     # and Java spell with the same sigil.
     "function.decorator":      ("amber",   ""),
-    "hint":                    ("fg_dark", ""),
+    "hint":                    ("fg_faint", ""),
     "keyword":                 ("red",     ""),
     "label":                   ("red",     ""),
     # The link text is the link. Zed captures an autolink with the same
     # link_uri as the address behind a link, so autolinks recede with it.
     "link_text":               ("blue",    ""),
-    "link_uri":                ("fg_darker", ""),
+    "link_uri":                ("fg_subtle", ""),
     "namespace":               ("blue",    ""),
     "number":                  ("purple",  ""),
     "operator":                ("red",     ""),
-    "predictive":              ("fg_dark", ""),
+    "predictive":              ("fg_faint", ""),
     "preproc":                 ("red",     ""),
     "primary":                 ("fg",      ""),
     "property":                ("fg",      ""),
     "property.json_key":       ("amber",   ""),
-    "punctuation":             ("fg_alt",  ""),
-    "punctuation.bracket":     ("fg_alt",  ""),
-    "punctuation.delimiter":   ("fg_alt",  ""),
-    "punctuation.list_marker": ("fg_alt",  ""),
-    "punctuation.markup":      ("fg_dark", ""),
+    "punctuation":             ("fg_muted", ""),
+    "punctuation.bracket":     ("fg_muted", ""),
+    "punctuation.delimiter":   ("fg_muted", ""),
+    "punctuation.list_marker": ("fg_muted", ""),
+    "punctuation.markup":      ("fg_faint", ""),
     "punctuation.special":     ("orange",  ""),
     "selector":                ("cyan",    ""),
     "selector.pseudo":         ("purple",  ""),
-    "strikethrough":           ("fg_dark", ""),
+    "strikethrough":           ("fg_faint", ""),
     "string":                  ("yellow",  ""),
     "string.escape":           ("orange",  ""),
     "string.regex":            ("cyan",    ""),
@@ -1710,7 +1709,7 @@ def emit_zed(resolved: dict[str, dict], specs: dict[str, dict]) -> str:
             {
                 "cursor": _zed(palette, slot),
                 "background": _zed(palette, slot),
-                "selection": _zed(palette, "bg_alt2" if i == 0
+                "selection": _zed(palette, "bg_selected" if i == 0
                                   else ("alpha", slot, 0.24)),
             }
             for i, slot in enumerate(ZED_PLAYERS)
@@ -1753,9 +1752,9 @@ ICON_CURSOR = "__cursor__"
 
 # (indent, [(slot, width)]) in a 256-unit design space.
 ICON_LINES: list[tuple[int, list[tuple[str, int]]]] = [
-    (0,  [("red", 50), ("cyan", 64), ("fg_alt", 40)]),
+    (0,  [("red", 50), ("cyan", 64), ("fg_muted", 40)]),
     (26, [("green", 44), ("yellow", 58), ("purple", 26)]),
-    (26, [("purple", 56), ("fg_alt", 34), ("green", 28)]),
+    (26, [("purple", 56), ("fg_muted", 34), ("green", 28)]),
     (0,  [("red", 46), ("yellow", 58), (ICON_CURSOR, 26)]),
 ]
 
@@ -1856,7 +1855,7 @@ def emit_icon(palette: dict, size: int = ICON_SIZE) -> bytes:
 # hides that completely.
 
 CARD_ACCENTS = ["amber", "red", "orange", "yellow", "green", "cyan", "blue", "purple"]
-CARD_NEUTRALS = ["bg", "bg_alt", "bg_alt2", "fg_dark", "fg_darker", "fg_alt", "fg", "fg_light"]
+CARD_NEUTRALS = ["bg_chrome", "bg", "bg_highlight", "bg_selected", "fg_faint", "fg_subtle", "fg_muted", "fg", "fg_strong"]
 
 CARD_FONT = MONO_STACK
 CARD_CHIP_W, CARD_CHIP_H, CARD_GAP, CARD_PAD = 92, 56, 12, 28
@@ -1885,7 +1884,8 @@ def _card_row(palette: dict, slots: list[str], top: float, stroke: str) -> list[
 
 def emit_palette_card(variant: str, palette: dict) -> str:
     hexes = {k: f"#{v['gui'].lower()}" for k, v in palette.items()}
-    width = CARD_PAD * 2 + 8 * CARD_CHIP_W + 7 * CARD_GAP
+    columns = max(len(CARD_ACCENTS), len(CARD_NEUTRALS))
+    width = CARD_PAD * 2 + columns * CARD_CHIP_W + (columns - 1) * CARD_GAP
     # Neutrals sit clear of the accent hex labels, which run to top + 91.
     accents_top, neutrals_top = 86.0, 232.0
     height = neutrals_top + CARD_CHIP_H + 46
@@ -1894,18 +1894,18 @@ def emit_palette_card(variant: str, palette: dict) -> str:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height:.0f}" '
         f'viewBox="0 0 {width} {height:.0f}" font-family="{CARD_FONT}">',
         f'<rect width="{width}" height="{height:.0f}" rx="10" fill="{hexes["bg"]}" '
-        f'stroke="{hexes["bg_alt2"]}"/>',
+        f'stroke="{hexes["bg_selected"]}"/>',
         f'<text x="{CARD_PAD}" y="42" font-size="17" fill="{hexes["fg"]}">'
         f'{CARD_TITLES[variant]}</text>',
     ]
     for label, top in (("Accents", accents_top), ("Neutrals", neutrals_top)):
         parts.append(
             f'<text x="{CARD_PAD}" y="{top - 14:.0f}" font-size="10" '
-            f'letter-spacing="1.5" fill="{hexes["fg_dark"]}">{label.upper()}</text>'
+            f'letter-spacing="1.5" fill="{hexes["fg_faint"]}">{label.upper()}</text>'
         )
     for slots, top in ((CARD_ACCENTS, accents_top), (CARD_NEUTRALS, neutrals_top)):
-        for line in _card_row(palette, slots, top, hexes["bg_alt2"]):
-            parts.append(line.format(name=hexes["fg_alt"], hex=hexes["fg_darker"]))
+        for line in _card_row(palette, slots, top, hexes["bg_selected"]):
+            parts.append(line.format(name=hexes["fg_muted"], hex=hexes["fg_subtle"]))
     parts.append("</svg>")
     return "\n".join(parts) + "\n"
 

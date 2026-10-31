@@ -3,7 +3,7 @@
 A warm, high-contrast colorscheme with an amber-CRT signature, in dark and
 light variants.
 
-- **Spectral Dark** — amber phosphor on OLED black
+- **Spectral Dark** — amber phosphor on near-black
 - **Spectral Light** — warm cream paper, same amber signature
 
 Every target is generated from one palette definition, so the colors match
@@ -123,14 +123,10 @@ To build a `.vsix`:
 cd vscode && npx @vscode/vsce package
 ```
 
-The mapping departs from the Vim theme in two places, both where the Vim theme
-is internally inconsistent:
-
-- **Punctuation** uses `fg_alt`, following the Treesitter captures rather than
-  the brighter per-language groups (`jsonBraces`, `cssBraces`).
-- **Regular expressions** follow the richer `rubyRegexp*` treatment — cyan
-  body, orange escapes, purple character classes — rather than the flat orange
-  of `@string.regex`.
+The mapping departs from the Vim theme in one place, where the Vim theme is
+internally inconsistent: **regular expressions** follow the richer `rubyRegexp*`
+treatment — cyan body, orange escapes, purple character classes — rather than
+the flat orange of `@string.regex`.
 
 Markdown H1 is amber, bold and underlined rather than inverted: token colors
 cannot set a background.
@@ -255,7 +251,7 @@ carries both variants, so herdr follows the terminal's light or dark
 appearance.
 
 Amber is the accent: active borders, the mode badge and key hints. The active
-space and focused agent sit on black in the dark variant, where herdr's muted
+space and focused agent sit on `bg_chrome` in the dark variant, where herdr's muted
 session titles read best, and on an amber wash in the light one. The
 sidebar is left transparent so it shows the terminal's own background, which
 is Spectral too if you use the Ghostty or iTerm2 presets. Agent states keep
@@ -265,8 +261,8 @@ for idle.
 ## The palette
 
 Each variant is defined in OKLCH — lightness 0–1, chroma, and hue in degrees.
-The accents sit in a roughly equiluminant band, so they feel equally bright
-across hues, and the neutrals all share one warm hue at low chroma.
+The accents sit in a similar lightness band, so no hue jumps out as much
+brighter than the rest, and the neutrals all share one warm hue at low chroma.
 
 Amber is the signature, and it goes on whatever gives a language its texture:
 the element you see constantly. Ruby symbols came first; the rest were picked
@@ -293,6 +289,26 @@ Links are blue and underlined wherever they appear, including URLs inside
 comments. In a Markdown link that is the text, as it renders; the address
 behind it is dimmed with the brackets.
 
+### Neutrals
+
+Neutrals are named for their role rather than their lightness, so a name means
+the same in both variants. Both ramps run in the order below, from the chrome
+towards the strongest text: lighter at each step in the dark variant, darker in
+the light one. In the dark variant, each step from `bg` to `fg_subtle` is about
+0.10 in OKLCH.
+
+| Neutral        | Dark      | Light     | Role                                |
+|----------------|-----------|-----------|-------------------------------------|
+| `bg_chrome`    | `#040302` | `#FFFDFA` | Sidebars, tab bars, status bars     |
+| `bg`           | `#110F0C` | `#FFFAEE` | The main background                 |
+| `bg_highlight` | `#282622` | `#F6EAD1` | Cursor line, tabs, terminal black   |
+| `bg_selected`  | `#403D36` | `#E7D9BD` | Selection, status line, separators  |
+| `fg_faint`     | `#5E574A` | `#6E6249` | Comments, line numbers, inactive UI |
+| `fg_subtle`    | `#7B7463` | `#5D5139` | Muted UI text, Vim's status line    |
+| `fg_muted`     | `#A19784` | `#463C28` | Secondary text, punctuation         |
+| `fg`           | `#DCD0B5` | `#2B2313` | Main text                           |
+| `fg_strong`    | `#F4E6CA` | `#171105` | Emphasis                            |
+
 ### Spectral Dark
 
 | Color             | OKLCH                | Hex       | Usage                          |
@@ -306,7 +322,7 @@ behind it is dimmed with the brackets.
 | Blue              | `0.72 / 0.18 / 255°` | `#60A7FF` | Links, namespaces              |
 | Purple            | `0.70 / 0.17 / 320°` | `#CC77DF` | Constants, numbers, booleans   |
 
-Background `0.21 / 0.006 / 85°` → `#1A1815` · Foreground `0.86 / 0.038 / 85°` → `#DCD0B5`
+Background `0.17 / 0.006 / 85°` → `#110F0C` · Foreground `0.86 / 0.038 / 85°` → `#DCD0B5`
 
 ### Spectral Light
 

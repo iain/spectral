@@ -29,12 +29,12 @@ endfunction
 
 function! spectral#apply(p) abort
   let s:bg         = a:p.bg
-  let s:bg_alt     = a:p.bg_alt
-  let s:bg_alt2    = a:p.bg_alt2
-  let s:fg_dark    = a:p.fg_dark
-  let s:fg_darker  = a:p.fg_darker
-  let s:fg_alt     = a:p.fg_alt
-  let s:fg_light   = a:p.fg_light
+  let s:bg_highlight = a:p.bg_highlight
+  let s:bg_selected = a:p.bg_selected
+  let s:fg_faint   = a:p.fg_faint
+  let s:fg_subtle  = a:p.fg_subtle
+  let s:fg_muted   = a:p.fg_muted
+  let s:fg_strong  = a:p.fg_strong
   let s:fg         = a:p.fg
   let s:white      = a:p.white
   let s:red        = a:p.red
@@ -45,43 +45,43 @@ function! spectral#apply(p) abort
   let s:blue       = a:p.blue
   let s:purple     = a:p.purple
   let s:black      = a:p.black
-  let s:tab_bg     = a:p.tab_bg
+  let s:bg_chrome  = a:p.bg_chrome
   let s:amber      = a:p.amber
   let s:amber_bg   = a:p.amber_bg
   let s:none       = {'gui': 'NONE', 'cterm': 'NONE'}
 
   " Editor UI {{{
   call s:HL('Normal',          s:fg,         s:bg,         '')
-  call s:HL('NormalNC',        s:fg_alt,     s:bg,         '')
+  call s:HL('NormalNC',        s:fg_muted,   s:bg,         '')
 
   " Cursor
   call s:HL('Cursor',          s:bg,         s:fg,         '')
-  call s:HL('CursorLine',      s:none,       s:bg_alt,     '')
-  call s:HL('CursorLineNr',    s:fg_light,   s:bg_alt,     '')
-  call s:HL('CursorColumn',    s:none,       s:bg_alt,     '')
+  call s:HL('CursorLine',      s:none,       s:bg_highlight, '')
+  call s:HL('CursorLineNr',    s:fg_strong,  s:bg_highlight, '')
+  call s:HL('CursorColumn',    s:none,       s:bg_highlight, '')
 
   " Line Numbers
-  call s:HL('LineNr',          s:fg_dark,    s:bg,         '')
-  call s:HL('SignColumn',      s:fg_dark,    s:bg,         '')
-  call s:HL('FoldColumn',      s:fg_darker,  s:bg,         '')
+  call s:HL('LineNr',          s:fg_faint,   s:bg,         '')
+  call s:HL('SignColumn',      s:fg_faint,   s:bg,         '')
+  call s:HL('FoldColumn',      s:fg_subtle,  s:bg,         '')
 
   " Statusline
-  call s:HL('StatusLine',      s:fg_darker,  s:bg,         '')
-  call s:HL('StatusLineNC',    s:fg_dark,    s:bg,         '')
-  call s:HL('StatusLineTerm',  s:fg_darker,  s:bg,         '')
-  call s:HL('StatusLineTermNC',s:fg_dark,    s:bg,         '')
+  call s:HL('StatusLine',      s:fg_subtle,  s:bg,         '')
+  call s:HL('StatusLineNC',    s:fg_faint,   s:bg,         '')
+  call s:HL('StatusLineTerm',  s:fg_subtle,  s:bg,         '')
+  call s:HL('StatusLineTermNC',s:fg_faint,   s:bg,         '')
 
   " Tabline
-  call s:HL('TabLine',         s:fg_alt,     s:tab_bg,     '')
-  call s:HL('TabLineFill',     s:fg_dark,    s:tab_bg,     '')
-  call s:HL('TabLineSel',      s:fg_light,   s:bg,         '')
+  call s:HL('TabLine',         s:fg_muted,   s:bg_chrome,  '')
+  call s:HL('TabLineFill',     s:fg_faint,   s:bg_chrome,  '')
+  call s:HL('TabLineSel',      s:fg_strong,  s:bg,         '')
 
   " Vertical Split
-  call s:HL('VertSplit',       s:bg_alt2,    s:bg,         '')
+  call s:HL('VertSplit',       s:bg_selected, s:bg,         '')
 
   " Visual Selection
-  call s:HL('Visual',          s:none,       s:bg_alt2,    '')
-  call s:HL('VisualNOS',       s:none,       s:bg_alt2,    '')
+  call s:HL('Visual',          s:none,       s:bg_selected, '')
+  call s:HL('VisualNOS',       s:none,       s:bg_selected, '')
 
   " Search
   call s:HL('Search',          s:bg,         s:yellow,     '')
@@ -97,23 +97,23 @@ function! spectral#apply(p) abort
   call s:HL('Question',        s:cyan,       s:bg,         '')
 
   " Menu/Popup
-  call s:HL('Pmenu',           s:fg,         s:bg_alt,     '')
+  call s:HL('Pmenu',           s:fg,         s:bg_highlight, '')
   call s:HL('PmenuSel',        s:bg,         s:cyan,       '')
-  call s:HL('PmenuSbar',       s:none,       s:bg_alt2,    '')
-  call s:HL('PmenuThumb',      s:none,       s:fg_darker,  '')
+  call s:HL('PmenuSbar',       s:none,       s:bg_selected, '')
+  call s:HL('PmenuThumb',      s:none,       s:fg_subtle,  '')
   call s:HL('PmenuShadow',     s:none,       s:bg,         '')
-  call s:HL('PmenuKind',       s:purple,     s:bg_alt,     '')
+  call s:HL('PmenuKind',       s:purple,     s:bg_highlight, '')
   call s:HL('PmenuKindSel',    s:bg,         s:purple,     '')
-  call s:HL('PmenuExtra',      s:fg_darker,  s:bg_alt,     '')
+  call s:HL('PmenuExtra',      s:fg_subtle,  s:bg_highlight, '')
   call s:HL('PmenuExtraSel',   s:bg,         s:cyan,       '')
-  call s:HL('PmenuMatch',      s:cyan,       s:bg_alt,     '')
+  call s:HL('PmenuMatch',      s:cyan,       s:bg_highlight, '')
   call s:HL('PmenuMatchSel',   s:bg,         s:cyan,       '')
 
   " Diff
-  call s:HL('DiffAdd',         s:green,      s:bg_alt,     '')
-  call s:HL('DiffChange',      s:yellow,     s:bg_alt,     '')
-  call s:HL('DiffDelete',      s:red,        s:bg_alt,     '')
-  call s:HL('DiffText',        s:cyan,       s:bg_alt2,    '')
+  call s:HL('DiffAdd',         s:green,      s:bg_highlight, '')
+  call s:HL('DiffChange',      s:yellow,     s:bg_highlight, '')
+  call s:HL('DiffDelete',      s:red,        s:bg_highlight, '')
+  call s:HL('DiffText',        s:cyan,       s:bg_selected, '')
 
   " Spelling
   call s:HL('SpellBad',        s:none,       s:none,       'underline')
@@ -124,56 +124,56 @@ function! spectral#apply(p) abort
   call s:HL('SpellRare',       s:cyan,       s:none,       'underline')
 
   " Misc
-  call s:HL('ColorColumn',     s:none,       s:bg_alt,     '')
-  call s:HL('Conceal',         s:fg_dark,    s:none,       '')
+  call s:HL('ColorColumn',     s:none,       s:bg_highlight, '')
+  call s:HL('Conceal',         s:fg_faint,   s:none,       '')
   call s:HL('Directory',       s:cyan,       s:none,       '')
-  call s:HL('Folded',          s:fg_darker,  s:bg_alt,     '')
-  call s:HL('MatchParen',      s:yellow,     s:bg_alt2,    '')
-  call s:HL('NonText',         s:fg_dark,    s:none,       '')
-  call s:HL('EndOfBuffer',     s:fg_dark,    s:none,       '')
-  call s:HL('SpecialKey',      s:fg_dark,    s:none,       '')
-  call s:HL('Whitespace',      s:fg_dark,    s:none,       '')
+  call s:HL('Folded',          s:fg_subtle,  s:bg_highlight, '')
+  call s:HL('MatchParen',      s:yellow,     s:bg_selected, '')
+  call s:HL('NonText',         s:fg_faint,   s:none,       '')
+  call s:HL('EndOfBuffer',     s:fg_faint,   s:none,       '')
+  call s:HL('SpecialKey',      s:fg_faint,   s:none,       '')
+  call s:HL('Whitespace',      s:fg_faint,   s:none,       '')
   call s:HL('Title',           s:purple,     s:none,       '')
   call s:HL('WildMenu',        s:bg,         s:cyan,       '')
-  call s:HL('QuickFixLine',    s:none,       s:bg_alt2,    '')
+  call s:HL('QuickFixLine',    s:none,       s:bg_selected, '')
 
   " Terminal
   call s:HL('Terminal',        s:fg,         s:bg,         '')
-  call s:HL('TerminalNC',      s:fg_alt,     s:bg,         '')
+  call s:HL('TerminalNC',      s:fg_muted,   s:bg,         '')
   call s:HL('TermCursor',      s:bg,         s:fg,         '')
-  call s:HL('TermCursorNC',    s:bg,         s:fg_darker,  '')
+  call s:HL('TermCursorNC',    s:bg,         s:fg_subtle,  '')
 
   " Neovim Floating Windows
   if has('nvim')
-    call s:HL('FloatBorder',   s:fg_alt,     s:bg_alt,     '')
-    call s:HL('FloatTitle',    s:purple,     s:bg_alt,     '')
+    call s:HL('FloatBorder',   s:fg_muted,   s:bg_highlight, '')
+    call s:HL('FloatTitle',    s:purple,     s:bg_highlight, '')
     call s:HL('FloatShadow',   s:none,       s:bg,         '')
     call s:HL('FloatShadowThrough', s:none,  s:bg,         '')
-    call s:HL('NormalFloat',   s:fg,         s:bg_alt,     '')
+    call s:HL('NormalFloat',   s:fg,         s:bg_highlight, '')
   endif
 
   " Neovim Window UI
   if has('nvim')
-    call s:HL('WinSeparator',  s:bg_alt2,    s:none,       '')
-    call s:HL('WinBar',        s:fg,         s:bg_alt2,    '')
-    call s:HL('WinBarNC',      s:fg_darker,  s:bg_alt,     '')
+    call s:HL('WinSeparator',  s:bg_selected, s:none,       '')
+    call s:HL('WinBar',        s:fg,         s:bg_selected, '')
+    call s:HL('WinBarNC',      s:fg_subtle,  s:bg_highlight, '')
   endif
 
   " Neovim Messages
   if has('nvim')
     call s:HL('MsgArea',       s:fg,         s:bg,         '')
-    call s:HL('MsgSeparator',  s:fg_dark,    s:bg_alt,     '')
+    call s:HL('MsgSeparator',  s:fg_faint,   s:bg_highlight, '')
   endif
 
   " GUI Toolbar (gvim/MacVim)
   if has('gui_running')
-    call s:HL('ToolbarLine',   s:none,       s:bg_alt,     '')
-    call s:HL('ToolbarButton', s:fg,         s:bg_alt2,    '')
+    call s:HL('ToolbarLine',   s:none,       s:bg_highlight, '')
+    call s:HL('ToolbarButton', s:fg,         s:bg_selected, '')
   endif
   " }}}
 
   " Syntax Highlighting {{{
-  call s:HL('Comment',         s:fg_dark,    s:none,       'italic')
+  call s:HL('Comment',         s:fg_faint,   s:none,       'italic')
   call s:HL('Constant',        s:purple,     s:none,       '')
   call s:HL('String',          s:yellow,     s:none,       '')
   hi link Character String
@@ -206,22 +206,22 @@ function! spectral#apply(p) abort
   call s:HL('Special',         s:cyan,       s:none,       '')
   call s:HL('SpecialChar',     s:orange,     s:none,       '')
   call s:HL('Tag',             s:red,        s:none,       '')
-  call s:HL('Delimiter',       s:fg,         s:none,       '')
-  call s:HL('SpecialComment',  s:fg_darker,  s:none,       'italic')
+  call s:HL('Delimiter',       s:fg_muted, s:none,       '')
+  call s:HL('SpecialComment',  s:fg_subtle,  s:none,       'italic')
   call s:HL('Debug',           s:orange,     s:none,       '')
 
   call s:HL('Underlined',      s:blue,       s:none,       'underline')
   " Syntax pattern is defined in plugin/comment_urls.vim
   hi link spectralCommentUrl Underlined
-  call s:HL('Ignore',          s:fg_dark,    s:none,       '')
+  call s:HL('Ignore',          s:fg_faint,   s:none,       '')
   call s:HL('Error',           s:red,        s:bg,         '')
   call s:HL('Todo',            s:orange,     s:bg,         '')
   " }}}
 
   " Language-Specific {{{
   " HTML
-  call s:HL('htmlTag',         s:fg_alt,     s:none,       '')
-  call s:HL('htmlEndTag',      s:fg_alt,     s:none,       '')
+  call s:HL('htmlTag',         s:fg_muted,   s:none,       '')
+  call s:HL('htmlEndTag',      s:fg_muted,   s:none,       '')
   call s:HL('htmlTagName',     s:red,        s:none,       '')
   call s:HL('htmlArg',         s:green,      s:none,       '')
   call s:HL('htmlSpecialChar', s:purple,     s:none,       '')
@@ -237,7 +237,7 @@ function! spectral#apply(p) abort
   call s:HL('htmlBold',        s:orange,     s:none,       '')
   call s:HL('htmlItalic',      s:purple,     s:none,       'italic')
   call s:HL('htmlBoldItalic',  s:orange,     s:none,       'italic')
-  call s:HL('htmlStrike',      s:fg_darker,  s:none,       'strikethrough')
+  call s:HL('htmlStrike',      s:fg_subtle,  s:none,       'strikethrough')
   call s:HL('htmlLink',        s:blue,       s:none,       'underline')
 
   " XML
@@ -247,7 +247,7 @@ function! spectral#apply(p) abort
   call s:HL('xmlAttrib',       s:green,      s:none,       '')
 
   " CSS
-  call s:HL('cssBraces',       s:fg,         s:none,       '')
+  call s:HL('cssBraces',       s:fg_muted, s:none,       '')
   call s:HL('cssClassName',    s:cyan,       s:none,       '')
   call s:HL('cssClassNameDot', s:cyan,       s:none,       '')
   call s:HL('cssProp',         s:amber,      s:none,       '')
@@ -258,7 +258,7 @@ function! spectral#apply(p) abort
   call s:HL('cssImportant',    s:red,        s:none,       '')
 
   " JavaScript
-  call s:HL('javaScriptBraces',     s:fg,    s:none,       '')
+  call s:HL('javaScriptBraces',     s:fg_muted, s:none,       '')
   call s:HL('javaScriptFunction',   s:red,   s:none,       '')
   call s:HL('javaScriptIdentifier', s:red,   s:none,       '')
   call s:HL('javaScriptNull',       s:purple,s:none,       '')
@@ -271,7 +271,7 @@ function! spectral#apply(p) abort
   call s:HL('jsObjectKey',          s:amber, s:none,       '')
 
   " TypeScript
-  call s:HL('typescriptBraces',           s:fg,    s:none,  '')
+  call s:HL('typescriptBraces',           s:fg_muted, s:none,  '')
   call s:HL('typescriptImport',           s:red,   s:none,  '')
   call s:HL('typescriptExport',           s:red,   s:none,  '')
   call s:HL('typescriptIdentifier',       s:cyan,  s:none,  '')
@@ -296,12 +296,12 @@ function! spectral#apply(p) abort
   call s:HL('pythonInclude',       s:red,    s:none,       '')
   call s:HL('pythonImport',        s:red,    s:none,       '')
   call s:HL('pythonRun',           s:cyan,   s:none,       '')
-  call s:HL('pythonCoding',        s:fg_dark,s:none,       '')
+  call s:HL('pythonCoding',        s:fg_faint,s:none,       '')
   call s:HL('pythonOperator',      s:red,    s:none,       '')
   call s:HL('pythonException',     s:red,    s:none,       '')
   call s:HL('pythonExceptions',    s:cyan,   s:none,       '')
   call s:HL('pythonBoolean',       s:purple, s:none,       '')
-  call s:HL('pythonDot',           s:fg_alt, s:none,       '')
+  call s:HL('pythonDot',           s:fg_muted, s:none,       '')
   call s:HL('pythonConditional',   s:red,    s:none,       '')
   call s:HL('pythonRepeat',        s:red,    s:none,       '')
   call s:HL('pythonDottedName',    s:green,  s:none,       '')
@@ -352,15 +352,15 @@ function! spectral#apply(p) abort
   call s:HL('rubyRegexpSpecial',         s:orange, s:none, '')
   call s:HL('rubyRegexpCharClass',       s:purple, s:none, '')
   call s:HL('rubyRegexpQuantifier',      s:purple, s:none, '')
-  call s:HL('rubyComment',               s:fg_dark,s:none, 'italic')
-  call s:HL('rubyDocumentation',         s:fg_dark,s:none, 'italic')
-  call s:HL('rubySharpBang',             s:fg_dark,s:none, 'italic')
+  call s:HL('rubyComment',               s:fg_faint,s:none, 'italic')
+  call s:HL('rubyDocumentation',         s:fg_faint,s:none, 'italic')
+  call s:HL('rubySharpBang',             s:fg_faint,s:none, 'italic')
 
   " Sorbet Type Signatures (non-italic, comment color)
   " Note: Syntax patterns are defined in plugin/sorbet.vim
-  call s:HL('rubySorbetExtend',          s:fg_dark,s:none, '')
-  call s:HL('rubySorbetSigBlock',        s:fg_dark,s:none, '')
-  call s:HL('rubySorbetTypes',           s:fg_dark,s:none, '')
+  call s:HL('rubySorbetExtend',          s:fg_faint,s:none, '')
+  call s:HL('rubySorbetSigBlock',        s:fg_faint,s:none, '')
+  call s:HL('rubySorbetTypes',           s:fg_faint,s:none, '')
 
   " Go
   call s:HL('goDeclaration',       s:red,    s:none,       '')
@@ -380,42 +380,42 @@ function! spectral#apply(p) abort
   call s:HL('markdownH4',                s:orange, s:none,  '')
   call s:HL('markdownH5',                s:fg,     s:none,  'bold')
   call s:HL('markdownH6',                s:fg,     s:none,  'bold')
-  call s:HL('markdownHeadingDelimiter',  s:fg_darker,s:none,'')
+  call s:HL('markdownHeadingDelimiter',  s:fg_subtle,s:none,'')
   call s:HL('markdownH1Delimiter',       s:amber,  s:amber_bg, 'bold')
   call s:HL('markdownH2Delimiter',       s:amber,  s:none,  'bold')
   call s:HL('markdownH3Delimiter',       s:amber,  s:none,  '')
   call s:HL('markdownH4Delimiter',       s:orange, s:none,  '')
   call s:HL('markdownH5Delimiter',       s:fg,     s:none,  'bold')
   call s:HL('markdownH6Delimiter',       s:fg,     s:none,  'bold')
-  call s:HL('markdownHeadingRule',       s:fg_dark,s:none,  '')
+  call s:HL('markdownHeadingRule',       s:fg_faint,s:none,  '')
   call s:HL('markdownBold',              s:orange, s:none,  '')
-  call s:HL('markdownBoldDelimiter',     s:fg_darker,s:none,'')
+  call s:HL('markdownBoldDelimiter',     s:fg_subtle,s:none,'')
   call s:HL('markdownItalic',            s:purple, s:none,  'italic')
-  call s:HL('markdownItalicDelimiter',   s:fg_darker,s:none,'italic')
+  call s:HL('markdownItalicDelimiter',   s:fg_subtle,s:none,'italic')
   call s:HL('markdownBoldItalic',        s:orange, s:none,  'italic')
-  call s:HL('markdownBoldItalicDelimiter',s:fg_darker,s:none,'italic')
-  call s:HL('markdownStrike',            s:fg_darker,s:none,'strikethrough')
-  call s:HL('markdownStrikeDelimiter',   s:fg_dark,s:none,  '')
-  call s:HL('markdownCode',              s:green,  s:bg_alt, '')
-  call s:HL('markdownCodeBlock',         s:green,  s:bg_alt, '')
-  call s:HL('markdownCodeDelimiter',     s:fg_darker,s:none,'')
+  call s:HL('markdownBoldItalicDelimiter',s:fg_subtle,s:none,'italic')
+  call s:HL('markdownStrike',            s:fg_subtle,s:none,'strikethrough')
+  call s:HL('markdownStrikeDelimiter',   s:fg_faint,s:none,  '')
+  call s:HL('markdownCode',              s:green,  s:bg_highlight, '')
+  call s:HL('markdownCodeBlock',         s:green,  s:bg_highlight, '')
+  call s:HL('markdownCodeDelimiter',     s:fg_subtle,s:none,'')
   " A link reads as it renders: the text is the link, and the address behind
   " it recedes with the brackets. An autolink is its own text, so it stays blue.
-  call s:HL('markdownUrl',               s:fg_darker,s:none,'')
+  call s:HL('markdownUrl',               s:fg_subtle,s:none,'')
   call s:HL('markdownAutomaticLink',     s:blue,   s:none,  'underline')
   call s:HL('markdownUrlTitle',          s:yellow, s:none,  '')
-  call s:HL('markdownUrlDelimiter',      s:fg_darker,s:none,'')
-  call s:HL('markdownUrlTitleDelimiter', s:fg_darker,s:none,'')
+  call s:HL('markdownUrlDelimiter',      s:fg_subtle,s:none,'')
+  call s:HL('markdownUrlTitleDelimiter', s:fg_subtle,s:none,'')
   call s:HL('markdownLinkText',          s:blue,   s:none,  'underline')
-  call s:HL('markdownLinkDelimiter',     s:fg_darker,s:none,'')
-  call s:HL('markdownLinkTextDelimiter', s:fg_darker,s:none,'')
-  call s:HL('markdownId',                s:fg_darker,s:none,'')
-  call s:HL('markdownIdDeclaration',     s:fg_darker,s:none,'')
-  call s:HL('markdownIdDelimiter',       s:fg_darker,s:none,'')
-  call s:HL('markdownListMarker',        s:fg_alt, s:none,  '')
-  call s:HL('markdownOrderedListMarker', s:fg_alt, s:none,  '')
-  call s:HL('markdownBlockquote',        s:fg_dark,s:none,  'italic')
-  call s:HL('markdownRule',              s:fg_darker,s:none,'')
+  call s:HL('markdownLinkDelimiter',     s:fg_subtle,s:none,'')
+  call s:HL('markdownLinkTextDelimiter', s:fg_subtle,s:none,'')
+  call s:HL('markdownId',                s:fg_subtle,s:none,'')
+  call s:HL('markdownIdDeclaration',     s:fg_subtle,s:none,'')
+  call s:HL('markdownIdDelimiter',       s:fg_subtle,s:none,'')
+  call s:HL('markdownListMarker',        s:fg_muted, s:none,  '')
+  call s:HL('markdownOrderedListMarker', s:fg_muted, s:none,  '')
+  call s:HL('markdownBlockquote',        s:fg_faint,s:none,  'italic')
+  call s:HL('markdownRule',              s:fg_subtle,s:none,'')
   call s:HL('markdownFootnote',          s:cyan,   s:none,  '')
   call s:HL('markdownFootnoteDefinition',s:cyan,   s:none,  '')
   call s:HL('markdownEscape',            s:orange, s:none,  '')
@@ -423,19 +423,19 @@ function! spectral#apply(p) abort
 
   " Markdown (vim-polyglot). Headings are htmlH1-H6; the # is one group for
   " every level, except an H1's, which plugin/markdown.vim splits off.
-  call s:HL('mkdHeading',                s:fg_darker,s:none,'')
+  call s:HL('mkdHeading',                s:fg_subtle,s:none,'')
   call s:HL('spectralMkdH1Delimiter',    s:amber,  s:amber_bg, 'bold')
-  call s:HL('mkdListItem',               s:fg_alt, s:none,  '')
-  call s:HL('mkdDelimiter',              s:fg_darker,s:none,'')
+  call s:HL('mkdListItem',               s:fg_muted, s:none,  '')
+  call s:HL('mkdDelimiter',              s:fg_subtle,s:none,'')
   call s:HL('mkdLink',                   s:blue,   s:none,  'underline')
-  call s:HL('mkdURL',                    s:fg_darker,s:none,'')
-  call s:HL('mkdID',                     s:fg_darker,s:none,'')
+  call s:HL('mkdURL',                    s:fg_subtle,s:none,'')
+  call s:HL('mkdID',                     s:fg_subtle,s:none,'')
   call s:HL('mkdInlineURL',              s:blue,   s:none,  'underline')
 
   " JSON
   call s:HL('jsonKeyword',         s:amber,  s:none,       '')
-  call s:HL('jsonQuote',           s:fg_alt, s:none,       '')
-  call s:HL('jsonBraces',          s:fg,     s:none,       '')
+  call s:HL('jsonQuote',           s:fg_muted, s:none,       '')
+  call s:HL('jsonBraces',          s:fg_muted, s:none,       '')
   call s:HL('jsonString',          s:yellow, s:none,       '')
 
   " YAML
@@ -483,47 +483,47 @@ function! spectral#apply(p) abort
   call s:HL('NERDTreeDirSlash',    s:cyan,   s:none,       '')
   call s:HL('NERDTreeFile',        s:fg,     s:none,       '')
   call s:HL('NERDTreeExecFile',    s:green,  s:none,       '')
-  call s:HL('NERDTreeOpenable',    s:fg_alt, s:none,       '')
-  call s:HL('NERDTreeClosable',    s:fg_alt, s:none,       '')
+  call s:HL('NERDTreeOpenable',    s:fg_muted, s:none,       '')
+  call s:HL('NERDTreeClosable',    s:fg_muted, s:none,       '')
   call s:HL('NERDTreeCWD',         s:purple, s:none,       '')
-  call s:HL('NERDTreeUp',          s:fg_darker, s:none,    '')
+  call s:HL('NERDTreeUp',          s:fg_subtle, s:none,    '')
   call s:HL('NERDTreeFlags',       s:purple, s:none,       '')
 
   " netrw (built-in file browser)
   call s:HL('netrwDir',            s:cyan,   s:none,       '')
   call s:HL('netrwClassify',       s:cyan,   s:none,       '')
   call s:HL('netrwExe',            s:green,  s:none,       '')
-  call s:HL('netrwSuffixes',       s:fg_dark,s:none,       '')
+  call s:HL('netrwSuffixes',       s:fg_faint,s:none,       '')
   call s:HL('netrwPlain',          s:fg,     s:none,       '')
   call s:HL('netrwSpecial',        s:orange, s:none,       '')
   call s:HL('netrwSymLink',        s:purple, s:none,       '')
-  call s:HL('netrwTreeBar',        s:fg_darker,s:none,     '')
+  call s:HL('netrwTreeBar',        s:fg_subtle,s:none,     '')
   call s:HL('netrwVersion',        s:cyan,   s:none,       '')
   call s:HL('netrwMarkFile',       s:bg,     s:cyan,       '')
-  call s:HL('netrwGray',           s:fg_dark,s:none,       '')
-  call s:HL('netrwComment',        s:fg_dark,s:none,       'italic')
+  call s:HL('netrwGray',           s:fg_faint,s:none,       '')
+  call s:HL('netrwComment',        s:fg_faint,s:none,       'italic')
   call s:HL('netrwList',           s:cyan,   s:none,       '')
   call s:HL('netrwHelpCmd',        s:cyan,   s:none,       '')
-  call s:HL('netrwCmdSep',         s:fg_darker,s:none,     '')
+  call s:HL('netrwCmdSep',         s:fg_subtle,s:none,     '')
   call s:HL('netrwQHTopic',        s:purple, s:none,       '')
   call s:HL('netrwHidePat',        s:yellow, s:none,       '')
-  call s:HL('netrwHideSep',        s:fg_darker,s:none,     '')
-  call s:HL('netrwDateSep',        s:fg_darker,s:none,     '')
-  call s:HL('netrwTimeSep',        s:fg_darker,s:none,     '')
-  call s:HL('netrwSizeDate',       s:fg_darker,s:none,     '')
-  call s:HL('netrwTime',           s:fg_darker,s:none,     '')
+  call s:HL('netrwHideSep',        s:fg_subtle,s:none,     '')
+  call s:HL('netrwDateSep',        s:fg_subtle,s:none,     '')
+  call s:HL('netrwTimeSep',        s:fg_subtle,s:none,     '')
+  call s:HL('netrwSizeDate',       s:fg_subtle,s:none,     '')
+  call s:HL('netrwTime',           s:fg_subtle,s:none,     '')
   call s:HL('netrwCoreDump',       s:red,    s:none,       '')
   call s:HL('netrwData',           s:purple, s:none,       '')
   call s:HL('netrwLib',            s:yellow, s:none,       '')
   call s:HL('netrwMakefile',       s:orange, s:none,       '')
   call s:HL('netrwPix',            s:purple, s:none,       '')
   call s:HL('netrwLink',           s:blue,   s:none,       'underline')
-  call s:HL('netrwBak',            s:fg_dark,s:none,       '')
-  call s:HL('netrwCompress',       s:fg_dark,s:none,       '')
-  call s:HL('netrwObj',            s:fg_dark,s:none,       '')
-  call s:HL('netrwTags',           s:fg_dark,s:none,       '')
-  call s:HL('netrwTilde',          s:fg_dark,s:none,       '')
-  call s:HL('netrwTmp',            s:fg_dark,s:none,       '')
+  call s:HL('netrwBak',            s:fg_faint,s:none,       '')
+  call s:HL('netrwCompress',       s:fg_faint,s:none,       '')
+  call s:HL('netrwObj',            s:fg_faint,s:none,       '')
+  call s:HL('netrwTags',           s:fg_faint,s:none,       '')
+  call s:HL('netrwTilde',          s:fg_faint,s:none,       '')
+  call s:HL('netrwTmp',            s:fg_faint,s:none,       '')
 
   " ALE (Asynchronous Lint Engine)
   call s:HL('ALEError',            s:none,   s:none,       'underline')
@@ -540,57 +540,57 @@ function! spectral#apply(p) abort
   call s:HL('CocWarningSign',      s:yellow, s:bg,         '')
   call s:HL('CocInfoSign',         s:cyan,   s:bg,         '')
   call s:HL('CocHintSign',         s:purple, s:bg,         '')
-  call s:HL('CocErrorFloat',       s:red,    s:bg_alt,     '')
-  call s:HL('CocWarningFloat',     s:yellow, s:bg_alt,     '')
-  call s:HL('CocInfoFloat',        s:cyan,   s:bg_alt,     '')
-  call s:HL('CocHintFloat',        s:purple, s:bg_alt,     '')
+  call s:HL('CocErrorFloat',       s:red,    s:bg_highlight, '')
+  call s:HL('CocWarningFloat',     s:yellow, s:bg_highlight, '')
+  call s:HL('CocInfoFloat',        s:cyan,   s:bg_highlight, '')
+  call s:HL('CocHintFloat',        s:purple, s:bg_highlight, '')
 
   " CtrlP
   call s:HL('CtrlPMatch',          s:cyan,   s:none,       '')
   call s:HL('CtrlPNoEntries',      s:red,    s:none,       '')
-  call s:HL('CtrlPPrtBase',        s:fg_dark,s:none,       '')
+  call s:HL('CtrlPPrtBase',        s:fg_faint,s:none,       '')
   call s:HL('CtrlPPrtCursor',      s:cyan,   s:none,       '')
-  call s:HL('CtrlPLinePre',        s:fg_dark,s:none,       '')
-  call s:HL('CtrlPMode1',          s:fg,     s:bg_alt,     '')
-  call s:HL('CtrlPMode2',          s:fg,     s:bg_alt2,    '')
+  call s:HL('CtrlPLinePre',        s:fg_faint,s:none,       '')
+  call s:HL('CtrlPMode1',          s:fg,     s:bg_highlight, '')
+  call s:HL('CtrlPMode2',          s:fg,     s:bg_selected, '')
 
   " fzf
-  call s:HL('fzf1',                s:cyan,   s:bg_alt,     '')
-  call s:HL('fzf2',                s:cyan,   s:bg_alt,     '')
-  call s:HL('fzf3',                s:cyan,   s:bg_alt,     '')
+  call s:HL('fzf1',                s:cyan,   s:bg_highlight, '')
+  call s:HL('fzf2',                s:cyan,   s:bg_highlight, '')
+  call s:HL('fzf3',                s:cyan,   s:bg_highlight, '')
 
   " Startify
-  call s:HL('StartifyBracket',     s:fg_alt, s:none,       '')
+  call s:HL('StartifyBracket',     s:fg_muted, s:none,       '')
   call s:HL('StartifyFile',        s:cyan,   s:none,       '')
-  call s:HL('StartifyFooter',      s:fg_dark,s:none,       '')
+  call s:HL('StartifyFooter',      s:fg_faint,s:none,       '')
   call s:HL('StartifyHeader',      s:purple, s:none,       '')
   call s:HL('StartifyNumber',      s:orange, s:none,       '')
-  call s:HL('StartifyPath',        s:fg_alt, s:none,       '')
+  call s:HL('StartifyPath',        s:fg_muted, s:none,       '')
   call s:HL('StartifySection',     s:red,    s:none,       '')
   call s:HL('StartifySelect',      s:green,  s:none,       '')
-  call s:HL('StartifySlash',       s:fg_alt, s:none,       '')
-  call s:HL('StartifySpecial',     s:fg_dark,s:none,       '')
+  call s:HL('StartifySlash',       s:fg_muted, s:none,       '')
+  call s:HL('StartifySpecial',     s:fg_faint,s:none,       '')
 
   " vim-which-key
   call s:HL('WhichKey',            s:cyan,   s:none,       '')
-  call s:HL('WhichKeySeperator',   s:fg_darker, s:none,    '')
+  call s:HL('WhichKeySeperator',   s:fg_subtle, s:none,    '')
   call s:HL('WhichKeyGroup',       s:purple, s:none,       '')
   call s:HL('WhichKeyDesc',        s:fg,     s:none,       '')
 
   " Telescope
-  call s:HL('TelescopeBorder',     s:fg_alt, s:bg,         '')
+  call s:HL('TelescopeBorder',     s:fg_muted, s:bg,         '')
   call s:HL('TelescopePromptBorder', s:cyan, s:bg,         '')
-  call s:HL('TelescopeResultsBorder', s:fg_alt, s:bg,      '')
-  call s:HL('TelescopePreviewBorder', s:fg_alt, s:bg,      '')
-  call s:HL('TelescopeSelection',  s:fg,     s:bg_alt,     '')
-  call s:HL('TelescopeSelectionCaret', s:cyan, s:bg_alt,   '')
-  call s:HL('TelescopeMultiSelection', s:purple, s:bg_alt, '')
+  call s:HL('TelescopeResultsBorder', s:fg_muted, s:bg,      '')
+  call s:HL('TelescopePreviewBorder', s:fg_muted, s:bg,      '')
+  call s:HL('TelescopeSelection',  s:fg,     s:bg_highlight, '')
+  call s:HL('TelescopeSelectionCaret', s:cyan, s:bg_highlight, '')
+  call s:HL('TelescopeMultiSelection', s:purple, s:bg_highlight, '')
   call s:HL('TelescopeMatching',   s:cyan,   s:none,       '')
   " }}}
 
   " Terminal Colors {{{
   if has('nvim')
-    let g:terminal_color_0  = s:bg_alt2.gui
+    let g:terminal_color_0  = s:bg_selected.gui
     let g:terminal_color_1  = s:red.gui
     let g:terminal_color_2  = s:green.gui
     let g:terminal_color_3  = s:yellow.gui
@@ -598,7 +598,7 @@ function! spectral#apply(p) abort
     let g:terminal_color_5  = s:purple.gui
     let g:terminal_color_6  = s:cyan.gui
     let g:terminal_color_7  = s:fg.gui
-    let g:terminal_color_8  = s:fg_dark.gui
+    let g:terminal_color_8  = s:fg_faint.gui
     let g:terminal_color_9  = s:red.gui
     let g:terminal_color_10 = s:green.gui
     let g:terminal_color_11 = s:yellow.gui
@@ -608,7 +608,7 @@ function! spectral#apply(p) abort
     let g:terminal_color_15 = s:white.gui
   elseif has('terminal')
     let g:terminal_ansi_colors = [
-      \ s:bg_alt2.gui,
+      \ s:bg_selected.gui,
       \ s:red.gui,
       \ s:green.gui,
       \ s:yellow.gui,
@@ -616,7 +616,7 @@ function! spectral#apply(p) abort
       \ s:purple.gui,
       \ s:cyan.gui,
       \ s:fg.gui,
-      \ s:fg_dark.gui,
+      \ s:fg_faint.gui,
       \ s:red.gui,
       \ s:green.gui,
       \ s:yellow.gui,
@@ -630,15 +630,15 @@ function! spectral#apply(p) abort
 
   " Treesitter — legacy capture names, Neovim 0.8 and 0.9 {{{
   if has('nvim-0.8')
-    call s:HL('@comment',            s:fg_dark,    s:none, 'italic')
+    call s:HL('@comment',            s:fg_faint,   s:none, 'italic')
     call s:HL('@error',              s:red,        s:none, '')
     call s:HL('@none',               s:none,       s:none, '')
     call s:HL('@preproc',            s:red,        s:none, '')
     call s:HL('@define',             s:red,        s:none, '')
     call s:HL('@operator',           s:red,        s:none, '')
 
-    call s:HL('@punctuation.delimiter', s:fg_alt,  s:none, '')
-    call s:HL('@punctuation.bracket',   s:fg_alt,  s:none, '')
+    call s:HL('@punctuation.delimiter', s:fg_muted, s:none, '')
+    call s:HL('@punctuation.bracket',   s:fg_muted, s:none, '')
     call s:HL('@punctuation.special',   s:orange,  s:none, '')
 
     call s:HL('@string',             s:yellow,     s:none, '')
@@ -692,7 +692,7 @@ function! spectral#apply(p) abort
     call s:HL('@text.strong',        s:orange,     s:none, '')
     call s:HL('@text.emphasis',      s:purple,     s:none, 'italic')
     call s:HL('@text.underline',     s:fg,         s:none, 'underline')
-    call s:HL('@text.strike',        s:fg_dark,    s:none, 'strikethrough')
+    call s:HL('@text.strike',        s:fg_faint,   s:none, 'strikethrough')
     call s:HL('@text.title',         s:amber,      s:none, 'bold')
     call s:HL('@text.literal',       s:green,      s:none, '')
     call s:HL('@text.uri',           s:blue,       s:none, 'underline')
@@ -700,13 +700,13 @@ function! spectral#apply(p) abort
     call s:HL('@text.reference',     s:blue,       s:none, 'underline')
     call s:HL('@text.environment',   s:purple,     s:none, '')
     call s:HL('@text.environment.name', s:cyan,    s:none, '')
-    call s:HL('@text.note',          s:fg_dark,    s:none, 'italic')
+    call s:HL('@text.note',          s:fg_faint,   s:none, 'italic')
     call s:HL('@text.warning',       s:orange,     s:none, '')
     call s:HL('@text.danger',        s:red,        s:none, '')
 
     call s:HL('@tag',                s:red,        s:none, '')
     call s:HL('@tag.attribute',      s:green,      s:none, '')
-    call s:HL('@tag.delimiter',      s:fg_alt,     s:none, '')
+    call s:HL('@tag.delimiter',      s:fg_muted,   s:none, '')
   endif
   " }}}
 
@@ -764,22 +764,22 @@ function! spectral#apply(p) abort
     call s:HL('@markup.heading.6',    s:fg,         s:none, 'bold')
     call s:HL('@markup.strong',       s:orange,     s:none, '')
     call s:HL('@markup.italic',       s:purple,     s:none, 'italic')
-    call s:HL('@markup.strikethrough',s:fg_dark,    s:none, 'strikethrough')
+    call s:HL('@markup.strikethrough',s:fg_faint,   s:none, 'strikethrough')
     call s:HL('@markup.underline',    s:fg,         s:none, 'underline')
-    call s:HL('@markup.quote',        s:fg_dark,    s:none, 'italic')
+    call s:HL('@markup.quote',        s:fg_faint,   s:none, 'italic')
     call s:HL('@markup.math',         s:purple,     s:none, '')
     " The .destination and .reference captures come from queries/markdown*:
     " the address and reference label recede, autolinks stay blue.
-    call s:HL('@markup.link',         s:fg_darker,  s:none, '')
+    call s:HL('@markup.link',         s:fg_subtle,  s:none, '')
     call s:HL('@markup.link.label',   s:blue,       s:none, 'underline')
-    call s:HL('@markup.link.label.reference', s:fg_darker, s:none, 'nocombine')
+    call s:HL('@markup.link.label.reference', s:fg_subtle, s:none, 'nocombine')
     call s:HL('@markup.link.url',     s:blue,       s:none, 'underline')
-    call s:HL('@markup.link.url.destination', s:fg_darker, s:none, 'nocombine')
+    call s:HL('@markup.link.url.destination', s:fg_subtle, s:none, 'nocombine')
     call s:HL('@markup.raw',          s:green,      s:none, '')
     call s:HL('@markup.raw.block',    s:green,      s:none, '')
-    call s:HL('@markup.list',         s:fg_alt,     s:none, '')
+    call s:HL('@markup.list',         s:fg_muted,   s:none, '')
     call s:HL('@markup.list.checked', s:green,      s:none, '')
-    call s:HL('@markup.list.unchecked', s:fg_dark,  s:none, '')
+    call s:HL('@markup.list.unchecked', s:fg_faint, s:none, '')
 
     call s:HL('@diff.plus',           s:green,      s:none, '')
     call s:HL('@diff.minus',          s:red,        s:none, '')
@@ -817,24 +817,24 @@ function! spectral#apply(p) abort
     call s:HL('DiagnosticVirtualTextHint',  s:purple, s:none, '')
     call s:HL('DiagnosticVirtualTextOk',    s:green,  s:none, '')
 
-    call s:HL('DiagnosticFloatingError', s:red,    s:bg_alt, '')
-    call s:HL('DiagnosticFloatingWarn',  s:yellow, s:bg_alt, '')
-    call s:HL('DiagnosticFloatingInfo',  s:cyan,   s:bg_alt, '')
-    call s:HL('DiagnosticFloatingHint',  s:purple, s:bg_alt, '')
-    call s:HL('DiagnosticFloatingOk',    s:green,  s:bg_alt, '')
+    call s:HL('DiagnosticFloatingError', s:red,    s:bg_highlight, '')
+    call s:HL('DiagnosticFloatingWarn',  s:yellow, s:bg_highlight, '')
+    call s:HL('DiagnosticFloatingInfo',  s:cyan,   s:bg_highlight, '')
+    call s:HL('DiagnosticFloatingHint',  s:purple, s:bg_highlight, '')
+    call s:HL('DiagnosticFloatingOk',    s:green,  s:bg_highlight, '')
 
-    call s:HL('LspReferenceText',    s:none,       s:bg_alt2, '')
-    call s:HL('LspReferenceRead',    s:none,       s:bg_alt2, '')
-    call s:HL('LspReferenceWrite',   s:none,       s:bg_alt2, '')
+    call s:HL('LspReferenceText',    s:none,       s:bg_selected, '')
+    call s:HL('LspReferenceRead',    s:none,       s:bg_selected, '')
+    call s:HL('LspReferenceWrite',   s:none,       s:bg_selected, '')
 
-    call s:HL('LspCodeLens',         s:fg_dark,    s:none, 'italic')
-    call s:HL('LspCodeLensSeparator',s:fg_dark,    s:none, 'italic')
+    call s:HL('LspCodeLens',         s:fg_faint,   s:none, 'italic')
+    call s:HL('LspCodeLensSeparator',s:fg_faint,   s:none, 'italic')
 
-    call s:HL('LspSignatureActiveParameter', s:orange, s:bg_alt2, '')
+    call s:HL('LspSignatureActiveParameter', s:orange, s:bg_selected, '')
 
-    call s:HL('LspInlayHint',        s:fg_dark,    s:none, 'italic')
+    call s:HL('LspInlayHint',        s:fg_faint,   s:none, 'italic')
 
-    call s:HL('LspInfoBorder',       s:fg_alt,     s:bg_alt, '')
+    call s:HL('LspInfoBorder',       s:fg_muted,   s:bg_highlight, '')
   endif
 
   if has('nvim-0.9')
@@ -853,14 +853,14 @@ function! spectral#apply(p) abort
     call s:HL('@lsp.type.type',         s:cyan,   s:none, '')
     call s:HL('@lsp.type.typeParameter',s:cyan,   s:none, '')
     call s:HL('@lsp.type.variable',     s:fg,     s:none, '')
-    call s:HL('@lsp.type.comment',      s:fg_dark,s:none, 'italic')
+    call s:HL('@lsp.type.comment',      s:fg_faint,s:none, 'italic')
     call s:HL('@lsp.type.keyword',      s:red,    s:none, '')
     call s:HL('@lsp.type.string',       s:yellow, s:none, '')
     call s:HL('@lsp.type.number',       s:purple, s:none, '')
     call s:HL('@lsp.type.operator',     s:red,    s:none, '')
 
     call s:HL('@lsp.mod.readonly',      s:purple, s:none, '')
-    call s:HL('@lsp.mod.deprecated',    s:fg_dark,s:none, 'strikethrough')
+    call s:HL('@lsp.mod.deprecated',    s:fg_faint,s:none, 'strikethrough')
     call s:HL('@lsp.mod.abstract',      s:cyan,   s:none, 'italic')
     call s:HL('@lsp.mod.static',        s:purple, s:none, '')
     call s:HL('@lsp.mod.defaultLibrary',s:cyan,   s:none, '')

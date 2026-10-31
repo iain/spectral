@@ -335,11 +335,12 @@ class HerdrTheme(unittest.TestCase):
                     with self.subTest(variant=variant, row=row, key=key):
                         self.assertGreaterEqual(contrast(colors[key], colors[row]), floor)
 
-    def test_the_dark_focused_space_is_black(self):
-        # herdr draws session titles in muted overlay0 on every row; black
-        # gives them the most contrast on the focused one.
+    def test_the_dark_focused_space_is_on_the_chrome(self):
+        # herdr draws session titles in muted overlay0 on every row; the
+        # darkest neutral gives them the most contrast on the focused one.
         colors = dict(self.modes())["dark"]
-        self.assertEqual(colors["active_row_bg"], "#000000")
+        chrome = resolved("dark")["bg_chrome"]["gui"]
+        self.assertEqual(colors["active_row_bg"], f"#{chrome}")
 
     def test_badges_on_the_accent_stay_legible(self):
         # herdr writes mode badges and overlay titles in panel_bg on the accent.
@@ -368,6 +369,26 @@ class MarketplaceIcon(unittest.TestCase):
         )
 
 
+class VimPunctuation(unittest.TestCase):
+    def test_every_punctuation_group_matches_the_treesitter_captures(self):
+        source = (palette.REPO / "autoload" / "spectral.vim").read_text()
+        groups = ["Delimiter", "cssBraces", "javaScriptBraces", "typescriptBraces",
+                  "jsonBraces", "@punctuation.delimiter", "@punctuation.bracket"]
+        for group in groups:
+            with self.subTest(group=group):
+                self.assertRegex(source, rf"s:HL\('{re.escape(group)}', +s:fg_muted,")
+
+
+class NeutralRamp(unittest.TestCase):
+    def test_every_step_moves_from_the_chrome_towards_the_strongest_text(self):
+        direction = {"dark": 1, "light": -1}
+        for variant in VARIANTS:
+            lightness = [palette.PALETTES[variant][slot][0] for slot in palette.CARD_NEUTRALS]
+            for step, (before, after) in enumerate(zip(lightness, lightness[1:])):
+                with self.subTest(variant=variant, step=step):
+                    self.assertGreater((after - before) * direction[variant], 0)
+
+
 class PaletteCard(unittest.TestCase):
     def test_every_slot_it_claims_is_drawn_and_labelled(self):
         for variant in VARIANTS:
@@ -386,6 +407,19 @@ class PaletteCard(unittest.TestCase):
             with self.subTest(variant=variant):
                 card = palette.emit_palette_card(variant, resolved(variant))
                 self.assertEqual(card.count("<rect"), expected)
+
+    def test_every_neutral_is_on_the_card_and_fits(self):
+        for variant in VARIANTS:
+            with self.subTest(variant=variant):
+                card = palette.emit_palette_card(variant, resolved(variant))
+                width = int(re.search(r'<svg[^>]* width="(\d+)"', card)[1])
+                neutrals = [slot for slot in palette.PALETTES[variant]
+                            if slot.startswith(("bg", "fg"))]
+                for slot in neutrals:
+                    self.assertIn(f">{slot}</text>", card)
+                swatches = re.findall(r'<rect x="(\d+)" y="[^"]+" width="(\d+)"', card)
+                for x, chip_width in swatches:
+                    self.assertLessEqual(int(x) + int(chip_width), width)
 
 
 if __name__ == "__main__":
