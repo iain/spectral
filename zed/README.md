@@ -61,7 +61,7 @@ palette, and accent icons.
 - **TOML table headers** are amber in Vim, but Zed captures the table name as
   the same `property` as every key, so they follow body text.
 - **Markdown headings** are all amber bold rather than stepping down from an
-  inverted H1: Zed captures every heading level as `title`.
+  H1 on an amber field: Zed captures every heading level as `title`.
 - **Markdown autolinks** are dimmed rather than blue: Zed captures them as the
   same `link_uri` as the address behind a link, which is dimmed so the link
   text reads as the link.
@@ -74,7 +74,7 @@ in `plugin/sorbet.vim`, which have no Zed equivalent.
 
 ## Also available for
 
-Vim/Neovim, VS Code, Ghostty, iTerm2, and Mattermost: see the
+Vim/Neovim, VS Code, Ghostty, iTerm2, Mattermost, tuicr and herdr: see the
 [main repository](https://github.com/iain/spectral).
 
 ## License

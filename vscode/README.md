@@ -46,7 +46,7 @@ and buttons.
 
 ## Also available for
 
-Vim/Neovim, Ghostty, iTerm2, and Mattermost: see the
+Vim/Neovim, Zed, Ghostty, iTerm2, Mattermost, tuicr and herdr: see the
 [main repository](https://github.com/iain/spectral).
 
 ## License

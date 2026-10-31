@@ -128,7 +128,7 @@ internally inconsistent: **regular expressions** follow the richer `rubyRegexp*`
 treatment (cyan body, orange escapes, purple character classes), not the flat
 orange of `@string.regex`.
 
-Markdown H1 is amber, bold and underlined rather than inverted: token colors
+Markdown H1 is amber, bold and underlined, without the amber field: token colors
 cannot set a background.
 
 Sorbet signatures are not dimmed, Go composite literal keys are not amber, and
