@@ -3,8 +3,8 @@
 A warm, high-contrast colorscheme with an amber-CRT signature, in dark and
 light variants.
 
-- **Spectral Dark** — amber phosphor on near-black, with cool accents for balance
-- **Spectral Light** — warm cream paper with the same amber signature
+- **Spectral Dark:** amber phosphor on near-black, with cool accents for balance
+- **Spectral Light:** warm cream paper with the same amber signature
 
 Both ship in one theme family, so `"mode": "system"` switches between them:
 
@@ -21,10 +21,9 @@ Both ship in one theme family, so `"mode": "system"` switches between them:
 ## Design
 
 The palette is defined in [OKLCH](https://bottosson.github.io/posts/oklab/), so
-the accents sit in a similar lightness band — no single hue jumps out as
-brighter than the rest — and every neutral shares one warm yellow-orange hue at
-low chroma. The result reads as amber phosphor rather than as a set of colors
-that happen to be near each other.
+the accents sit in a similar lightness band, so no single hue jumps out as
+brighter than the rest, and every neutral shares one warm yellow-orange hue at
+low chroma. The result reads as amber phosphor.
 
 | Role                        | Color   |
 |-----------------------------|---------|
@@ -38,15 +37,14 @@ that happen to be near each other.
 | Constants, numbers, booleans| Purple  |
 | Comments                    | Dimmed, italic |
 
-Amber is the signature. In syntax it lands on whatever gives a language its
-texture — Ruby symbols, Python decorators, JSON keys, Markdown headings. In
-the workbench it is reserved for what the eye returns to constantly rather than
-for body text: the cursor, matched characters in the file finder and command
+Amber is the signature. In syntax it goes on whatever gives a language its
+texture: Ruby symbols, Python decorators, JSON keys, Markdown headings. In
+the workbench it is reserved for what the eye returns to constantly: the cursor, matched characters in the file finder and command
 palette, and accent icons.
 
 ## What's covered
 
-- Workbench chrome — title bar, tabs, panels, status bar, scrollbars, the git
+- Workbench chrome: title bar, tabs, panels, status bar, scrollbars, the git
   panel and the diff gutter
 - Terminal ANSI palette, matched to the Ghostty and iTerm2 presets so a
   terminal inside the editor matches one outside it
@@ -76,7 +74,7 @@ in `plugin/sorbet.vim`, which have no Zed equivalent.
 
 ## Also available for
 
-Vim/Neovim, VS Code, Ghostty, iTerm2, and Mattermost — see the
+Vim/Neovim, VS Code, Ghostty, iTerm2, and Mattermost: see the
 [main repository](https://github.com/iain/spectral).
 
 ## License

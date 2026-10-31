@@ -3,15 +3,15 @@
 A warm, high-contrast colorscheme with an amber-CRT signature, in dark and
 light variants.
 
-- **Spectral Dark** — amber phosphor on near-black
-- **Spectral Light** — warm cream paper, same amber signature
+- **Spectral Dark:** amber phosphor on near-black
+- **Spectral Light:** warm cream paper, same amber signature
 
 Every target is generated from one palette definition, so the colors match
 across your editor, your terminal, and everything else.
 
-![Spectral Dark palette — accents and the warm neutral ramp](screenshots/palette-dark.svg)
+![Spectral Dark palette: accents and the warm neutral ramp](screenshots/palette-dark.svg)
 
-![Spectral Light palette — accents and the warm neutral ramp](screenshots/palette-light.svg)
+![Spectral Light palette: accents and the warm neutral ramp](screenshots/palette-light.svg)
 
 Ruby with Sorbet type signatures, Markdown headings, and YAML keys in amber:
 
@@ -29,8 +29,8 @@ Click through for the full-size render. Python samples are in
 | Application  | What ships                                              |
 |--------------|---------------------------------------------------------|
 | Vim / Neovim | colorscheme, lightline theme, Sorbet syntax plugin      |
-| VS Code      | extension — workbench, TextMate scopes, semantic tokens |
-| Zed          | extension — one theme family with both variants         |
+| VS Code      | extension: workbench, TextMate scopes, semantic tokens |
+| Zed          | extension: one theme family with both variants         |
 | Ghostty      | two themes, plus an install script                      |
 | iTerm2       | two presets, plus a profile sync script                 |
 | Mattermost   | two custom themes                                       |
@@ -57,13 +57,13 @@ colorscheme spectral        " picks the variant matching &background
 `spectral-dark` and `spectral-light` force a variant. Requires Vim 7.4+ or
 Neovim 0.5+, and a true-color terminal.
 
-**Languages** — Ruby (including Sorbet), Python, JavaScript, TypeScript, Go,
+**Languages:** Ruby (including Sorbet), Python, JavaScript, TypeScript, Go,
 HTML, CSS, Markdown, JSON, YAML, TOML, XML, and Vim script.
 
-**Plugins** — GitGutter, Signify, fugitive, NERDTree, netrw, ALE, CoC, fzf,
+**Plugins:** GitGutter, Signify, fugitive, NERDTree, netrw, ALE, CoC, fzf,
 CtrlP, Telescope, Startify, and vim-which-key.
 
-**Neovim** — Treesitter (0.8+), covering both the legacy `@text.*` captures and
+**Neovim:** Treesitter (0.8+), covering both the legacy `@text.*` captures and
 the `@markup.*` names Neovim 0.10 renamed them to; LSP diagnostics, references,
 code lens, inlay hints and signature help (0.5+); semantic tokens (0.9+);
 floating windows, WinBar and WinSeparator.
@@ -125,8 +125,8 @@ cd vscode && npx @vscode/vsce package
 
 The mapping departs from the Vim theme in one place, where the Vim theme is
 internally inconsistent: **regular expressions** follow the richer `rubyRegexp*`
-treatment — cyan body, orange escapes, purple character classes — rather than
-the flat orange of `@string.regex`.
+treatment (cyan body, orange escapes, purple character classes), not the flat
+orange of `@string.regex`.
 
 Markdown H1 is amber, bold and underlined rather than inverted: token colors
 cannot set a background.
@@ -137,7 +137,7 @@ in `plugin/`, which have no TextMate scope to hook.
 
 ## Zed
 
-`zed/` is an extension carrying `zed/themes/spectral.json` — one theme family
+`zed/` is an extension with `zed/themes/spectral.json`: one theme family
 with both variants, so Zed's `system` mode switches between them:
 
 ```json
@@ -255,12 +255,12 @@ space and focused agent sit on `bg_chrome` in the dark variant, where herdr's mu
 session titles read best, and on an amber wash in the light one. The
 sidebar is left transparent so it shows the terminal's own background, which
 is Spectral too if you use the Ghostty or iTerm2 presets. Agent states keep
-herdr's meanings — yellow for working, red for blocked, cyan for done, green
+herdr's meanings: yellow for working, red for blocked, cyan for done, green
 for idle.
 
 ## The palette
 
-Each variant is defined in OKLCH — lightness 0–1, chroma, and hue in degrees.
+Each variant is defined in OKLCH: lightness 0–1, chroma, and hue in degrees.
 The accents sit in a similar lightness band, so no hue jumps out as much
 brighter than the rest, and the neutrals all share one warm hue at low chroma.
 
@@ -358,8 +358,8 @@ That writes `colors/spectral-*.vim`, `ghostty/spectral-*`,
 `herdr/spectral.toml`, `iterm2/*.itermcolors`, `mattermost/spectral-*.json`,
 `vscode/themes/spectral-*.json`, `vscode/icon.png`,
 `zed/themes/spectral.json`, `tuicr/spectral-*`, `screenshots/palette-*.svg`, and
-`autoload/lightline/colorscheme/spectral.vim`. All of those are generated — do
-not hand-edit them. After regenerating the iTerm2 presets, run
+`autoload/lightline/colorscheme/spectral.vim`. All of those are generated, so
+don't hand-edit them. After regenerating the iTerm2 presets, run
 `iterm2/sync.py <plist>` to push them into your own plist.
 
 ### Tests
